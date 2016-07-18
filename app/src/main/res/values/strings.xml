@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">IDu</string>
 
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <!--WelcomeActivity-->
+    <string name="enter_button">开启悦读</string>
+    <string name="idu_title">|\n悦\n读\n|</string>
 </resources>
