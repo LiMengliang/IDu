@@ -1,6 +1,7 @@
 package com.redoc.idu.view;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,17 +19,18 @@ import java.io.IOException;
 /**
  * Welcome activity.
  */
-public class WelcomeActivity extends AppCompatActivity {
-    private View mContentView;
+public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
     private RelativeLayout mRootLayout;
+    private View mEnter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_welcome);
-        mContentView = findViewById(R.id.fullscreen_content);
         mRootLayout = (RelativeLayout)findViewById(R.id.root_layout);
+        mEnter = findViewById(R.id.enter_button);
+        mEnter.setOnClickListener(this);
         // <Lessons Learned>
         // 我们在布局文件里面写android:background和android:src这些属性，
         // 实际上解析之后执行的是view.setBackgroundResource和view.setImageResource方法，
@@ -43,6 +45,15 @@ public class WelcomeActivity extends AppCompatActivity {
             mRootLayout.setBackground(BitmapUtils.res2BitmapDrawable(IDuApplication.Context, R.drawable.splash));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == mEnter) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            this.finish();
         }
     }
 }

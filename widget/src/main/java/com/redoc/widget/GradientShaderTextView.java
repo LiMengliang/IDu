@@ -1,4 +1,4 @@
-package com.redoc.idu.view.widget;
+package com.redoc.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -9,8 +9,6 @@ import android.graphics.Paint;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.widget.TextView;
-
-import com.redoc.idu.R;
 
 /**
  * Created by limen on 2016/7/17.
@@ -90,3 +88,4 @@ public class GradientShaderTextView extends TextView {
         }
     }
 }
+

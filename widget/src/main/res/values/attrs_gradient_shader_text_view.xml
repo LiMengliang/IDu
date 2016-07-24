@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GradientShaderTextView">
+        <attr name="gradientWidthPercentage" format="float"/>
+        <attr name="speedPercentage" format="float"/>
+        <attr name="backForward" format="boolean"/>
+    </declare-styleable>
+</resources>
