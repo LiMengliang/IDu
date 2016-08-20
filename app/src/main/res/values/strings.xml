@@ -4,4 +4,7 @@
     <!--WelcomeActivity-->
     <string name="enter_button">开启悦读</string>
     <string name="idu_title">|\n悦\n读\n|</string>
+
+    <!--News Category-->
+    <string name="news_name">新闻</string>
 </resources>

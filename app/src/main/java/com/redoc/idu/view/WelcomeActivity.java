@@ -1,12 +1,8 @@
 package com.redoc.idu.view;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -16,21 +12,36 @@ import com.redoc.idu.utils.BitmapUtils;
 
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Welcome activity.
  */
-public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
-    private RelativeLayout mRootLayout;
-    private View mEnter;
+public class WelcomeActivity extends AppCompatActivity /*implements View.OnClickListener*/ {
+    /**
+     * The root layout.
+     */
+    @BindView(R.id.root_layout)
+    RelativeLayout mRootLayout;
 
+    /**
+     * The enter button.
+     */
+    @BindView(R.id.enter_button)
+    View mEnter;
+
+    /**
+     * On create.
+     * @param savedInstanceState The instance state bundle.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_welcome);
-        mRootLayout = (RelativeLayout)findViewById(R.id.root_layout);
-        mEnter = findViewById(R.id.enter_button);
-        mEnter.setOnClickListener(this);
+        ButterKnife.bind(this);
         // <Lessons Learned>
         // 我们在布局文件里面写android:background和android:src这些属性，
         // 实际上解析之后执行的是view.setBackgroundResource和view.setImageResource方法，
@@ -48,12 +59,13 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        if(v == mEnter) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            this.finish();
-        }
+    /**
+     * On button click.
+     */
+    @OnClick(R.id.enter_button)
+    public void onClick() {
+        Intent intent = new Intent(this, CategoriesActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 }
