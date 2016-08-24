@@ -72,4 +72,12 @@ public class CategoriesPresenter implements ICategoriesContract.ICategoriesPrese
     public void onDetached() {
 
     }
+
+    /**
+     * Get Category Presenters.
+     * @return A list of category presenter.
+     */
+    public List<ICategoryContract.ICategoryPresenter> getmCategoryPresenters() {
+        return mCategoryPresenters;
+    }
 }

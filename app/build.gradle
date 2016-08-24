@@ -3,7 +3,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "24.0.1"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.redoc.idu"
@@ -12,6 +12,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        //enable runwith annotation
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         release {
@@ -19,20 +21,40 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    configurations.all {
+        resolutionStrategy.force 'com.android.support:support-annotations:23.4.0'
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    // Dependencies for local unit tests
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-all:2.0.2-beta'
+    androidTestCompile 'junit:junit:4.12'
+    // // // Android Testing Support Library's runner and rules
+    androidTestCompile "com.android.support.test:runner:0.4.1"
+    androidTestCompile "com.android.support.test:rules:0.4.1"
+    // // Espresso UI Testing
+    androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.1"
+    androidTestCompile "com.android.support.test.espresso:espresso-contrib:2.2.1"
+    androidTestCompile "com.android.support.test.espresso:espresso-intents:2.2.1"
+    // Resolve conflicts between main and test APK:
+    androidTestCompile "com.android.support:support-annotations:23.4.0"
+    androidTestCompile "com.android.support:support-v4:23.4.0"
+    androidTestCompile "com.android.support:recyclerview-v7:23.4.0"
+
+
     compile project(':widget')
     //noinspection GradleDependency
-    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:appcompat-v7:23.4.0'
     //noinspection GradleDependency
-    compile 'com.android.support:support-v4:23.2.1'
+    compile 'com.android.support:support-v4:23.4.0'
     //noinspection GradleDependency
-    compile 'com.android.support:design:23.2.1'
+    compile 'com.android.support:design:23.4.0'
     compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
-    compile 'com.hannesdorfmann.mosby:viewstate:2.0.1' // optional viewstate feature
+    compile 'com.hannesdorfmann.mosby:viewstate:2.0.1'
+    // optional viewstate feature
     compile 'com.jakewharton:butterknife:8.2.0'
     apt 'com.jakewharton:butterknife-compiler:8.2.0'
 }
