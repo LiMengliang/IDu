@@ -1,5 +1,10 @@
 package com.redoc.idu.contract;
 
+import android.support.v4.app.Fragment;
+
+import com.redoc.idu.IPresenter;
+import com.redoc.idu.IView;
+
 /**
  * Contract between {@link ICategoryView} and {@link ICategoryPresenter}
  *
@@ -10,14 +15,29 @@ public interface ICategoryContract {
     /**
      * Category view.
      */
-    interface ICategoryView {
+    interface ICategoryView extends IView<ICategoryContract.ICategoryPresenter>  {
 
+        /**
+         * Get or create the view of the category.
+         * @return
+         */
+        Fragment getOrCreateRootFragment();
     }
 
     /**
      * Category presenter.
      */
-    interface ICategoryPresenter {
+    interface ICategoryPresenter extends IPresenter {
+        /**
+         * Get category name.
+         * @return Name of the category.
+         */
         String getCategoryName();
+
+        /**
+         * Get attached {@link ICategoryView} instance.
+         * @return Attached {@link ICategoryView} instance.
+         */
+        ICategoryView getAttachedCategoryView();
     }
 }

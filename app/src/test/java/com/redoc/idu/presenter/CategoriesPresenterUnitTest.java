@@ -1,6 +1,7 @@
 package com.redoc.idu.presenter;
 
 import com.redoc.idu.contract.ICategoriesContract;
+import com.redoc.idu.contract.ICategoryContract;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,8 +21,11 @@ public class CategoriesPresenterUnitTest {
     ICategoriesContract.ICategoriesView categoriesView;
 
     /**
-     * Set up categories presenter.
+     * A mock category presenter.
      */
+    @Mock
+    ICategoryContract.ICategoryPresenter mCategoryPresenter;
+
     @Before
     public void setupCategoriesPresenter() {
         // Mockito has a very convenient way to inject mocks by using the @Mock annotation. To
@@ -34,7 +38,6 @@ public class CategoriesPresenterUnitTest {
      */
     @Test
     public void CategoriesPresenter_setPresenter_called() {
-        // ICategoriesContract.ICategoriesView categoriesView = Mockito.mock(ICategoriesContract.ICategoriesView.class);
         CategoriesPresenter categoriesPresenter = new CategoriesPresenter(categoriesView);
         Mockito.verify(categoriesView).setPresenter(categoriesPresenter);
     }
@@ -46,6 +49,16 @@ public class CategoriesPresenterUnitTest {
     public void CategoriesPresenter_onAttached_setCategories_called() {
         CategoriesPresenter categoriesPresenter = new CategoriesPresenter(categoriesView);
         categoriesPresenter.onAttached();
-        Mockito.verify(categoriesView).setCategories(categoriesPresenter.getmCategoryPresenters());
+        Mockito.verify(categoriesView).setCategories(categoriesPresenter.getCategoryPresenters());
+    }
+
+    /**
+     * CateogriesView.switchToCategory is called.
+     */
+    @Test
+    public void CategoriesPresenter_onSelectACategory_switchToCategory_called() {
+        CategoriesPresenter categoriesPresenter = new CategoriesPresenter(categoriesView);
+        categoriesPresenter.onSelectACategory(mCategoryPresenter);
+        Mockito.verify(categoriesView).switchToCategory(mCategoryPresenter);
     }
 }

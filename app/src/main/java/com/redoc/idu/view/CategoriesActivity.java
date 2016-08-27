@@ -1,7 +1,9 @@
 package com.redoc.idu.view;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
@@ -23,6 +25,10 @@ import butterknife.ButterKnife;
 public class CategoriesActivity extends AppCompatActivity implements ICategoriesContract.ICategoriesView {
 
     /**
+     * Selected category view.
+     */
+    private ICategoryContract.ICategoryView mSelectedCategoryView;
+    /**
      * The category selector bar.
      */
     @BindView(R.id.categorySelectorBar)
@@ -31,7 +37,7 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
     /**
      * The {@link com.redoc.idu.contract.ICategoriesContract.ICategoriesPresenter} instance.
      */
-    private ICategoriesContract.ICategoriesPresenter presenter;
+    private ICategoriesContract.ICategoriesPresenter mCategoriesPresenter;
 
     /**
      * A list of category icon view.
@@ -50,15 +56,29 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
         ButterKnife.bind(this);
 
         mCategoryIconViews = new ArrayList<>();
-        presenter = new CategoriesPresenter(this);
+        mCategoriesPresenter = new CategoriesPresenter(this);
     }
 
     /**
      * Switch to category.
+     * @param categoryPresenter Presenter of the category.
      */
     @Override
-    public void switchCategory() {
-
+    public void switchToCategory(ICategoryContract.ICategoryPresenter categoryPresenter) {
+        ICategoryContract.ICategoryView categoryView = categoryPresenter.getAttachedCategoryView();
+        Fragment categoryFragment = categoryView.getOrCreateRootFragment();
+        if(mSelectedCategoryView == null) {
+            getSupportFragmentManager().beginTransaction().add(R.id.contentView, categoryFragment).commit();
+            mSelectedCategoryView = categoryView;
+        }
+        else {
+            if(categoryFragment.isAdded()) {
+                getSupportFragmentManager().beginTransaction().hide(mSelectedCategoryView.getOrCreateRootFragment()).show(categoryFragment).commit();
+            }
+            else {
+                getSupportFragmentManager().beginTransaction().hide(mSelectedCategoryView.getOrCreateRootFragment()).add(R.id.contentView, categoryFragment).commit();
+            }
+        }
     }
 
     /**
@@ -79,13 +99,19 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layoutParameters.weight = 1;
         int index = 0;
-        for(ICategoryContract.ICategoryPresenter categoryPresenter : categoryPresenters) {
+        for(final ICategoryContract.ICategoryPresenter categoryPresenter : categoryPresenters) {
             CategoryIconView categoryIconView = new CategoryIconView(this);
             categoryIconView.setIconResourceId(R.drawable.category_main);
             categoryIconView.setName(categoryPresenter.getCategoryName());
             categoryIconView.setLayoutParams(layoutParameters);
             mCategorySelectorBar.addView(categoryIconView, index++);
             mCategoryIconViews.add(categoryIconView);
+            categoryIconView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mCategoriesPresenter.onSelectACategory(categoryPresenter);
+                }
+            });
         }
     }
 

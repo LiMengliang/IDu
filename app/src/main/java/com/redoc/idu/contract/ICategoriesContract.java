@@ -19,8 +19,9 @@ public interface ICategoriesContract {
 
         /**
          * Switch category.
+         * @param categoryPresenter Presenter of the category.
          */
-        void switchCategory();
+        void switchToCategory(ICategoryContract.ICategoryPresenter categoryPresenter);
 
         /**
          * Add category.
@@ -32,7 +33,6 @@ public interface ICategoriesContract {
          * @param categoryPresenters A list of category presenter.
          */
         void setCategories(List<ICategoryContract.ICategoryPresenter> categoryPresenters);
-
     }
 
     /**
@@ -44,5 +44,11 @@ public interface ICategoriesContract {
          * @return Categories.
          */
         List<Category> getCategories();
+
+        /**
+         * On select a category.
+         * @param categoryPresenter Presenter of selected cateogry.
+         */
+        void onSelectACategory(ICategoryContract.ICategoryPresenter categoryPresenter);
     }
 }

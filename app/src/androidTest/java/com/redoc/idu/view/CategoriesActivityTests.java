@@ -3,6 +3,7 @@ package com.redoc.idu.view;
 import android.support.test.espresso.assertion.PositionAssertions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v4.app.Fragment;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.view.View;
 
@@ -14,10 +15,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.core.deps.guava.base.CharMatcher.is;
+import static android.support.test.espresso.core.deps.guava.base.Predicates.instanceOf;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * CategoriesActivity unit test.
@@ -25,7 +33,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class CategoriesActivityUnitTest {
+public class CategoriesActivityTests {
     @Rule
     public ActivityTestRule<CategoriesActivity> mCategoriesActivity =
             new ActivityTestRule<CategoriesActivity>(CategoriesActivity.class) {
@@ -41,9 +49,17 @@ public class CategoriesActivityUnitTest {
     @Test
     public void categoriesActivity_selectorbar_layoutCorrectly() {
         Matcher<View> selectorBarMatcher = withId(R.id.categorySelectorBar);
-        Matcher<View>  seperatorMatcher = withId(R.id.separator);
+        Matcher<View> seperatorMatcher = withId(R.id.separator);
         onView(selectorBarMatcher).check(matches(isDisplayed()));
         onView(selectorBarMatcher).check(PositionAssertions.isBottomAlignedWith(isRoot()));
         onView(selectorBarMatcher).check(PositionAssertions.isBelow(seperatorMatcher));
+    }
+
+    @Test
+    public void categoriesActivity_newCategory_selected_multiChannelsFragmentShown() {
+        // TODO: finish test
+        // Matcher<View> newCategoryButtonMatcher = withText("新闻");
+        // onView(newCategoryButtonMatcher).perform(click());
+        // onView(withId(R.id.contentView)).check(hasDescendant(withClassName("MultiChannelsCategoryFragment")));
     }
 }
