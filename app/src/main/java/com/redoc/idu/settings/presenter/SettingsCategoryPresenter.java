@@ -1,11 +1,27 @@
 package com.redoc.idu.settings.presenter;
 
+import com.redoc.idu.R;
 import com.redoc.idu.presenter.SingleChannelCategoryPresenter;
+import com.redoc.idu.settings.model.SettingsCategory;
 
 /**
+ * Settings category presenter.
+ *
  * Created by limen on 2016/8/27.
  */
 public class SettingsCategoryPresenter extends SingleChannelCategoryPresenter {
+
+    private SettingsCategory mSettingsCategory;
+
+    /**
+     * Construct a {@link SettingsCategoryPresenter} instance.
+     *
+     * @param settingsCategory Model of settings category.
+     */
+    public SettingsCategoryPresenter(SettingsCategory settingsCategory) {
+        mSettingsCategory = settingsCategory;
+    }
+
     /**
      * Get category name.
      *
@@ -13,6 +29,16 @@ public class SettingsCategoryPresenter extends SingleChannelCategoryPresenter {
      */
     @Override
     public String getCategoryName() {
-        return "设置";
+        return mSettingsCategory.getmCategoryName();
+    }
+
+    /**
+     * Get category icon resource id.
+     *
+     * @return Id of icon.
+     */
+    @Override
+    public int getIconResourceId() {
+        return R.drawable.category_setting;
     }
 }

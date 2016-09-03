@@ -35,6 +35,13 @@ public interface ICategoryContract {
         String getCategoryName();
 
         /**
+         * Get category icon resource id.
+         *
+         * @return Id of icon.
+         */
+        int getIconResourceId();
+
+        /**
          * Get attached {@link ICategoryView} instance.
          * @return Attached {@link ICategoryView} instance.
          */

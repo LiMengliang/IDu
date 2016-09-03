@@ -22,7 +22,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class WelcomeActivityUnitTest {
+public class WelcomeActivityTests {
     /**
      * Test rule
      */

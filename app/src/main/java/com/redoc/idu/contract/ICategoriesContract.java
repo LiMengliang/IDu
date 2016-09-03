@@ -27,12 +27,6 @@ public interface ICategoriesContract {
          * Add category.
          */
         void addCategory();
-
-        /**
-         * Set categories.
-         * @param categoryPresenters A list of category presenter.
-         */
-        void setCategories(List<ICategoryContract.ICategoryPresenter> categoryPresenters);
     }
 
     /**
@@ -40,15 +34,15 @@ public interface ICategoriesContract {
      */
     interface ICategoriesPresenter extends IPresenter {
         /**
-         * Get categories.
-         * @return Categories.
-         */
-        List<Category> getCategories();
-
-        /**
          * On select a category.
          * @param categoryPresenter Presenter of selected cateogry.
          */
         void onSelectACategory(ICategoryContract.ICategoryPresenter categoryPresenter);
+
+        /**
+         * Get a list of {@link ICategoriesPresenter}
+         * @return A list of  {@link ICategoriesPresenter} contained.
+         */
+        List<ICategoryContract.ICategoryPresenter> getCategoryPresenters();
     }
 }

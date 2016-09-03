@@ -2,12 +2,14 @@ package com.redoc.idu.presenter;
 
 import android.support.annotation.NonNull;
 
+import com.redoc.idu.audios.model.AudioCategory;
 import com.redoc.idu.audios.presenter.AudioCategoryPresenter;
 import com.redoc.idu.contract.ICategoriesContract;
 import com.redoc.idu.contract.ICategoryContract;
-import com.redoc.idu.model.CategoriesProvider;
 import com.redoc.idu.model.bean.Category;
+import com.redoc.idu.news.model.NewsCategory;
 import com.redoc.idu.news.presenter.NewsCategoryPresenter;
+import com.redoc.idu.settings.model.SettingsCategory;
 import com.redoc.idu.settings.presenter.SettingsCategoryPresenter;
 
 import java.util.ArrayList;
@@ -20,10 +22,10 @@ import java.util.List;
  */
 public class CategoriesPresenter implements ICategoriesContract.ICategoriesPresenter {
 
-    /**
-     * Categories model provider.
+     /**
+     * Categories model.
      */
-    private CategoriesProvider mCategoriesProvider;
+    List<Category> mCategories;
 
     /**
      * The attached {@link com.redoc.idu.contract.ICategoriesContract.ICategoriesView}
@@ -34,15 +36,6 @@ public class CategoriesPresenter implements ICategoriesContract.ICategoriesPrese
      * The attached {@link com.redoc.idu.contract.ICategoriesContract.ICategoriesPresenter}
      */
     private List<ICategoryContract.ICategoryPresenter> mCategoryPresenters;
-
-    /**
-     * Get categories.
-     * @return All categories.
-     */
-    @Override
-    public List<Category> getCategories() {
-        return mCategoriesProvider.getCategories();
-    }
 
     /**
      * On a category is selected.
@@ -59,23 +52,11 @@ public class CategoriesPresenter implements ICategoriesContract.ICategoriesPrese
      * @param view Attached view.
      */
     public CategoriesPresenter(@NonNull ICategoriesContract.ICategoriesView view) {
-        mCategoriesProvider = new CategoriesProvider();
         mCategoryPresenters = new ArrayList<>();
         // TODO: We need a extensible way to add categories.
-        for(Category category : mCategoriesProvider.getCategories()) {
-            if(category.getmCategoryName() == "首页") {
-                ICategoryContract.ICategoryPresenter categoryPresenter = new NewsCategoryPresenter();
-                mCategoryPresenters.add(categoryPresenter);
-            }
-            else if(category.getmCategoryName() == "音频") {
-                ICategoryContract.ICategoryPresenter categoryPresenter = new AudioCategoryPresenter();
-                mCategoryPresenters.add(categoryPresenter);
-            }
-            else if(category.getmCategoryName() == "设置") {
-                ICategoryContract.ICategoryPresenter categoryPresenter = new SettingsCategoryPresenter();
-                mCategoryPresenters.add(categoryPresenter);
-            }
-        }
+        mCategoryPresenters.add(new NewsCategoryPresenter(new NewsCategory()));
+        mCategoryPresenters.add(new AudioCategoryPresenter(new AudioCategory()));
+        mCategoryPresenters.add(new SettingsCategoryPresenter(new SettingsCategory()));
         mCategoriesView = view;
         mCategoriesView.setPresenter(this);
     }
@@ -85,7 +66,6 @@ public class CategoriesPresenter implements ICategoriesContract.ICategoriesPrese
      */
     @Override
     public void onAttached() {
-        mCategoriesView.setCategories(mCategoryPresenters);
     }
 
     /**
@@ -100,6 +80,7 @@ public class CategoriesPresenter implements ICategoriesContract.ICategoriesPrese
      * Get Category Presenters.
      * @return A list of category presenter.
      */
+    @Override
     public List<ICategoryContract.ICategoryPresenter> getCategoryPresenters() {
         return mCategoryPresenters;
     }

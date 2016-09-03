@@ -32,10 +32,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:2.0.2-beta'
     androidTestCompile 'junit:junit:4.12'
-    // // // Android Testing Support Library's runner and rules
+    // Android Testing Support Library's runner and rules
     androidTestCompile "com.android.support.test:runner:0.4.1"
     androidTestCompile "com.android.support.test:rules:0.4.1"
-    // // Espresso UI Testing
+    // Espresso UI Testing
     androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.1"
     androidTestCompile "com.android.support.test.espresso:espresso-contrib:2.2.1"
     androidTestCompile "com.android.support.test.espresso:espresso-intents:2.2.1"
@@ -46,9 +46,6 @@ dependencies {
 
 
     compile project(':widget')
-    //noinspection GradleDependency
-    //noinspection GradleDependency
-    //noinspection GradleDependency
     // optional viewstate feature
     apt 'com.jakewharton:butterknife-compiler:8.2.0'
     compile 'com.android.support:appcompat-v7:23.4.0'

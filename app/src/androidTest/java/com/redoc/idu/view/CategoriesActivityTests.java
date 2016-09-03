@@ -3,7 +3,6 @@ package com.redoc.idu.view;
 import android.support.test.espresso.assertion.PositionAssertions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.app.Fragment;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.view.View;
 
@@ -15,17 +14,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.core.deps.guava.base.CharMatcher.is;
-import static android.support.test.espresso.core.deps.guava.base.Predicates.instanceOf;
-import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
-import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
-import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 
 /**
  * CategoriesActivity unit test.
@@ -35,7 +28,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @LargeTest
 public class CategoriesActivityTests {
     @Rule
-    public ActivityTestRule<CategoriesActivity> mCategoriesActivity =
+    public ActivityTestRule<CategoriesActivity> mCategoriesActivityRule =
             new ActivityTestRule<CategoriesActivity>(CategoriesActivity.class) {
                 @Override
                 protected void beforeActivityLaunched() {
@@ -53,6 +46,7 @@ public class CategoriesActivityTests {
         onView(selectorBarMatcher).check(matches(isDisplayed()));
         onView(selectorBarMatcher).check(PositionAssertions.isBottomAlignedWith(isRoot()));
         onView(selectorBarMatcher).check(PositionAssertions.isBelow(seperatorMatcher));
+        onView(withParent(withId(R.id.contentView))).check(matches(isDisplayed()));
     }
 
     @Test

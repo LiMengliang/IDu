@@ -45,6 +45,19 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
     private List<CategoryIconView> mCategoryIconViews;
 
     /**
+     * Selected category.
+     */
+    private ICategoryContract.ICategoryPresenter mSelectedCategory;
+
+    /**
+     * Get presenter.
+     * @return Category presenter.
+     */
+    ICategoriesContract.ICategoriesPresenter getCategoriesPresenter() {
+        return mCategoriesPresenter;
+    }
+
+    /**
      * On create
      * @param savedInstanceState The bundle instance.
      */
@@ -65,18 +78,21 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
      */
     @Override
     public void switchToCategory(ICategoryContract.ICategoryPresenter categoryPresenter) {
-        ICategoryContract.ICategoryView categoryView = categoryPresenter.getAttachedCategoryView();
-        Fragment categoryFragment = categoryView.getOrCreateRootFragment();
-        if(mSelectedCategoryView == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.contentView, categoryFragment).commit();
-            mSelectedCategoryView = categoryView;
-        }
-        else {
-            if(categoryFragment.isAdded()) {
-                getSupportFragmentManager().beginTransaction().hide(mSelectedCategoryView.getOrCreateRootFragment()).show(categoryFragment).commit();
+        if(mSelectedCategory != categoryPresenter) {
+            mSelectedCategory = categoryPresenter;
+            ICategoryContract.ICategoryView categoryView = categoryPresenter.getAttachedCategoryView();
+            Fragment categoryFragment = categoryView.getOrCreateRootFragment();
+            if(mSelectedCategoryView == null) {
+                getSupportFragmentManager().beginTransaction().add(R.id.contentView, categoryFragment).commit();
+                mSelectedCategoryView = categoryView;
             }
             else {
-                getSupportFragmentManager().beginTransaction().hide(mSelectedCategoryView.getOrCreateRootFragment()).add(R.id.contentView, categoryFragment).commit();
+                if(categoryFragment.isAdded()) {
+                    getSupportFragmentManager().beginTransaction().hide(mSelectedCategoryView.getOrCreateRootFragment()).show(categoryFragment).commit();
+                }
+                else {
+                    getSupportFragmentManager().beginTransaction().hide(mSelectedCategoryView.getOrCreateRootFragment()).add(R.id.contentView, categoryFragment).commit();
+                }
             }
         }
     }
@@ -93,15 +109,14 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
      * Set categories.
      * @param categoryPresenters A list of category presenter.
      */
-    @Override
-    public void setCategories(List<ICategoryContract.ICategoryPresenter> categoryPresenters) {
+    private void setCategories(List<ICategoryContract.ICategoryPresenter> categoryPresenters) {
         LinearLayout.LayoutParams layoutParameters = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layoutParameters.weight = 1;
         int index = 0;
         for(final ICategoryContract.ICategoryPresenter categoryPresenter : categoryPresenters) {
             CategoryIconView categoryIconView = new CategoryIconView(this);
-            categoryIconView.setIconResourceId(R.drawable.category_main);
+            categoryIconView.setIconResourceId(categoryPresenter.getIconResourceId());
             categoryIconView.setName(categoryPresenter.getCategoryName());
             categoryIconView.setLayoutParams(layoutParameters);
             mCategorySelectorBar.addView(categoryIconView, index++);
@@ -113,6 +128,7 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
                 }
             });
         }
+        switchToCategory(categoryPresenters.get(0));
     }
 
     /**
@@ -122,5 +138,6 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
     @Override
     public void setPresenter(ICategoriesContract.ICategoriesPresenter presenter) {
         presenter.onAttached();
+        setCategories(presenter.getCategoryPresenters());
     }
 }

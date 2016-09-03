@@ -13,7 +13,7 @@ import org.mockito.MockitoAnnotations;
  * Unit test of {@link CategoriesPresenter}
  * Created by limen on 2016/8/21.
  */
-public class CategoriesPresenterUnitTest {
+public class CategoriesPresenterUnitTests {
     /**
      * A mock categories view.
      */
@@ -40,16 +40,6 @@ public class CategoriesPresenterUnitTest {
     public void CategoriesPresenter_setPresenter_called() {
         CategoriesPresenter categoriesPresenter = new CategoriesPresenter(categoriesView);
         Mockito.verify(categoriesView).setPresenter(categoriesPresenter);
-    }
-
-    /**
-     * CategoriesView.setCategories is called when a CategoriesPresenter is attached to view.
-     */
-    @Test
-    public void CategoriesPresenter_onAttached_setCategories_called() {
-        CategoriesPresenter categoriesPresenter = new CategoriesPresenter(categoriesView);
-        categoriesPresenter.onAttached();
-        Mockito.verify(categoriesView).setCategories(categoriesPresenter.getCategoryPresenters());
     }
 
     /**
