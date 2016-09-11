@@ -2,7 +2,6 @@ package com.redoc.idu.contract;
 
 import com.redoc.idu.IPresenter;
 import com.redoc.idu.IView;
-import com.redoc.idu.model.bean.Category;
 
 import java.util.List;
 

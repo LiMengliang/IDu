@@ -78,6 +78,7 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
      */
     @Override
     public void switchToCategory(ICategoryContract.ICategoryPresenter categoryPresenter) {
+        categoryPresenter.onSelected();
         if(mSelectedCategory != categoryPresenter) {
             mSelectedCategory = categoryPresenter;
             ICategoryContract.ICategoryView categoryView = categoryPresenter.getAttachedCategoryView();

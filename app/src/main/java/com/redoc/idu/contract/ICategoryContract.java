@@ -46,5 +46,10 @@ public interface ICategoryContract {
          * @return Attached {@link ICategoryView} instance.
          */
         ICategoryView getAttachedCategoryView();
+
+        /**
+         * On a category is selected.
+         */
+        void onSelected();
     }
 }

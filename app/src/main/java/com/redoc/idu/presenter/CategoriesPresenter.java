@@ -6,6 +6,8 @@ import com.redoc.idu.audios.model.AudioCategory;
 import com.redoc.idu.audios.presenter.AudioCategoryPresenter;
 import com.redoc.idu.contract.ICategoriesContract;
 import com.redoc.idu.contract.ICategoryContract;
+import com.redoc.idu.model.CategoriesProvider;
+import com.redoc.idu.model.bean.BaseCategory;
 import com.redoc.idu.model.bean.Category;
 import com.redoc.idu.news.model.NewsCategory;
 import com.redoc.idu.news.presenter.NewsCategoryPresenter;
@@ -25,7 +27,7 @@ public class CategoriesPresenter implements ICategoriesContract.ICategoriesPrese
      /**
      * Categories model.
      */
-    List<Category> mCategories;
+    List<BaseCategory> mCategories;
 
     /**
      * The attached {@link com.redoc.idu.contract.ICategoriesContract.ICategoriesView}
@@ -54,8 +56,14 @@ public class CategoriesPresenter implements ICategoriesContract.ICategoriesPrese
     public CategoriesPresenter(@NonNull ICategoriesContract.ICategoriesView view) {
         mCategoryPresenters = new ArrayList<>();
         // TODO: We need a extensible way to add categories.
-        mCategoryPresenters.add(new NewsCategoryPresenter(new NewsCategory()));
-        mCategoryPresenters.add(new AudioCategoryPresenter(new AudioCategory()));
+        for(Category category : CategoriesProvider.getCategories()) {
+            if(category.getCATEGORY_NAME().equals("首页")) {
+                mCategoryPresenters.add(new NewsCategoryPresenter(new NewsCategory(category)));
+            }
+            else if(category.getCATEGORY_NAME().equals( "电台")) {
+                mCategoryPresenters.add(new AudioCategoryPresenter(new AudioCategory(category)));
+            }
+        }
         mCategoryPresenters.add(new SettingsCategoryPresenter(new SettingsCategory()));
         mCategoriesView = view;
         mCategoriesView.setPresenter(this);

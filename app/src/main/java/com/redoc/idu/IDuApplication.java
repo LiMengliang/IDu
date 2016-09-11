@@ -3,6 +3,8 @@ package com.redoc.idu;
 import android.app.Application;
 import android.content.Context;
 
+import com.redoc.idu.model.DatabaseManager;
+
 /**
  * IDu application.
  *
@@ -15,6 +17,8 @@ public class IDuApplication extends Application {
      */
     public static Context Context;
 
+    public static DatabaseManager DatabaseManager;
+
     /**
      * On create.
      */
@@ -22,5 +26,7 @@ public class IDuApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Context = getApplicationContext();
+        DatabaseManager = new DatabaseManager();
+        DatabaseManager.setupDatabase(Context);
     }
 }

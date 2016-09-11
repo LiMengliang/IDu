@@ -1,5 +1,6 @@
 package com.redoc.idu.news.presenter;
 
+import com.redoc.idu.model.bean.Category;
 import com.redoc.idu.news.model.NewsCategory;
 
 import org.junit.Test;
@@ -16,7 +17,7 @@ public class NewsCategoryPresenterUnitTests {
      */
     @Test
     public void getCategoryName_isCorrect() {
-        NewsCategoryPresenter newsCategoryPresenter = new NewsCategoryPresenter(new NewsCategory());
+        NewsCategoryPresenter newsCategoryPresenter = new NewsCategoryPresenter(new NewsCategory(new Category(1L, "首页")));
         assertEquals("News category name should be 首页", "首页", newsCategoryPresenter.getCategoryName());
     }
 }

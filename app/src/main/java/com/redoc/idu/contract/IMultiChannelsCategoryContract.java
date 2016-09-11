@@ -13,11 +13,17 @@ public interface IMultiChannelsCategoryContract extends IView<IMultiChannelsCate
      * Multi-channels category view.
      */
     interface IMultiChannelsCategoryView extends ICategoryContract.ICategoryView {
+
         /**
-         * Set channels.
-         * @param channelPresenters A list of presenter of channel.
+         * Initialize a category view.
          */
-        void setChannels(List<IChannelContract.IChannelPresenter> channelPresenters);
+        void initialize();
+
+        /**
+         * Switch to channel.
+         * @param channelPresenter
+         */
+        void switchToChannel(IChannelContract.IChannelPresenter channelPresenter);
     }
 
     /**

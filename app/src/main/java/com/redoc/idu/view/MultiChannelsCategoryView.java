@@ -20,15 +20,6 @@ public class MultiChannelsCategoryView implements IMultiChannelsCategoryContract
      */
     private Fragment rootFragment;
 
-    /**
-     * Set channels.
-     *
-     * @param channelPresenters A list of presenter of channel.
-     */
-    @Override
-    public void setChannels(List<IChannelContract.IChannelPresenter> channelPresenters) {
-
-    }
 
     /**
      * Get or create the view of the category.
@@ -50,6 +41,16 @@ public class MultiChannelsCategoryView implements IMultiChannelsCategoryContract
      */
     @Override
     public void setPresenter(ICategoryContract.ICategoryPresenter presenter) {
+
+    }
+
+    @Override
+    public void initialize() {
+
+    }
+
+    @Override
+    public void switchToChannel(IChannelContract.IChannelPresenter channelPresenter) {
 
     }
 }

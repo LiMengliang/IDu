@@ -7,11 +7,20 @@ import com.redoc.idu.model.bean.Category;
  *
  * Created by limen on 2016/8/28.
  */
-public class AudioCategory extends Category {
+public class AudioCategory{
+    private Category mCategory;
     /**
      * Construct a category instance.
      */
-    public AudioCategory() {
-        super("音频");
+    public AudioCategory(long id) {
+        mCategory = new Category(id, "电台");
+    }
+
+    public AudioCategory(Category category) {
+        mCategory = category;
+    }
+
+    public Category getCategory() {
+        return mCategory;
     }
 }

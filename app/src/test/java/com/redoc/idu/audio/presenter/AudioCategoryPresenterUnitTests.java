@@ -3,6 +3,7 @@ package com.redoc.idu.audio.presenter;
 import com.redoc.idu.R;
 import com.redoc.idu.audios.model.AudioCategory;
 import com.redoc.idu.audios.presenter.AudioCategoryPresenter;
+import com.redoc.idu.model.bean.Category;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,13 +15,13 @@ import org.junit.Test;
 public class AudioCategoryPresenterUnitTests {
     @Test
     public void AudioCategoryPresenter_getCategoryName_meetExpected() {
-        AudioCategoryPresenter audioCategoryPresenter = new AudioCategoryPresenter(new AudioCategory());
-        Assert.assertEquals("音频", audioCategoryPresenter.getCategoryName());
+        AudioCategoryPresenter audioCategoryPresenter = new AudioCategoryPresenter(new AudioCategory(new Category(2L, "电台")));
+        Assert.assertEquals("电台", audioCategoryPresenter.getCategoryName());
     }
 
     @Test
     public void AudioCategoryPresenter_getIconResourceId_meetExpected() {
-        AudioCategoryPresenter audioCategoryPresenter = new AudioCategoryPresenter(new AudioCategory());
+        AudioCategoryPresenter audioCategoryPresenter = new AudioCategoryPresenter(new AudioCategory(new Category(2L, "电台")));
         Assert.assertEquals(R.drawable.category_audio, audioCategoryPresenter.getIconResourceId());
     }
 }

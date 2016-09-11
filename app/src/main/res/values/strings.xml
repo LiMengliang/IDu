@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IDu</string>
+    <string name="app_name">悦读</string>
 
     <!--WelcomeActivity-->
     <string name="enter_button">开启悦读</string>

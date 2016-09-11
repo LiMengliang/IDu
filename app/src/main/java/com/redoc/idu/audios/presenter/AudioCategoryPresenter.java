@@ -2,6 +2,7 @@ package com.redoc.idu.audios.presenter;
 
 import com.redoc.idu.R;
 import com.redoc.idu.audios.model.AudioCategory;
+import com.redoc.idu.model.bean.Category;
 import com.redoc.idu.presenter.SingleChannelCategoryPresenter;
 
 /**
@@ -30,7 +31,7 @@ public class AudioCategoryPresenter extends SingleChannelCategoryPresenter {
      */
     @Override
     public String getCategoryName() {
-        return mAudioCategory.getmCategoryName();
+        return mAudioCategory.getCategory().getCATEGORY_NAME();
     }
 
     /**
@@ -41,5 +42,10 @@ public class AudioCategoryPresenter extends SingleChannelCategoryPresenter {
     @Override
     public int getIconResourceId() {
         return R.drawable.category_audio;
+    }
+
+    @Override
+    public void onSelected() {
+
     }
 }

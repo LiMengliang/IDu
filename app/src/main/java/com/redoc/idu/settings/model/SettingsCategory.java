@@ -1,5 +1,6 @@
 package com.redoc.idu.settings.model;
 
+import com.redoc.idu.model.bean.BaseCategory;
 import com.redoc.idu.model.bean.Category;
 
 /**
@@ -12,6 +13,6 @@ public class SettingsCategory extends Category {
      * Construct a category instance.
      */
     public SettingsCategory() {
-        super("设置");
+        super(0L, "设置");
     }
 }

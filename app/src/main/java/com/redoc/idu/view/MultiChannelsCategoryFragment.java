@@ -31,7 +31,7 @@ public class MultiChannelsCategoryFragment extends Fragment {
 
     /**
      * On create view.
-     * @param inflater The inflator.
+     * @param inflater The inflater.
      * @param container The container.
      * @param savedInstanceState The saved instance state.
      * @return The created view.

@@ -29,7 +29,7 @@ public class SettingsCategoryPresenter extends SingleChannelCategoryPresenter {
      */
     @Override
     public String getCategoryName() {
-        return mSettingsCategory.getmCategoryName();
+        return mSettingsCategory.getCATEGORY_NAME();
     }
 
     /**
@@ -40,5 +40,10 @@ public class SettingsCategoryPresenter extends SingleChannelCategoryPresenter {
     @Override
     public int getIconResourceId() {
         return R.drawable.category_setting;
+    }
+
+    @Override
+    public void onSelected() {
+
     }
 }
