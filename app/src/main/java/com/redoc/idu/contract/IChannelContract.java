@@ -20,6 +20,32 @@ public interface IChannelContract {
      * Channel presenter.
      */
     interface IChannelPresenter extends IPresenter {
+        /**
+         * Get Channel Id.
+         * @return Channel Id.
+         */
+        String getChannelId();
+
+        /**
+         * Get Channel name.
+         * @return Channel name.
+         */
         String getChannelName();
+
+        /**
+         * Is followed.
+         * @return If is followed.
+         */
+        boolean isFollowed();
+
+        /**
+         * Follow the channel.
+         */
+        void follow();
+
+        /**
+         * Unfollow the channel.
+         */
+        void unfollow();
     }
 }

@@ -3,7 +3,7 @@ package com.redoc.idu.news.presenter;
 import com.redoc.idu.R;
 import com.redoc.idu.contract.IChannelContract;
 import com.redoc.idu.model.bean.Channel;
-import com.redoc.idu.news.model.NewsCategory;
+import com.redoc.idu.model.MultiChannelsCategory;
 import com.redoc.idu.presenter.ChannelPresenter;
 import com.redoc.idu.presenter.MultiChannelsCategoryPresenter;
 
@@ -20,7 +20,7 @@ public class NewsCategoryPresenter extends MultiChannelsCategoryPresenter {
     /**
      * News category instance.
      */
-    private NewsCategory mNewsCategory;
+    private MultiChannelsCategory mNewsCategory;
 
     /**
      * Channels.
@@ -31,8 +31,10 @@ public class NewsCategoryPresenter extends MultiChannelsCategoryPresenter {
      * Construct a {@link NewsCategoryPresenter} instance.
      * @param newsCategory News category model.
      */
-    public NewsCategoryPresenter(NewsCategory newsCategory) {
+    public NewsCategoryPresenter(MultiChannelsCategory newsCategory) {
+        super();
         mNewsCategory = newsCategory;
+        getAttachedCategoryView().setPresenter(this);
     }
 
     /**
@@ -54,6 +56,9 @@ public class NewsCategoryPresenter extends MultiChannelsCategoryPresenter {
         return R.drawable.category_main;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<IChannelContract.IChannelPresenter> getAllChannels() {
         if(mChannels == null) {

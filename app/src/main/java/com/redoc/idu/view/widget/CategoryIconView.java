@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.redoc.idu.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Category icon view.
  * Created by limen on 2016/8/19.
@@ -18,12 +21,14 @@ public class CategoryIconView extends LinearLayout {
     /**
      * The icon image view.
      */
-    private ImageView mIcon;
+    @BindView(R.id.icon)
+    ImageView mIcon;
 
     /**
      * The icon name text view.
      */
-    private TextView mName;
+    @BindView(R.id.name)
+    TextView mName;
 
     /**
      * Construct a CategoryIconView instance.
@@ -42,8 +47,7 @@ public class CategoryIconView extends LinearLayout {
         super(context, attrs);
 
         LayoutInflater.from(context).inflate(R.layout.view_category, this, true);
-        mIcon = (ImageView)findViewById(R.id.icon);
-        mName = (TextView)findViewById(R.id.name);
+        ButterKnife.bind(this);
         if(attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CategoryIconView);
             setIconResourceId(R.drawable.category_main);

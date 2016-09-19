@@ -1,12 +1,7 @@
 package com.redoc.idu.view;
 
-import android.support.v4.app.Fragment;
-
-import com.redoc.idu.contract.ICategoryContract;
 import com.redoc.idu.contract.IChannelContract;
 import com.redoc.idu.contract.IMultiChannelsCategoryContract;
-
-import java.util.List;
 
 /**
  * Multi-channels category view.
@@ -18,7 +13,9 @@ public class MultiChannelsCategoryView implements IMultiChannelsCategoryContract
     /**
      * The root fragment of the view.
      */
-    private Fragment rootFragment;
+    private MultiChannelsCategoryFragment rootFragment;
+
+    private IMultiChannelsCategoryContract.IMultiChannelsCategoryPresenter mMultiChannelsCategoryPresenter;
 
 
     /**
@@ -27,7 +24,7 @@ public class MultiChannelsCategoryView implements IMultiChannelsCategoryContract
      * @return Root fragment.
      */
     @Override
-    public Fragment getOrCreateRootFragment() {
+    public MultiChannelsCategoryFragment getOrCreateRootFragment() {
         if(rootFragment == null) {
             rootFragment = new MultiChannelsCategoryFragment();
         }
@@ -40,15 +37,22 @@ public class MultiChannelsCategoryView implements IMultiChannelsCategoryContract
      * @param presenter The presenter.
      */
     @Override
-    public void setPresenter(ICategoryContract.ICategoryPresenter presenter) {
-
+    public void setPresenter(IMultiChannelsCategoryContract.IMultiChannelsCategoryPresenter presenter) {
+        mMultiChannelsCategoryPresenter = presenter;
+        mMultiChannelsCategoryPresenter.onAttached();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize() {
-
+        getOrCreateRootFragment().setChannels(mMultiChannelsCategoryPresenter.getAllChannels());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void switchToChannel(IChannelContract.IChannelPresenter channelPresenter) {
 

@@ -4,21 +4,21 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <!-- Actionbar color -->
-        <item name="colorPrimary">@color/mainColor</item>
+        <item name="colorPrimary">@color/main_color</item>
         <!--Status bar color-->
-        <item name="colorPrimaryDark">@color/mainColor</item>
+        <item name="colorPrimaryDark">@color/main_color</item>
         <!--Accent color-->
-        <item name="colorAccent">@color/mainColor</item>
+        <item name="colorAccent">@color/main_color</item>
     </style>
 
     <style name="AppTheme.NoActionBar." parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <!-- Actionbar color -->
-        <item name="colorPrimary">@color/mainColor</item>
+        <item name="colorPrimary">@color/main_color</item>
         <!--Status bar color-->
-        <item name="colorPrimaryDark">@color/mainColor</item>
+        <item name="colorPrimaryDark">@color/main_color</item>
         <!--Accent color-->
-        <item name="colorAccent">@color/mainColor</item>
+        <item name="colorAccent">@color/main_color</item>
     </style>
 
     <!--Full screen-->

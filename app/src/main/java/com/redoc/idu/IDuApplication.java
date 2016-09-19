@@ -3,7 +3,7 @@ package com.redoc.idu;
 import android.app.Application;
 import android.content.Context;
 
-import com.redoc.idu.model.DatabaseManager;
+import com.redoc.idu.model.CategoryAndChannelManager;
 
 /**
  * IDu application.
@@ -17,7 +17,10 @@ public class IDuApplication extends Application {
      */
     public static Context Context;
 
-    public static DatabaseManager DatabaseManager;
+    /**
+     * Category and channel manager.
+     */
+    public static CategoryAndChannelManager CategoryAndChannelManager;
 
     /**
      * On create.
@@ -26,7 +29,7 @@ public class IDuApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Context = getApplicationContext();
-        DatabaseManager = new DatabaseManager();
-        DatabaseManager.setupDatabase(Context);
+        CategoryAndChannelManager = new CategoryAndChannelManager(Context);
+        CategoryAndChannelManager.initialize();
     }
 }

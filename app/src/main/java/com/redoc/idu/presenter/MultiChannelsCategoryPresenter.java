@@ -1,8 +1,9 @@
 package com.redoc.idu.presenter;
 
-import com.redoc.idu.contract.ICategoryContract;
+import com.redoc.idu.IDuApplication;
 import com.redoc.idu.contract.IChannelContract;
 import com.redoc.idu.contract.IMultiChannelsCategoryContract;
+import com.redoc.idu.model.bean.Channel;
 import com.redoc.idu.view.MultiChannelsCategoryView;
 
 import java.util.ArrayList;
@@ -19,8 +20,19 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
      */
     private IMultiChannelsCategoryContract.IMultiChannelsCategoryView mMultiChannelsCategoryView;
 
+    /**
+     * Presenter to selected channel.
+     */
     private IChannelContract.IChannelPresenter mSelectedChannel;
 
+    /**
+     * Presenters to all channels.
+     */
+    private List<IChannelContract.IChannelPresenter> mChannels;
+
+    /**
+     * Presenters to followed channels.
+     */
     private List<IChannelContract.IChannelPresenter> mFollowedChannels;
 
     /**
@@ -42,33 +54,19 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
     }
 
     /**
-     * On follow a channel.
-     *
-     * @param followedChannel Presenter of the followed channel.
-     */
-    @Override
-    public void onFollowAChannel(IChannelContract.IChannelPresenter followedChannel) {
-
-    }
-
-    /**
-     * On unfollow a channel.
-     *
-     * @param unfollowedChannel Presenter of the unfollowed channel.
-     */
-    @Override
-    public void onUnfollowAChannel(IChannelContract.IChannelPresenter unfollowedChannel) {
-
-    }
-
-    /**
      * Get all channels in this category.
      *
      * @return All channels of this category.
      */
     @Override
     public List<IChannelContract.IChannelPresenter> getAllChannels() {
-        return null;
+        if(mChannels == null) {
+            mChannels = new ArrayList<>();
+            for(Channel channel : IDuApplication.CategoryAndChannelManager.getChannels()) {
+                mChannels.add(new ChannelPresenter(channel));
+            }
+        }
+        return mChannels;
     }
 
     /**
@@ -81,7 +79,9 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
         if(mFollowedChannels == null) {
             mFollowedChannels = new ArrayList<>();
             for(IChannelContract.IChannelPresenter channel : getAllChannels()) {
-                mFollowedChannels.add(channel);
+                if(channel.isFollowed()) {
+                    mFollowedChannels.add(channel);
+                }
             }
         }
         return mFollowedChannels;
@@ -103,7 +103,7 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
      * @return Attached {@link com.redoc.idu.contract.ICategoryContract.ICategoryView}
      */
     @Override
-    public ICategoryContract.ICategoryView getAttachedCategoryView() {
+    public IMultiChannelsCategoryContract.IMultiChannelsCategoryView getAttachedCategoryView() {
         return mMultiChannelsCategoryView;
     }
 
@@ -112,7 +112,7 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
      */
     @Override
     public void onAttached() {
-
+        mMultiChannelsCategoryView.initialize();
     }
 
     /**

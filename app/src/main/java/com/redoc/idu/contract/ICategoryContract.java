@@ -15,7 +15,7 @@ public interface ICategoryContract {
     /**
      * Category view.
      */
-    interface ICategoryView extends IView<ICategoryContract.ICategoryPresenter>  {
+    interface ICategoryView {
 
         /**
          * Get or create the view of the category.

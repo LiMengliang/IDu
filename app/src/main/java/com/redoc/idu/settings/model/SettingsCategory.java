@@ -1,6 +1,5 @@
 package com.redoc.idu.settings.model;
 
-import com.redoc.idu.model.bean.BaseCategory;
 import com.redoc.idu.model.bean.Category;
 
 /**

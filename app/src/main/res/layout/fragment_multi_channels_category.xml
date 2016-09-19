@@ -1,13 +1,69 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:idu="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.redoc.idu.view.MultiChannelsCategoryFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:id="@+id/multi_channels_category_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/channel_head_bar"
+        android:background="@color/main_color">
+        <FrameLayout
+            android:id="@+id/channel_manager_button"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/channel_selector_bar_height"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true">
+            <ImageView
+                android:id="@+id/show_channels_manager"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/channel_selector_bar_height"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/channel_glide"/>
+            <ImageView
+                android:id="@+id/hide_channels_manager"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/channel_selector_bar_height"
+                android:padding="10dp"
+                android:layout_alignParentRight="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/channel_glide_ok"
+                android:visibility="gone"/>
+        </FrameLayout>
+        <HorizontalScrollView
+            android:id="@+id/channel_selector_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/channel_selector_bar_height"
+            android:paddingTop="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@id/channel_manager_button"
+            android:scrollbars="none">
+            <com.redoc.idu.view.multiChannel.TabHead
+                android:id="@+id/channel_selectors"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/channel_item_height"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/channel_selector_bar_horizontal_padding"
+                android:paddingRight="@dimen/channel_selector_bar_horizontal_padding"
+                idu:tab_name_color="@color/white"
+                idu:tab_name_size="@dimen/media_text_size"/>
+        </HorizontalScrollView>
+    </RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/digest_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+        android:layout_below="@+id/multi_channels_category_header">
+    </android.support.v4.view.ViewPager>
+    <com.redoc.idu.view.multiChannel.MultiChannelsManagerView
+        android:id="@+id/multi_channel_manager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/multi_channels_category_header"
+        android:visibility="invisible"
+        idu:collumns="4"/>
+</RelativeLayout>
