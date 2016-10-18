@@ -1,4 +1,4 @@
-package com.redoc.idu.view;
+package com.redoc.idu.view.multiChannel;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,10 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.redoc.idu.R;
-import com.redoc.idu.contract.IChannelContract;
-import com.redoc.idu.presenter.adapters.ChannelsGridAdapter;
-import com.redoc.idu.view.multiChannel.MultiChannelsManagerView;
-import com.redoc.idu.view.multiChannel.TabHead;
+import com.redoc.idu.contract.multichannel.IMultiChannelContract;
+import com.redoc.idu.contract.multichannel.IMultiChannelsCategoryContract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +23,7 @@ import butterknife.OnClick;
  * Multi channels category fragment.
  */
 public class MultiChannelsCategoryFragment extends Fragment {
-
-    private List<IChannelContract.IChannelPresenter> mChannels;
+    private IMultiChannelsCategoryContract.IMultiChannelsCategoryPresenter mMultiChannelsCategoryPresenter;
 
     @BindView(R.id.channel_selectors)
     TabHead mChannelSelectors;
@@ -40,10 +37,14 @@ public class MultiChannelsCategoryFragment extends Fragment {
     ViewPager mChannelsViewPager;
 
     /**
-     * Construct a {@link MultiChannelsCategoryFragment}
+     * Construct a MultiChannelsCategoryFragment
      */
     public MultiChannelsCategoryFragment() {
         // Required empty public constructor
+    }
+
+    public void setPresenter(IMultiChannelsCategoryContract.IMultiChannelsCategoryPresenter presenter) {
+        mMultiChannelsCategoryPresenter = presenter;
     }
 
     /**
@@ -69,16 +70,12 @@ public class MultiChannelsCategoryFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_multi_channels_category, container, false);
         ButterKnife.bind(this, rootView);
         setupChannelSelectors();
-        setupChannelsManager();
+        setupMultiChannelsManager();
         return rootView;
     }
 
-    /**
-     * Set channels. This method should be called before onCreteView method.
-     * @param channels The channels.
-     */
-    public void setChannels(List<IChannelContract.IChannelPresenter> channels) {
-        mChannels = channels;
+    private void setupMultiChannelsManager() {
+        mMultiChannelsManagerView.setPresenter(mMultiChannelsCategoryPresenter.getMultiChannelManager());
     }
 
     /**
@@ -86,6 +83,10 @@ public class MultiChannelsCategoryFragment extends Fragment {
      */
     @OnClick(R.id.show_channels_manager)
     public void showChannelManager(View view) {
+        mMultiChannelsCategoryPresenter.startManage();
+    }
+
+    public void showChannelManager() {
         mHideChannelsManagerButton.setVisibility(View.VISIBLE);
         mShowChannelsManagerButton.setVisibility(View.INVISIBLE);
         mChannelsViewPager.setVisibility(View.INVISIBLE);
@@ -97,6 +98,10 @@ public class MultiChannelsCategoryFragment extends Fragment {
      */
     @OnClick(R.id.hide_channels_manager)
     public void hideChannelManager(View view) {
+        mMultiChannelsCategoryPresenter.confirmOrCancelManage(true);
+    }
+
+    public void hideChannelsManager(boolean saveOrCancel) {
         mShowChannelsManagerButton.setVisibility(View.VISIBLE);
         mHideChannelsManagerButton.setVisibility(View.INVISIBLE);
         mChannelsViewPager.setVisibility(View.VISIBLE);
@@ -108,24 +113,15 @@ public class MultiChannelsCategoryFragment extends Fragment {
      * Setup channel selectors.
      */
     private void setupChannelSelectors() {
-        if(mChannels != null) {
+        if(mMultiChannelsCategoryPresenter.getAllChannels() != null) {
             List<String> names = new ArrayList<>();
-            for(IChannelContract.IChannelPresenter channel : mChannels) {
+            for(IMultiChannelContract.IMultiChannelPresenter channel : mMultiChannelsCategoryPresenter.getAllChannels()) {
                 if(channel.isFollowed()) {
                    names.add(channel.getChannelName());
                 }
             }
             mChannelSelectors.setTabItems(names);
             mChannelSelectors.onTabItemSelected(0);
-        }
-    }
-
-    /**
-     * Setup channels manager.
-     */
-    private void setupChannelsManager() {
-        if(mChannels != null) {
-            mMultiChannelsManagerView.setChannelsAdapter(new ChannelsGridAdapter(mChannels));
         }
     }
 }

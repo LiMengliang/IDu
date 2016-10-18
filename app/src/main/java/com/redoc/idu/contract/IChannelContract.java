@@ -31,21 +31,5 @@ public interface IChannelContract {
          * @return Channel name.
          */
         String getChannelName();
-
-        /**
-         * Is followed.
-         * @return If is followed.
-         */
-        boolean isFollowed();
-
-        /**
-         * Follow the channel.
-         */
-        void follow();
-
-        /**
-         * Unfollow the channel.
-         */
-        void unfollow();
     }
 }

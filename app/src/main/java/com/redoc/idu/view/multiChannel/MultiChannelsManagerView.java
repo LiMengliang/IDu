@@ -14,6 +14,8 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import com.redoc.idu.R;
+import com.redoc.idu.contract.multichannel.IMultiChannelManagerContract;
+import com.redoc.idu.presenter.multichannel.adapter.ChannelsGridAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +24,7 @@ import butterknife.ButterKnife;
  * Multi channels manager view.
  * Created by limen on 2016/9/16.
  */
-public class MultiChannelsManagerView extends LinearLayout {
+public class MultiChannelsManagerView extends LinearLayout implements IMultiChannelManagerContract.IMultiChannelManagerView {
 
     /**
      * The recycle view contained in the view.
@@ -65,5 +67,29 @@ public class MultiChannelsManagerView extends LinearLayout {
      */
     public void setChannelsAdapter(RecyclerView.Adapter adapter) {
         mChannelsGrid.setAdapter(adapter);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void followAChannel() {
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void unFollowAChannel() {
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setPresenter(IMultiChannelManagerContract.IMultiChannelManagerPresenter presenter) {
+        mChannelsGrid.setAdapter(new ChannelsGridAdapter(presenter.getAllChannels()));
     }
 }

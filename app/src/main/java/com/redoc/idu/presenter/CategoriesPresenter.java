@@ -3,6 +3,7 @@ package com.redoc.idu.presenter;
 import android.support.annotation.NonNull;
 
 import com.redoc.idu.IDuApplication;
+import com.redoc.idu.IView;
 import com.redoc.idu.audios.model.AudioCategory;
 import com.redoc.idu.audios.presenter.AudioCategoryPresenter;
 import com.redoc.idu.contract.ICategoriesContract;
@@ -65,9 +66,10 @@ public class CategoriesPresenter implements ICategoriesContract.ICategoriesPrese
 
     /**
      *On presenter attached to view.
+     * @param view The view attached.
      */
     @Override
-    public void onAttached() {
+    public void onAttached(IView view) {
     }
 
     /**

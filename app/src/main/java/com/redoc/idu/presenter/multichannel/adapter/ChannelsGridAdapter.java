@@ -1,4 +1,4 @@
-package com.redoc.idu.presenter.adapters;
+package com.redoc.idu.presenter.multichannel.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -6,7 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.redoc.idu.contract.IChannelContract;
-import com.redoc.idu.view.multiChannel.ChannelItemView;
+import com.redoc.idu.contract.multichannel.IMultiChannelContract;
+import com.redoc.idu.view.multiChannel.MultiChannelItemView;
 
 import java.util.List;
 
@@ -19,13 +20,13 @@ public class ChannelsGridAdapter extends RecyclerView.Adapter<ChannelsGridAdapte
     /**
      * Presenters to channels.
      */
-    private List<IChannelContract.IChannelPresenter> mChannels;
+    private List<IMultiChannelContract.IMultiChannelPresenter> mChannels;
 
     /**
      * Construct a {@link ChannelsGridAdapter}
      * @param channels Presenters to channels.
      */
-    public ChannelsGridAdapter(List<IChannelContract.IChannelPresenter> channels) {
+    public ChannelsGridAdapter(List<IMultiChannelContract.IMultiChannelPresenter> channels) {
         this.mChannels = channels;
     }
 
@@ -34,7 +35,7 @@ public class ChannelsGridAdapter extends RecyclerView.Adapter<ChannelsGridAdapte
      */
     @Override
     public ChannelsItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ChannelsItemViewHolder(new ChannelItemView(parent.getContext()));
+        return new ChannelsItemViewHolder(new MultiChannelItemView(parent.getContext()));
     }
 
     /**
@@ -69,9 +70,9 @@ public class ChannelsGridAdapter extends RecyclerView.Adapter<ChannelsGridAdapte
          * Update Channel Item View according to channel.
          * @param channel The channel.
          */
-        public void updateChannel(IChannelContract.IChannelPresenter channel) {
+        public void updateChannel(IMultiChannelContract.IMultiChannelPresenter channel) {
             ((TextView)itemView).setText(channel.getChannelName());
-            ((ChannelItemView)itemView).setPresenter(channel);
+            ((MultiChannelItemView)itemView).setPresenter(channel);
         }
     }
 }

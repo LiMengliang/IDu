@@ -2,10 +2,11 @@ package com.redoc.idu.news.presenter;
 
 import com.redoc.idu.R;
 import com.redoc.idu.contract.IChannelContract;
+import com.redoc.idu.contract.multichannel.IMultiChannelContract;
 import com.redoc.idu.model.bean.Channel;
 import com.redoc.idu.model.MultiChannelsCategory;
-import com.redoc.idu.presenter.ChannelPresenter;
-import com.redoc.idu.presenter.MultiChannelsCategoryPresenter;
+import com.redoc.idu.presenter.multichannel.MultiChannelPresenter;
+import com.redoc.idu.presenter.multichannel.MultiChannelsCategoryPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,22 +19,16 @@ import java.util.List;
 public class NewsCategoryPresenter extends MultiChannelsCategoryPresenter {
 
     /**
-     * News category instance.
-     */
-    private MultiChannelsCategory mNewsCategory;
-
-    /**
      * Channels.
      */
-    private List<IChannelContract.IChannelPresenter> mChannels;
+    private List<IMultiChannelContract.IMultiChannelPresenter> mChannels;
 
     /**
      * Construct a {@link NewsCategoryPresenter} instance.
      * @param newsCategory News category model.
      */
     public NewsCategoryPresenter(MultiChannelsCategory newsCategory) {
-        super();
-        mNewsCategory = newsCategory;
+        super(newsCategory);
         getAttachedCategoryView().setPresenter(this);
     }
 
@@ -43,7 +38,7 @@ public class NewsCategoryPresenter extends MultiChannelsCategoryPresenter {
      */
     @Override
     public String getCategoryName() {
-        return mNewsCategory.getCategory().getCATEGORY_NAME();
+        return getMultiChannelsCategory().getCategory().getCATEGORY_NAME();
     }
 
     /**
@@ -60,11 +55,11 @@ public class NewsCategoryPresenter extends MultiChannelsCategoryPresenter {
      * {@inheritDoc}
      */
     @Override
-    public List<IChannelContract.IChannelPresenter> getAllChannels() {
+    public List<IMultiChannelContract.IMultiChannelPresenter> getAllChannels() {
         if(mChannels == null) {
             mChannels = new ArrayList<>();
-            for(Channel channel : mNewsCategory.getChannels()) {
-                mChannels.add(new ChannelPresenter(channel));
+            for(Channel channel : getMultiChannelsCategory().getChannels()) {
+                mChannels.add(new MultiChannelPresenter(channel, this));
             }
         }
         return mChannels;

@@ -9,8 +9,9 @@ public interface IPresenter {
 
     /**
      * On view attached.
+     * @param view The view attached.
      */
-    void onAttached();
+    void onAttached(IView view);
 
     /**
      * On view detached.

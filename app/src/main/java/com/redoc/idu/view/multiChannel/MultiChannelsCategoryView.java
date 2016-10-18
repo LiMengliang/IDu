@@ -1,7 +1,7 @@
-package com.redoc.idu.view;
+package com.redoc.idu.view.multiChannel;
 
 import com.redoc.idu.contract.IChannelContract;
-import com.redoc.idu.contract.IMultiChannelsCategoryContract;
+import com.redoc.idu.contract.multichannel.IMultiChannelsCategoryContract;
 
 /**
  * Multi-channels category view.
@@ -39,7 +39,8 @@ public class MultiChannelsCategoryView implements IMultiChannelsCategoryContract
     @Override
     public void setPresenter(IMultiChannelsCategoryContract.IMultiChannelsCategoryPresenter presenter) {
         mMultiChannelsCategoryPresenter = presenter;
-        mMultiChannelsCategoryPresenter.onAttached();
+        mMultiChannelsCategoryPresenter.onAttached(this);
+        getOrCreateRootFragment().setPresenter(mMultiChannelsCategoryPresenter);
     }
 
     /**
@@ -47,7 +48,6 @@ public class MultiChannelsCategoryView implements IMultiChannelsCategoryContract
      */
     @Override
     public void initialize() {
-        getOrCreateRootFragment().setChannels(mMultiChannelsCategoryPresenter.getAllChannels());
     }
 
     /**
@@ -56,5 +56,15 @@ public class MultiChannelsCategoryView implements IMultiChannelsCategoryContract
     @Override
     public void switchToChannel(IChannelContract.IChannelPresenter channelPresenter) {
 
+    }
+
+    @Override
+    public void showChannelsManager() {
+        getOrCreateRootFragment().showChannelManager();
+    }
+
+    @Override
+    public void hideChannelsManager() {
+        getOrCreateRootFragment().hideChannelsManager(true);
     }
 }

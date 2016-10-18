@@ -138,7 +138,7 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
      */
     @Override
     public void setPresenter(ICategoriesContract.ICategoriesPresenter presenter) {
-        presenter.onAttached();
+        presenter.onAttached(this);
         setCategories(presenter.getCategoryPresenters());
     }
 }

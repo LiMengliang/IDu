@@ -1,10 +1,14 @@
-package com.redoc.idu.presenter;
+package com.redoc.idu.presenter.multichannel;
 
 import com.redoc.idu.IDuApplication;
+import com.redoc.idu.IView;
 import com.redoc.idu.contract.IChannelContract;
-import com.redoc.idu.contract.IMultiChannelsCategoryContract;
+import com.redoc.idu.contract.multichannel.IMultiChannelContract;
+import com.redoc.idu.contract.multichannel.IMultiChannelManagerContract;
+import com.redoc.idu.contract.multichannel.IMultiChannelsCategoryContract;
+import com.redoc.idu.model.MultiChannelsCategory;
 import com.redoc.idu.model.bean.Channel;
-import com.redoc.idu.view.MultiChannelsCategoryView;
+import com.redoc.idu.view.multiChannel.MultiChannelsCategoryView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +19,7 @@ import java.util.List;
  */
 public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCategoryContract.IMultiChannelsCategoryPresenter {
 
+    private MultiChannelsCategory mMultiChannelsCategory;
     /**
      * Multi-channel category view.
      */
@@ -23,23 +28,27 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
     /**
      * Presenter to selected channel.
      */
-    private IChannelContract.IChannelPresenter mSelectedChannel;
+    private IMultiChannelContract.IMultiChannelPresenter mSelectedChannel;
 
     /**
      * Presenters to all channels.
      */
-    private List<IChannelContract.IChannelPresenter> mChannels;
+    private List<IMultiChannelContract.IMultiChannelPresenter> mChannels;
 
     /**
      * Presenters to followed channels.
      */
-    private List<IChannelContract.IChannelPresenter> mFollowedChannels;
+    private List<IMultiChannelContract.IMultiChannelPresenter> mFollowedChannels;
+
+    private IMultiChannelManagerContract.IMultiChannelManagerPresenter mMultiChannelsManagerPresenter;
 
     /**
      * Construct a {@link MultiChannelsCategoryPresenter}
      */
-    public MultiChannelsCategoryPresenter() {
+    public MultiChannelsCategoryPresenter(MultiChannelsCategory multiChannelsCategory) {
+        mMultiChannelsCategory = multiChannelsCategory;
         mMultiChannelsCategoryView = new MultiChannelsCategoryView();
+        mMultiChannelsManagerPresenter = new MultiChannelsManagerPresenter(getAllChannels());
     }
 
     /**
@@ -48,7 +57,7 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
      * @param selectedChannel Presenter of selected channel.
      */
     @Override
-    public void onSelectAChannel(IChannelContract.IChannelPresenter selectedChannel) {
+    public void onSelectAChannel(IMultiChannelContract.IMultiChannelPresenter selectedChannel) {
         mSelectedChannel = selectedChannel;
         mMultiChannelsCategoryView.switchToChannel(selectedChannel);
     }
@@ -59,11 +68,11 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
      * @return All channels of this category.
      */
     @Override
-    public List<IChannelContract.IChannelPresenter> getAllChannels() {
+    public List<IMultiChannelContract.IMultiChannelPresenter> getAllChannels() {
         if(mChannels == null) {
             mChannels = new ArrayList<>();
             for(Channel channel : IDuApplication.CategoryAndChannelManager.getChannels()) {
-                mChannels.add(new ChannelPresenter(channel));
+                mChannels.add(new MultiChannelPresenter(channel, this));
             }
         }
         return mChannels;
@@ -75,10 +84,10 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
      * @return Presenters of all followed channels.
      */
     @Override
-    public List<IChannelContract.IChannelPresenter> getAllFollowedChannels() {
+    public List<IMultiChannelContract.IMultiChannelPresenter> getAllFollowedChannels() {
         if(mFollowedChannels == null) {
             mFollowedChannels = new ArrayList<>();
-            for(IChannelContract.IChannelPresenter channel : getAllChannels()) {
+            for(IMultiChannelContract.IMultiChannelPresenter channel : getAllChannels()) {
                 if(channel.isFollowed()) {
                     mFollowedChannels.add(channel);
                 }
@@ -93,8 +102,13 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
      * @return Presenter of selected channel.
      */
     @Override
-    public IChannelContract.IChannelPresenter getSelectedChannel() {
+    public IMultiChannelContract.IMultiChannelPresenter getSelectedChannel() {
         return mSelectedChannel;
+    }
+
+    @Override
+    public IMultiChannelManagerContract.IMultiChannelManagerPresenter getMultiChannelManager() {
+        return mMultiChannelsManagerPresenter;
     }
 
     /**
@@ -111,7 +125,7 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
      * On view attached.
      */
     @Override
-    public void onAttached() {
+    public void onAttached(IView view) {
         mMultiChannelsCategoryView.initialize();
     }
 
@@ -123,6 +137,9 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onSelected() {
         mMultiChannelsCategoryView.initialize();
@@ -130,5 +147,29 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
             mSelectedChannel = getAllFollowedChannels().get(0);
         }
         mMultiChannelsCategoryView.switchToChannel(mSelectedChannel);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void startManage() {
+        mMultiChannelsCategoryView.showChannelsManager();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void confirmOrCancelManage(boolean confirmOrCancel) {
+        mMultiChannelsCategoryView.hideChannelsManager();
+        if(confirmOrCancel) {
+        }
+        else {
+        }
+    }
+
+    protected MultiChannelsCategory getMultiChannelsCategory() {
+        return mMultiChannelsCategory;
     }
 }

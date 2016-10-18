@@ -1,5 +1,6 @@
 package com.redoc.idu.presenter;
 
+import com.redoc.idu.IView;
 import com.redoc.idu.contract.ICategoryContract;
 import com.redoc.idu.contract.ICategoryContract.ICategoryView;
 
@@ -21,9 +22,10 @@ public abstract class SingleChannelCategoryPresenter implements ICategoryContrac
 
     /**
      * On view attached.
+     * @param view View attached.
      */
     @Override
-    public void onAttached() {
+    public void onAttached(IView view) {
 
     }
 

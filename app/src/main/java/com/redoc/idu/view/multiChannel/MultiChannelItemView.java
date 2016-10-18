@@ -7,27 +7,26 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.redoc.idu.IView;
 import com.redoc.idu.R;
-import com.redoc.idu.contract.IChannelContract;
+import com.redoc.idu.contract.multichannel.IMultiChannelContract;
 
 /**
  * Channel item view in MultiChannelsManagerView
  * Created by limen on 2016/9/17.
  */
-public class ChannelItemView extends TextView implements IView<IChannelContract.IChannelPresenter> {
+public class MultiChannelItemView extends TextView implements IMultiChannelContract.IMultiChannelItemView {
 
     /**
      * The channel presenter.
      */
-    private IChannelContract.IChannelPresenter mChannelPresenter;
+    private IMultiChannelContract.IMultiChannelPresenter mChannelPresenter;
 
     /**
      * Construct a ChannelItemView instance.
      * @param context The context.
      * @param attrs The attributes.
      */
-    public ChannelItemView(Context context, AttributeSet attrs) {
+    public MultiChannelItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -35,7 +34,7 @@ public class ChannelItemView extends TextView implements IView<IChannelContract.
      * Construt a ChannelItemView instance.
      * @param context The context.
      */
-    public ChannelItemView(Context context) {
+    public MultiChannelItemView(Context context) {
         super(context);
         setBackground(context.getResources().getDrawable(R.drawable.channel_item_background));
         setTextAlignment(TEXT_ALIGNMENT_CENTER);
@@ -51,11 +50,9 @@ public class ChannelItemView extends TextView implements IView<IChannelContract.
             public void onClick(View v) {
                 if(mChannelPresenter.isFollowed()) {
                     mChannelPresenter.unfollow();
-                    setFollowed(false);
                 }
                 else {
                     mChannelPresenter.follow();
-                    setFollowed(true);
                 }
             }
         });
@@ -65,17 +62,16 @@ public class ChannelItemView extends TextView implements IView<IChannelContract.
      * {@inheritDoc}
      */
     @Override
-    public void setPresenter(IChannelContract.IChannelPresenter channelPresenter) {
-        mChannelPresenter = channelPresenter;
-        boolean followed = mChannelPresenter.isFollowed();
-        setFollowed(followed);
+    public void setPresenter(IMultiChannelContract.IMultiChannelPresenter multiChannelPresenter) {
+        mChannelPresenter = multiChannelPresenter;
+        mChannelPresenter.onAttached(this);
     }
 
     /**
-     * Set if follow.
-     * @param followed If follow.
+     * {@inheritDoc}
      */
-    private void setFollowed(boolean followed) {
+    @Override
+    public void setChannelItemStyle(boolean followed) {
         if(followed) {
             setTextColor(Color.DKGRAY);
         }
