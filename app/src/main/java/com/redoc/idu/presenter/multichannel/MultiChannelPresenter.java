@@ -2,11 +2,9 @@ package com.redoc.idu.presenter.multichannel;
 
 import com.redoc.idu.IDuApplication;
 import com.redoc.idu.IView;
-import com.redoc.idu.contract.IChannelContract;
 import com.redoc.idu.contract.multichannel.IMultiChannelContract;
 import com.redoc.idu.contract.multichannel.IMultiChannelsCategoryContract;
 import com.redoc.idu.model.bean.Channel;
-import com.redoc.idu.model.dao.ChannelDao;
 
 /**
  * Presenter for channel.
@@ -51,8 +49,7 @@ public class MultiChannelPresenter implements IMultiChannelContract.IMultiChanne
      */
     @Override
     public void follow() {
-        // IDuApplication.CategoryAndChannelManager.followAChannel(this.mChannel);
-
+        IDuApplication.CategoryAndChannelManager.followAChannel(this.mChannel);
         mMultiChannelItemView.setChannelItemStyle(true);
     }
 

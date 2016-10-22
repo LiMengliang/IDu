@@ -1,6 +1,6 @@
 package com.redoc.idu.view.multiChannel;
 
-import com.redoc.idu.contract.IChannelContract;
+import com.redoc.idu.contract.multichannel.IMultiChannelContract;
 import com.redoc.idu.contract.multichannel.IMultiChannelsCategoryContract;
 
 /**
@@ -54,8 +54,9 @@ public class MultiChannelsCategoryView implements IMultiChannelsCategoryContract
      * {@inheritDoc}
      */
     @Override
-    public void switchToChannel(IChannelContract.IChannelPresenter channelPresenter) {
-
+    public void switchToChannel(IMultiChannelContract.IMultiChannelPresenter selectedChannel) {
+        int index = mMultiChannelsCategoryPresenter.getAllFollowedChannels().indexOf(selectedChannel);
+        rootFragment.switchToChannel(index);
     }
 
     @Override

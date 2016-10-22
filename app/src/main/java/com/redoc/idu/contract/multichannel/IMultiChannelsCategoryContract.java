@@ -2,7 +2,6 @@ package com.redoc.idu.contract.multichannel;
 
 import com.redoc.idu.IView;
 import com.redoc.idu.contract.ICategoryContract;
-import com.redoc.idu.contract.IChannelContract;
 
 import java.util.List;
 
@@ -23,9 +22,9 @@ public interface IMultiChannelsCategoryContract {
 
         /**
          * Switch to channel.
-         * @param channelPresenter
+         * @param selectedChannel Selected channel.
          */
-        void switchToChannel(IChannelContract.IChannelPresenter channelPresenter);
+        void switchToChannel(IMultiChannelContract.IMultiChannelPresenter selectedChannel);
 
         /**
          * Show channel manager.
@@ -42,11 +41,17 @@ public interface IMultiChannelsCategoryContract {
      * Multi-channels category presenter.
      */
     interface IMultiChannelsCategoryPresenter extends ICategoryContract.ICategoryPresenter {
+
         /**
-         * On a channel is selected.
-         * @param channelPresenter Presenter of selected channel.
+         * Select the nth channel from all followed channels
+         * @param index Index.
          */
-        void onSelectAChannel(IMultiChannelContract.IMultiChannelPresenter channelPresenter);
+        void selectChannel(int index);
+
+        /**
+         * Update channel selection
+         */
+        void updateChannelSelection();
 
         /**
          * Get all channels in this category.

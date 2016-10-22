@@ -3,9 +3,11 @@ package com.redoc.idu.view.multiChannel;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 
 import com.redoc.idu.R;
@@ -23,7 +25,16 @@ import butterknife.OnClick;
  * Multi channels category fragment.
  */
 public class MultiChannelsCategoryFragment extends Fragment {
+
+    /**
+     * Multi channel category presenter.
+     */
     private IMultiChannelsCategoryContract.IMultiChannelsCategoryPresenter mMultiChannelsCategoryPresenter;
+
+    /**
+     * Multi channel adapter.
+     */
+    private MultiChannelsAdapter mMultiChannelsAdapter;
 
     @BindView(R.id.channel_selectors)
     TabHead mChannelSelectors;
@@ -35,6 +46,13 @@ public class MultiChannelsCategoryFragment extends Fragment {
     MultiChannelsManagerView mMultiChannelsManagerView;
     @BindView(R.id.digest_view_pager)
     ViewPager mChannelsViewPager;
+    @BindView(R.id.channel_selector_bar)
+    HorizontalScrollView mSelectorBarScrollView;
+
+    /**
+     * Display matrics.
+     */
+    private DisplayMetrics mDisplayMetrics;
 
     /**
      * Construct a MultiChannelsCategoryFragment
@@ -43,6 +61,10 @@ public class MultiChannelsCategoryFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Set presenter.
+     * @param presenter The Multi channel category presenter.
+     */
     public void setPresenter(IMultiChannelsCategoryContract.IMultiChannelsCategoryPresenter presenter) {
         mMultiChannelsCategoryPresenter = presenter;
     }
@@ -69,13 +91,59 @@ public class MultiChannelsCategoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_multi_channels_category, container, false);
         ButterKnife.bind(this, rootView);
-        setupChannelSelectors();
-        setupMultiChannelsManager();
+        mDisplayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
+
+        initializeChannelsSelector();
+        initializeChannelsViewPager();
+        initializeMultiChannelsManager();
+        updateChannels();
         return rootView;
     }
 
-    private void setupMultiChannelsManager() {
+    /**
+     * Initialize channels selector.
+     */
+    private void initializeChannelsSelector() {
+        mChannelSelectors.setOnTabItemSelectListener(new OnSelectTabListener() {
+            @Override
+            public void onSelect(int tabIndex) {
+                mMultiChannelsCategoryPresenter.selectChannel(tabIndex);
+            }
+        });
+    }
+
+    /**
+     * Initialize multi channels manager.
+     */
+    private void initializeMultiChannelsManager() {
         mMultiChannelsManagerView.setPresenter(mMultiChannelsCategoryPresenter.getMultiChannelManager());
+    }
+
+    /**
+     * Switch to nth channel.
+     * @param position The position of the channel.
+     */
+    public void switchToChannel(int position) {
+        if(mChannelSelectors != null) {
+            smoothScrollToChannelSelector(position);
+            mChannelSelectors.onTabItemSelected(position);
+            mChannelsViewPager.setCurrentItem(position, false);
+        }
+    }
+
+    /**
+     * Smooth scroll channels selector to expected position.
+     * @param index Index of the channel.
+     */
+    private void smoothScrollToChannelSelector(int index) {
+        View channelItem = mChannelSelectors.getChildAt(index);
+        int width = channelItem.getMeasuredWidth();
+        int left = channelItem.getLeft();
+        if(width > 0) {
+            int xDestination = left + width / 2 - mDisplayMetrics.widthPixels / 2;
+            mSelectorBarScrollView.smoothScrollTo(xDestination, 0);
+        }
     }
 
     /**
@@ -101,18 +169,22 @@ public class MultiChannelsCategoryFragment extends Fragment {
         mMultiChannelsCategoryPresenter.confirmOrCancelManage(true);
     }
 
+    /**
+     * Hide channel manager.
+     * @param saveOrCancel True means the management will be confirmed, otherwise it's cancelled.
+     */
     public void hideChannelsManager(boolean saveOrCancel) {
         mShowChannelsManagerButton.setVisibility(View.VISIBLE);
         mHideChannelsManagerButton.setVisibility(View.INVISIBLE);
         mChannelsViewPager.setVisibility(View.VISIBLE);
         mMultiChannelsManagerView.setVisibility(View.INVISIBLE);
-        setupChannelSelectors();
+        updateChannels();
     }
 
     /**
      * Setup channel selectors.
      */
-    private void setupChannelSelectors() {
+    private void updateChannels() {
         if(mMultiChannelsCategoryPresenter.getAllChannels() != null) {
             List<String> names = new ArrayList<>();
             for(IMultiChannelContract.IMultiChannelPresenter channel : mMultiChannelsCategoryPresenter.getAllChannels()) {
@@ -121,7 +193,60 @@ public class MultiChannelsCategoryFragment extends Fragment {
                 }
             }
             mChannelSelectors.setTabItems(names);
-            mChannelSelectors.onTabItemSelected(0);
         }
+        mMultiChannelsAdapter.notifyDataSetChanged();
+        mMultiChannelsCategoryPresenter.updateChannelSelection();
+    }
+
+    /**
+     * Initialize channels view pager.
+     */
+    private void initializeChannelsViewPager() {
+        if(mMultiChannelsAdapter == null) {
+            mMultiChannelsAdapter = new MultiChannelsAdapter(getFragmentManager(), mMultiChannelsCategoryPresenter);
+        }
+        mChannelsViewPager.setAdapter(mMultiChannelsAdapter);
+        mChannelsViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            private double lastPositionOffset;
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if(lastPositionOffset == -1) {
+                    lastPositionOffset = positionOffset;
+                    return;
+                }
+                if(lastPositionOffset < positionOffset && positionOffset > 0.999) {
+                    mMultiChannelsCategoryPresenter.selectChannel(position + 1);
+                    lastPositionOffset = -1;
+                    return;
+                }
+                else if(lastPositionOffset > positionOffset && positionOffset < 0.001) {
+                    mMultiChannelsCategoryPresenter.selectChannel(position);
+                    lastPositionOffset = -1;
+                    return;
+                }
+                lastPositionOffset = positionOffset;
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public void onPageSelected(int position) {
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        mChannelsViewPager.setOffscreenPageLimit(1);
+        mChannelsViewPager.setCurrentItem(0);
     }
 }

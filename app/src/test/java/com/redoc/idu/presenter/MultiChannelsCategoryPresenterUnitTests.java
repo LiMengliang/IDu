@@ -5,7 +5,6 @@ import com.redoc.idu.presenter.multichannel.MultiChannelsCategoryPresenter;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mock;
 
 /**
  * Unit test for {@link MultiChannelsCategoryPresenter}
@@ -13,6 +12,14 @@ import org.mockito.Mock;
  */
 public class MultiChannelsCategoryPresenterUnitTests {
     class MockMultiChannelsCategoryPresenter extends MultiChannelsCategoryPresenter {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void selectChannel(int index) {
+
+        }
 
         /**
          * Get category name.

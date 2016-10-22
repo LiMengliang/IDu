@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -58,6 +59,16 @@ public class TabHead extends LinearLayout {
     private List<TabItem> mTabItems;
 
     /**
+     * Display metrics.
+     */
+    private DisplayMetrics mDisplayMetrics;
+
+    /**
+     * Last selection index.
+     */
+    private int lastSelectIndex = -1;
+
+    /**
      * Construct a {@TabHead} instance.
      * @param context The context.
      */
@@ -80,11 +91,20 @@ public class TabHead extends LinearLayout {
         mTabNameTextColor = typedArray.getColor(R.styleable.TabHead_tab_name_color, Color.WHITE);
         mTextSize = typedArray.getDimension(R.styleable.TabHead_tab_name_size, 12);
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
-        int chanelItemWidth = displayMetrics.widthPixels / 7;
+        mDisplayMetrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(mDisplayMetrics);
+        int chanelItemWidth = mDisplayMetrics.widthPixels / 7;
         mParams = new LinearLayout.LayoutParams(chanelItemWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
         mParams.gravity = Gravity.CENTER_VERTICAL;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        smoothScrollToChannelSelector(lastSelectIndex);
     }
 
     /**
@@ -113,6 +133,7 @@ public class TabHead extends LinearLayout {
             mTabItems.clear();
         }
         removeAllViews();
+        lastSelectIndex = -1;
         for(int i = 0; i < names.size(); i++) {
             TabItem tabItem = new TabItem(getContext(), this, names.get(i), mTabNameTextColor, mTextSize);
             mTabItems.add(tabItem);
@@ -141,17 +162,35 @@ public class TabHead extends LinearLayout {
      * @param index The index of the tab item to select.
      */
     public void onTabItemSelected(int index) {
-        for(int i = 0; i < mTabItems.size(); i++) {
-            TabItem tabItem = mTabItems.get(i);
-            if(i == index) {
-                tabItem.setSelected(true);
-                if(tabItem.mOnSelectTabListener != null) {
-                    tabItem.mOnSelectTabListener.onSelect(index);
+        if(lastSelectIndex != index) {
+            lastSelectIndex = index;
+            for(int i = 0; i < mTabItems.size(); i++) {
+                TabItem tabItem = mTabItems.get(i);
+                if(i == index) {
+                    tabItem.setSelected(true);
+                }
+                else {
+                    tabItem.setSelected(false);
                 }
             }
-            else {
-                tabItem.setSelected(false);
+            if(mOnSelectTabItemListener != null) {
+                mOnSelectTabItemListener.onSelect(index);
             }
+        }
+    }
+
+    /**
+     * Smooth scroll to certain position of channels selector.
+     * @param index Index of the channel.
+     */
+    private void smoothScrollToChannelSelector(int index) {
+        if(getParent().getClass().isAssignableFrom(HorizontalScrollView.class)) {
+            View channelItem = getChildAt(index);
+            int width = channelItem.getMeasuredWidth();
+            int left = channelItem.getLeft();
+            int xDestination = left + width / 2 - mDisplayMetrics.widthPixels / 2;
+            HorizontalScrollView horizontalScrollView = (HorizontalScrollView)getParent();
+            horizontalScrollView.smoothScrollTo(xDestination, 0);
         }
     }
 
@@ -215,7 +254,7 @@ public class TabHead extends LinearLayout {
 
         /**
          * Set selected.
-         * @param selected If selectd.
+         * @param selected If selected.
          */
         void setSelected(boolean selected) {
             mSelected = selected;

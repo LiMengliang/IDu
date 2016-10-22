@@ -10,6 +10,8 @@
 
     <color name="light_gray">#F0F0F0</color>
     <color name="gray">#CCCCCC</color>
-    <color name="main_color">#606060</color>
+    <color name="dark_gray">#595a5e</color>
+    <!--<color name="main_color">#606060</color>-->
+    <color name="main_color">#0095ff</color>
     <color name="black">#000000</color>
 </resources>

@@ -12,4 +12,5 @@
     <dimen name="channel_selector_bar_height">36dp</dimen>
     <dimen name="channel_item_height">32dp</dimen>
     <dimen name="channel_selector_bar_horizontal_padding">14dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

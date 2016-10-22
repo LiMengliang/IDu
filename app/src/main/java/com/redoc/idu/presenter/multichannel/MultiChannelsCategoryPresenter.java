@@ -52,14 +52,31 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
     }
 
     /**
-     * On a channel is selected.
-     *
-     * @param selectedChannel Presenter of selected channel.
+     * {@inheritDoc}
      */
     @Override
-    public void onSelectAChannel(IMultiChannelContract.IMultiChannelPresenter selectedChannel) {
-        mSelectedChannel = selectedChannel;
-        mMultiChannelsCategoryView.switchToChannel(selectedChannel);
+    public  void selectChannel(int index) {
+        IMultiChannelContract.IMultiChannelPresenter channel = mFollowedChannels.get(index);
+        if(!channel.isFollowed()) {
+            channel = mFollowedChannels.get(0);
+        }
+        mSelectedChannel = channel;
+        mMultiChannelsCategoryView.switchToChannel(mSelectedChannel);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateChannelSelection() {
+        if(mSelectedChannel == null || !mSelectedChannel.isFollowed()) {
+            mSelectedChannel = mFollowedChannels.get(0);
+            selectChannel(0);
+            return;
+        }
+        int index = mFollowedChannels.indexOf(mSelectedChannel);
+        selectChannel(index);
+        return;
     }
 
     /**
@@ -85,12 +102,10 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
      */
     @Override
     public List<IMultiChannelContract.IMultiChannelPresenter> getAllFollowedChannels() {
-        if(mFollowedChannels == null) {
-            mFollowedChannels = new ArrayList<>();
-            for(IMultiChannelContract.IMultiChannelPresenter channel : getAllChannels()) {
-                if(channel.isFollowed()) {
-                    mFollowedChannels.add(channel);
-                }
+        mFollowedChannels = new ArrayList<>();
+        for(IMultiChannelContract.IMultiChannelPresenter channel : getAllChannels()) {
+            if(channel.isFollowed()) {
+                mFollowedChannels.add(channel);
             }
         }
         return mFollowedChannels;
@@ -103,6 +118,10 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
      */
     @Override
     public IMultiChannelContract.IMultiChannelPresenter getSelectedChannel() {
+        if(mSelectedChannel != null && mSelectedChannel.isFollowed()) {
+            return mSelectedChannel;
+        }
+        selectChannel(0);
         return mSelectedChannel;
     }
 
