@@ -1,8 +1,7 @@
-package com.redoc.idu.audios.presenter;
+package com.redoc.idu.radio.presenter;
 
 import com.redoc.idu.R;
-import com.redoc.idu.audios.model.AudioCategory;
-import com.redoc.idu.model.bean.Category;
+import com.redoc.idu.radio.model.AudioCategory;
 import com.redoc.idu.presenter.SingleChannelCategoryPresenter;
 
 /**

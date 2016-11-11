@@ -22,6 +22,7 @@ public class IDuDaoGenerator {
     private static void addChannelEntity(Schema schema) {
         Entity channel = schema.addEntity("Channel");
         channel.addIdProperty();
+        channel.addStringProperty("CHANNEL_ID");
         channel.addStringProperty("CHANNEL_NAME");
         channel.addStringProperty("CATEGORY_ID");
         channel.addBooleanProperty("CAN_CACHE");

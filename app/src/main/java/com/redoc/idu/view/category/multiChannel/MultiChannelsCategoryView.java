@@ -1,4 +1,4 @@
-package com.redoc.idu.view.multiChannel;
+package com.redoc.idu.view.category.multiChannel;
 
 import com.redoc.idu.contract.multichannel.IMultiChannelContract;
 import com.redoc.idu.contract.multichannel.IMultiChannelsCategoryContract;

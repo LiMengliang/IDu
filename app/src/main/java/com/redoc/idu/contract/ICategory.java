@@ -10,7 +10,7 @@ import com.redoc.idu.IView;
  *
  * Created by limen on 2016/8/20.
  */
-public interface ICategoryContract {
+public interface ICategory {
 
     /**
      * Category view.

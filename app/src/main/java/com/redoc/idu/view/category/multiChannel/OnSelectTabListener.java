@@ -1,4 +1,4 @@
-package com.redoc.idu.view.multiChannel;
+package com.redoc.idu.view.category.multiChannel;
 
 /**
  * On select a tab listener.

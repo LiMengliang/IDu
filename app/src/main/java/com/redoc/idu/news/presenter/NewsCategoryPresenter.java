@@ -1,7 +1,7 @@
 package com.redoc.idu.news.presenter;
 
+import com.redoc.idu.IDuApplication;
 import com.redoc.idu.R;
-import com.redoc.idu.contract.IChannelContract;
 import com.redoc.idu.contract.multichannel.IMultiChannelContract;
 import com.redoc.idu.model.bean.Channel;
 import com.redoc.idu.model.MultiChannelsCategory;
@@ -59,7 +59,7 @@ public class NewsCategoryPresenter extends MultiChannelsCategoryPresenter {
         if(mChannels == null) {
             mChannels = new ArrayList<>();
             for(Channel channel : getMultiChannelsCategory().getChannels()) {
-                mChannels.add(new MultiChannelPresenter(channel, this));
+                mChannels.add(new NewsChannelPresenter(channel, this));
             }
         }
         return mChannels;

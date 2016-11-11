@@ -5,9 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.redoc.idu.contract.IChannelContract;
 import com.redoc.idu.contract.multichannel.IMultiChannelContract;
-import com.redoc.idu.view.multiChannel.MultiChannelItemView;
+import com.redoc.idu.view.category.multiChannel.MultiChannelItemView;
 
 import java.util.List;
 

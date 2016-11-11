@@ -1,4 +1,4 @@
-package com.redoc.idu.view.singlechannel;
+package com.redoc.idu.view.category.singlechannel;
 
 /**
  * Single channel category view.

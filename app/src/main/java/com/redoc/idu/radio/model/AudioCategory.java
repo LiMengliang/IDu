@@ -1,4 +1,4 @@
-package com.redoc.idu.audios.model;
+package com.redoc.idu.radio.model;
 
 import com.redoc.idu.model.bean.Category;
 

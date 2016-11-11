@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.redoc.idu.model.CategoryAndChannelManager;
+import com.redoc.idu.utils.network.HttpClient;
 
 /**
  * IDu application.
@@ -22,6 +23,8 @@ public class IDuApplication extends Application {
      */
     public static CategoryAndChannelManager CategoryAndChannelManager;
 
+    public static HttpClient HttpClient;
+
     /**
      * On create.
      */
@@ -31,5 +34,6 @@ public class IDuApplication extends Application {
         Context = getApplicationContext();
         CategoryAndChannelManager = new CategoryAndChannelManager(Context);
         CategoryAndChannelManager.initialize();
+        HttpClient = new HttpClient(Context);
     }
 }

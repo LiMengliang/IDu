@@ -7,6 +7,7 @@ package com.redoc.idu.model.bean;
 public class Channel {
 
     private Long id;
+    private String CHANNEL_ID;
     private String CHANNEL_NAME;
     private String CATEGORY_ID;
     private Boolean CAN_CACHE;
@@ -21,8 +22,9 @@ public class Channel {
         this.id = id;
     }
 
-    public Channel(Long id, String CHANNEL_NAME, String CATEGORY_ID, Boolean CAN_CACHE, Boolean FOLLOWED, String LINK, Integer WEIGHT) {
+    public Channel(Long id, String CHANNEL_ID, String CHANNEL_NAME, String CATEGORY_ID, Boolean CAN_CACHE, Boolean FOLLOWED, String LINK, Integer WEIGHT) {
         this.id = id;
+        this.CHANNEL_ID = CHANNEL_ID;
         this.CHANNEL_NAME = CHANNEL_NAME;
         this.CATEGORY_ID = CATEGORY_ID;
         this.CAN_CACHE = CAN_CACHE;
@@ -37,6 +39,14 @@ public class Channel {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCHANNEL_ID() {
+        return CHANNEL_ID;
+    }
+
+    public void setCHANNEL_ID(String CHANNEL_ID) {
+        this.CHANNEL_ID = CHANNEL_ID;
     }
 
     public String getCHANNEL_NAME() {

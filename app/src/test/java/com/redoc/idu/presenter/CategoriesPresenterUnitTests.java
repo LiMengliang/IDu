@@ -1,7 +1,7 @@
 package com.redoc.idu.presenter;
 
-import com.redoc.idu.contract.ICategoriesContract;
-import com.redoc.idu.contract.ICategoryContract;
+import com.redoc.idu.contract.ICategories;
+import com.redoc.idu.contract.ICategory;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,13 +18,13 @@ public class CategoriesPresenterUnitTests {
      * A mock categories view.
      */
     @Mock
-    ICategoriesContract.ICategoriesView categoriesView;
+    ICategories.ICategoriesView categoriesView;
 
     /**
      * A mock category presenter.
      */
     @Mock
-    ICategoryContract.ICategoryPresenter mCategoryPresenter;
+    ICategory.ICategoryPresenter mCategoryPresenter;
 
     @Before
     public void setupCategoriesPresenter() {

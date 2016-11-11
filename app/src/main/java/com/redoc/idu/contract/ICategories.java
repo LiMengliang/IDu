@@ -10,7 +10,7 @@ import java.util.List;
  *
  * Created by limen on 2016/8/17.
  */
-public interface ICategoriesContract {
+public interface ICategories {
     /**
      * Categories view.
      */
@@ -20,7 +20,7 @@ public interface ICategoriesContract {
          * Switch category.
          * @param categoryPresenter Presenter of the category.
          */
-        void switchToCategory(ICategoryContract.ICategoryPresenter categoryPresenter);
+        void switchToCategory(ICategory.ICategoryPresenter categoryPresenter);
 
         /**
          * Add category.
@@ -36,12 +36,12 @@ public interface ICategoriesContract {
          * On select a category.
          * @param categoryPresenter Presenter of selected cateogry.
          */
-        void onSelectACategory(ICategoryContract.ICategoryPresenter categoryPresenter);
+        void onSelectACategory(ICategory.ICategoryPresenter categoryPresenter);
 
         /**
          * Get a list of {@link ICategoriesPresenter}
          * @return A list of  {@link ICategoriesPresenter} contained.
          */
-        List<ICategoryContract.ICategoryPresenter> getCategoryPresenters();
+        List<ICategory.ICategoryPresenter> getCategoryPresenters();
     }
 }

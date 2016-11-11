@@ -1,11 +1,11 @@
-package com.redoc.idu.view.multiChannel;
+package com.redoc.idu.view.category.multiChannel;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.redoc.idu.contract.IChannel;
 import com.redoc.idu.contract.multichannel.IMultiChannelsCategoryContract;
-import com.redoc.idu.view.digest.DigestList;
 
 /**
  * Adapter to channels in a category.
@@ -33,9 +33,9 @@ public class MultiChannelsAdapter extends FragmentStatePagerAdapter {
      */
     @Override
     public Fragment getItem(int position) {
-        DigestList digestFragment = DigestList.newInstance();
-        digestFragment.setPresenter(mMultiChannelsCategoryPresenter.getAllFollowedChannels().get(position));
-        return digestFragment;
+        IChannel.IChannelPresenter channelPresenter = mMultiChannelsCategoryPresenter.getAllFollowedChannels().get(position);
+        IChannel.IChannelView channelView = channelPresenter.getOrCreateChannelView();
+        return channelView.getRootFragment();
     }
 
     /**

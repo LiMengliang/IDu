@@ -1,22 +1,21 @@
 package com.redoc.idu.presenter;
 
 import com.redoc.idu.IView;
-import com.redoc.idu.contract.ICategoryContract;
-import com.redoc.idu.contract.ICategoryContract.ICategoryView;
+import com.redoc.idu.contract.ICategory;
 
 /**
  * Single channel category presenter.
  * Created by limen on 2016/8/27.
  */
-public abstract class SingleChannelCategoryPresenter implements ICategoryContract.ICategoryPresenter {
+public abstract class SingleChannelCategoryPresenter implements ICategory.ICategoryPresenter {
 
     /**
-     * Get attached {@link ICategoryContract.ICategoryView} instance.
+     * Get attached {@link ICategory.ICategoryView} instance.
      *
-     * @return Attached {@link ICategoryContract.ICategoryView} instance.
+     * @return Attached {@link ICategory.ICategoryView} instance.
      */
     @Override
-    public ICategoryContract.ICategoryView getAttachedCategoryView() {
+    public ICategory.ICategoryView getAttachedCategoryView() {
         return null;
     }
 

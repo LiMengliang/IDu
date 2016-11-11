@@ -4,10 +4,10 @@ import android.support.annotation.NonNull;
 
 import com.redoc.idu.IDuApplication;
 import com.redoc.idu.IView;
-import com.redoc.idu.audios.model.AudioCategory;
-import com.redoc.idu.audios.presenter.AudioCategoryPresenter;
-import com.redoc.idu.contract.ICategoriesContract;
-import com.redoc.idu.contract.ICategoryContract;
+import com.redoc.idu.radio.model.AudioCategory;
+import com.redoc.idu.radio.presenter.AudioCategoryPresenter;
+import com.redoc.idu.contract.ICategories;
+import com.redoc.idu.contract.ICategory;
 import com.redoc.idu.model.bean.Category;
 import com.redoc.idu.model.MultiChannelsCategory;
 import com.redoc.idu.news.presenter.NewsCategoryPresenter;
@@ -22,24 +22,24 @@ import java.util.List;
  *
  * Created by limen on 2016/8/17.
  */
-public class CategoriesPresenter implements ICategoriesContract.ICategoriesPresenter {
+public class CategoriesPresenter implements ICategories.ICategoriesPresenter {
 
     /**
-     * The attached {@link com.redoc.idu.contract.ICategoriesContract.ICategoriesView}
+     * The attached {@link ICategories.ICategoriesView}
      */
-    private ICategoriesContract.ICategoriesView mCategoriesView;
+    private ICategories.ICategoriesView mCategoriesView;
 
     /**
-     * The attached {@link com.redoc.idu.contract.ICategoriesContract.ICategoriesPresenter}
+     * The attached {@link ICategories.ICategoriesPresenter}
      */
-    private List<ICategoryContract.ICategoryPresenter> mCategoryPresenters;
+    private List<ICategory.ICategoryPresenter> mCategoryPresenters;
 
     /**
      * On a category is selected.
      * @param categoryPresenter Presenter of selected category.
      */
     @Override
-    public void onSelectACategory(ICategoryContract.ICategoryPresenter categoryPresenter) {
+    public void onSelectACategory(ICategory.ICategoryPresenter categoryPresenter) {
         // TODO: modify model here.
         mCategoriesView.switchToCategory(categoryPresenter);
     }
@@ -48,7 +48,7 @@ public class CategoriesPresenter implements ICategoriesContract.ICategoriesPrese
      * Create a CategoriesPresenter instance.
      * @param view Attached view.
      */
-    public CategoriesPresenter(@NonNull ICategoriesContract.ICategoriesView view) {
+    public CategoriesPresenter(@NonNull ICategories.ICategoriesView view) {
         mCategoryPresenters = new ArrayList<>();
         // TODO: We need a extensible way to add categories.
         for(Category category :  IDuApplication.CategoryAndChannelManager.getCategories()) {
@@ -85,7 +85,7 @@ public class CategoriesPresenter implements ICategoriesContract.ICategoriesPrese
      * @return A list of category presenter.
      */
     @Override
-    public List<ICategoryContract.ICategoryPresenter> getCategoryPresenters() {
+    public List<ICategory.ICategoryPresenter> getCategoryPresenters() {
         return mCategoryPresenters;
     }
 }

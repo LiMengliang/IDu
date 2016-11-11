@@ -1,16 +1,11 @@
-package com.redoc.idu.view.multiChannel;
+package com.redoc.idu.view.category.multiChannel;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.Adapter;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import com.redoc.idu.R;

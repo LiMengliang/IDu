@@ -3,7 +3,7 @@
     xmlns:idu="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.redoc.idu.view.multiChannel.MultiChannelsCategoryFragment">
+    tools:context=".view.category.multiChannel.MultiChannelsCategoryFragment">
     <RelativeLayout
         android:id="@+id/multi_channels_category_header"
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
             android:layout_alignParentBottom="true"
             android:layout_toLeftOf="@id/channel_manager_button"
             android:scrollbars="none">
-            <com.redoc.idu.view.multiChannel.TabHead
+            <com.redoc.idu.view.category.multiChannel.TabHead
                 android:id="@+id/channel_selectors"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/channel_item_height"
@@ -59,7 +59,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/multi_channels_category_header">
     </android.support.v4.view.ViewPager>
-    <com.redoc.idu.view.multiChannel.MultiChannelsManagerView
+    <com.redoc.idu.view.category.multiChannel.MultiChannelsManagerView
         android:id="@+id/multi_channel_manager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -1,14 +1,12 @@
 package com.redoc.idu.presenter.multichannel;
 
-import com.redoc.idu.IDuApplication;
 import com.redoc.idu.IView;
-import com.redoc.idu.contract.IChannelContract;
+import com.redoc.idu.contract.ICategory;
 import com.redoc.idu.contract.multichannel.IMultiChannelContract;
 import com.redoc.idu.contract.multichannel.IMultiChannelManagerContract;
 import com.redoc.idu.contract.multichannel.IMultiChannelsCategoryContract;
 import com.redoc.idu.model.MultiChannelsCategory;
-import com.redoc.idu.model.bean.Channel;
-import com.redoc.idu.view.multiChannel.MultiChannelsCategoryView;
+import com.redoc.idu.view.category.multiChannel.MultiChannelsCategoryView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,22 +78,6 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
     }
 
     /**
-     * Get all channels in this category.
-     *
-     * @return All channels of this category.
-     */
-    @Override
-    public List<IMultiChannelContract.IMultiChannelPresenter> getAllChannels() {
-        if(mChannels == null) {
-            mChannels = new ArrayList<>();
-            for(Channel channel : IDuApplication.CategoryAndChannelManager.getChannels()) {
-                mChannels.add(new MultiChannelPresenter(channel, this));
-            }
-        }
-        return mChannels;
-    }
-
-    /**
      * Get all followed channels.
      *
      * @return Presenters of all followed channels.
@@ -131,9 +113,9 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
     }
 
     /**
-     * Get attached {@link com.redoc.idu.contract.ICategoryContract.ICategoryView}
+     * Get attached {@link ICategory.ICategoryView}
      *
-     * @return Attached {@link com.redoc.idu.contract.ICategoryContract.ICategoryView}
+     * @return Attached {@link ICategory.ICategoryView}
      */
     @Override
     public IMultiChannelsCategoryContract.IMultiChannelsCategoryView getAttachedCategoryView() {

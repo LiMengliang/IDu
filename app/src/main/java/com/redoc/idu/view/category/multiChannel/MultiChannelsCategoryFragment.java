@@ -1,4 +1,4 @@
-package com.redoc.idu.view.multiChannel;
+package com.redoc.idu.view.category.multiChannel;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

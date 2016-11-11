@@ -1,7 +1,7 @@
 package com.redoc.idu.contract.singlechannel;
 
 import com.redoc.idu.IView;
-import com.redoc.idu.contract.ICategoryContract;
+import com.redoc.idu.contract.ICategory;
 
 /**
  * Created by limen on 2016/10/18.
@@ -11,14 +11,14 @@ public interface ISingleChannelCategoryContract {
     /**
      * Single channel category view.
      */
-    interface ISingleChannelCategoryView extends ICategoryContract.ICategoryView, IView<ISingleChannelCategoryPresenter> {
+    interface ISingleChannelCategoryView extends ICategory.ICategoryView, IView<ISingleChannelCategoryPresenter> {
 
     }
 
     /**
      * Single channel category presenter.
      */
-    interface ISingleChannelCategoryPresenter extends ICategoryContract.ICategoryPresenter {
+    interface ISingleChannelCategoryPresenter extends ICategory.ICategoryPresenter {
 
     }
 }

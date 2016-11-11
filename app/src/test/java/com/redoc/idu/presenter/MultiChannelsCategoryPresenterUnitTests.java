@@ -1,10 +1,13 @@
 package com.redoc.idu.presenter;
 
+import com.redoc.idu.contract.multichannel.IMultiChannelContract;
 import com.redoc.idu.model.MultiChannelsCategory;
 import com.redoc.idu.presenter.multichannel.MultiChannelsCategoryPresenter;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.List;
 
 /**
  * Unit test for {@link MultiChannelsCategoryPresenter}
@@ -19,6 +22,14 @@ public class MultiChannelsCategoryPresenterUnitTests {
         @Override
         public void selectChannel(int index) {
 
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public List<IMultiChannelContract.IMultiChannelPresenter> getAllChannels() {
+            return null;
         }
 
         /**

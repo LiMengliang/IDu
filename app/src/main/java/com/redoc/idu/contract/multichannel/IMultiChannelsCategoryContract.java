@@ -1,7 +1,7 @@
 package com.redoc.idu.contract.multichannel;
 
 import com.redoc.idu.IView;
-import com.redoc.idu.contract.ICategoryContract;
+import com.redoc.idu.contract.ICategory;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface IMultiChannelsCategoryContract {
     /**
      * Multi-channels category view.
      */
-    interface IMultiChannelsCategoryView extends ICategoryContract.ICategoryView, IView<IMultiChannelsCategoryPresenter> {
+    interface IMultiChannelsCategoryView extends ICategory.ICategoryView, IView<IMultiChannelsCategoryPresenter> {
 
         /**
          * Initialize a category view.
@@ -40,7 +40,7 @@ public interface IMultiChannelsCategoryContract {
     /**
      * Multi-channels category presenter.
      */
-    interface IMultiChannelsCategoryPresenter extends ICategoryContract.ICategoryPresenter {
+    interface IMultiChannelsCategoryPresenter extends ICategory.ICategoryPresenter {
 
         /**
          * Select the nth channel from all followed channels

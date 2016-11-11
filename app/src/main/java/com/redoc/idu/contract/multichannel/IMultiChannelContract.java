@@ -1,7 +1,7 @@
 package com.redoc.idu.contract.multichannel;
 
 import com.redoc.idu.IView;
-import com.redoc.idu.contract.IChannelContract;
+import com.redoc.idu.contract.IChannel;
 
 /**
  * Created by limen on 2016/9/19.
@@ -17,7 +17,7 @@ public interface IMultiChannelContract {
         void setChannelItemStyle(boolean followed);
     }
 
-    interface IMultiChannelPresenter extends IChannelContract.IChannelPresenter {
+    interface IMultiChannelPresenter extends IChannel.IChannelPresenter {
 
         /**
          * Is followed.
