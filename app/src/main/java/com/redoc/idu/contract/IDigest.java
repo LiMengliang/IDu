@@ -30,5 +30,11 @@ public interface IDigest {
          * @return The digest content.
          */
         String getDigest();
+
+        /**
+         * Get source.
+         * @return Source of the digest.
+         */
+        String getSource();
     }
 }

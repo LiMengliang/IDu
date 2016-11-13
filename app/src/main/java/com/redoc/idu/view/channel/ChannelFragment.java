@@ -129,12 +129,11 @@ public class ChannelFragment extends Fragment {
     public void setPresenter(IChannel.IChannelPresenter channelPresenter) {
         mChannelPresenter = channelPresenter;
         mChannelPresenter.getLatestDigests();
+        mDigestsAdapter = channelPresenter.createDigestsAdapter();
     }
 
     private void initializeView() {
         mDigestsView.setLayoutManager(new LinearLayoutManager(IDuApplication.Context));
-        mDigestsAdapter = new DigestsAdapter();
-        mDigestsAdapter.setPresenter(mChannelPresenter);
         TextView footer = new TextView(IDuApplication.Context);
         footer.setText("Get more");
         footer.setTextSize(15);

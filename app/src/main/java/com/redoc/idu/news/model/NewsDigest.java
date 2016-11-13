@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * News digest model.
  * Created by limen on 2016/11/5.
  */
 public class NewsDigest {
+    /**
+     * Id.
+     */
     private String docId;
     public String getDocId() {
         return docId;
@@ -15,6 +19,9 @@ public class NewsDigest {
         this.docId = docId;
     }
 
+    /**
+     * Title.
+     */
     private String digestTitle;
     public String getDigestTitle() {
         return digestTitle;
@@ -23,6 +30,9 @@ public class NewsDigest {
         digestTitle = title;
     }
 
+    /**
+     * Time.
+     */
     private String time;
     public String getTime() {
         return time;
@@ -31,6 +41,9 @@ public class NewsDigest {
         this.time = time;
     }
 
+    /**
+     * Digest.
+     */
     private String digest;
     public String getDigest() {
         return digest;
@@ -39,6 +52,9 @@ public class NewsDigest {
         this.digest = digest;
     }
 
+    /**
+     * Tag.
+     */
     private String tag;
     public String getTag() {
         return tag;
@@ -47,6 +63,9 @@ public class NewsDigest {
         this.tag = tag;
     }
 
+    /**
+     * Image links.
+     */
     private List<String> mDigestImages = new ArrayList<String>();
     public List<String> getDigestImages() {
         return mDigestImages;
@@ -55,6 +74,9 @@ public class NewsDigest {
         mDigestImages.add(uri);
     }
 
+    /**
+     * Links to the news article.
+     */
     private String newsUrl;
     public String getNewsUrl() {
         return newsUrl;
@@ -63,6 +85,9 @@ public class NewsDigest {
         newsUrl = url;
     }
 
+    /**
+     * Photo set id.
+     */
     private String photoSetId;
     public String getPhotoSetId() {
         return photoSetId;
@@ -71,6 +96,9 @@ public class NewsDigest {
         this.photoSetId = photoSetId;
     }
 
+    /**
+     * Source of the news.
+     */
     private String source;
     public String getSource() {
         return source;

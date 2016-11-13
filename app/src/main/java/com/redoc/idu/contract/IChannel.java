@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 
 import com.redoc.idu.IPresenter;
 import com.redoc.idu.IView;
+import com.redoc.idu.view.channel.DigestsAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +24,7 @@ public interface IChannel {
 
         /**
          * Get the fragment contained in the channel view.
-         * @return
+         * @return Root fragment.
          */
         Fragment getRootFragment();
 
@@ -78,6 +79,12 @@ public interface IChannel {
          * Get latest digests.
          */
         void getLatestDigests();
+
+        /**
+         * Create adapter for digests view.
+         * @return Digests adapter.
+         */
+        DigestsAdapter createDigestsAdapter();
 
         /**
          * Action to be taken when receive more digests.

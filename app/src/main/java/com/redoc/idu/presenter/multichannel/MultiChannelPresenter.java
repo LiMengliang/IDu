@@ -7,14 +7,9 @@ import com.redoc.idu.contract.IDigest;
 import com.redoc.idu.contract.multichannel.IMultiChannelContract;
 import com.redoc.idu.contract.multichannel.IMultiChannelsCategoryContract;
 import com.redoc.idu.model.bean.Channel;
-import com.redoc.idu.presenter.DigestPresenter;
 import com.redoc.idu.view.channel.ChannelView;
-import com.redoc.idu.view.channel.DigestsAdapter;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

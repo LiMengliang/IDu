@@ -50,7 +50,7 @@
                 android:paddingLeft="@dimen/channel_selector_bar_horizontal_padding"
                 android:paddingRight="@dimen/channel_selector_bar_horizontal_padding"
                 idu:tab_name_color="@color/white"
-                idu:tab_name_size="@dimen/media_text_size"/>
+                idu:tab_name_size="5dp"/>
         </HorizontalScrollView>
     </RelativeLayout>
     <android.support.v4.view.ViewPager
