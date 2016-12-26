@@ -12,7 +12,7 @@ public interface IDigest {
      * Digest view.
      */
     interface IDigestView extends IView<IDigestPresenter> {
-
+        void loadDigestImages();
     }
 
     /**
@@ -36,5 +36,7 @@ public interface IDigest {
          * @return Source of the digest.
          */
         String getSource();
+
+        void loadImages();
     }
 }

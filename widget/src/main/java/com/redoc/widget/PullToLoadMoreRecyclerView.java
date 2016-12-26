@@ -271,6 +271,9 @@ public class PullToLoadMoreRecyclerView extends RecyclerView {
             }
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {
             outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());

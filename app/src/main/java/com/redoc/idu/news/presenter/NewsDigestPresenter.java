@@ -1,9 +1,12 @@
 package com.redoc.idu.news.presenter;
 
+import com.android.volley.Response;
 import com.redoc.idu.IView;
 import com.redoc.idu.contract.IDigest;
 import com.redoc.idu.news.model.NewsDigest;
 import com.redoc.idu.news.model.NewsDigestType;
+
+import java.util.List;
 
 /**
  * News digest presenter.
@@ -11,6 +14,7 @@ import com.redoc.idu.news.model.NewsDigestType;
  */
 public class NewsDigestPresenter implements IDigest.IDigestPresenter {
     private NewsDigest mDigestModel;
+    private IDigest.IDigestView mDigestView;
 
     /**
      * Construct a instance.
@@ -44,13 +48,22 @@ public class NewsDigestPresenter implements IDigest.IDigestPresenter {
         return mDigestModel.getSource();
     }
 
+    @Override
+    public void loadImages() {
+        mDigestView.loadDigestImages();
+    }
+
+    public List<String> getDigestImageSources() {
+        return mDigestModel.getDigestImages();
+    }
+
 
     /**
      * Get digest type.
      * @return Digest type.
      */
     public NewsDigestType getDigestType() {
-        if(mDigestModel.getPhotoSetId() != null && !mDigestModel.getPhotoSetId().isEmpty()) {
+        if(mDigestModel.getPhotoSetId() != null && !mDigestModel.getPhotoSetId().isEmpty() && mDigestModel.getDigestImages().size() == 3) {
             return NewsDigestType.Images;
         }
         else if(mDigestModel.getDigestImages().size() == 1) {
@@ -66,7 +79,7 @@ public class NewsDigestPresenter implements IDigest.IDigestPresenter {
      */
     @Override
     public void onAttached(IView view) {
-
+        mDigestView = (IDigest.IDigestView)view;
     }
 
     /**

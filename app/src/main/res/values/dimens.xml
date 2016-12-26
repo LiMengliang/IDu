@@ -1,5 +1,5 @@
 <resources>
-    <dimen name="media_text_size">13sp</dimen>
+    <dimen name="media_text_size">15sp</dimen>
     <dimen name="small_text_size">10sp</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->

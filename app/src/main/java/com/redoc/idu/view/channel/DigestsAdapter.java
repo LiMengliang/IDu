@@ -25,6 +25,9 @@ public abstract class DigestsAdapter extends RecyclerView.Adapter<RecyclerView.V
     public int getItemViewType(int position) {
         return 0;
     }
+
+    public void setIsFirstScreen(boolean firstScreen){
+    };
 }
 
 

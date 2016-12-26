@@ -34,17 +34,16 @@ public class NewsDigestsAdapter extends DigestsAdapter {
      */
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        TextView textView = new TextView(IDuApplication.Context);
         NewsDigestType digestType = NewsDigestType.values()[viewType];
         switch (digestType) {
             case SingleImageArticle:
-                RelativeLayout singleImageArticleDigestView = (RelativeLayout) LayoutInflater.from(IDuApplication.Context).inflate(R.layout.view_single_image_article_digest, null);
+                SingleImageArticleDigestView singleImageArticleDigestView = new SingleImageArticleDigestView();
                 return new SingleImageArticleDigestViewHolder(singleImageArticleDigestView);
             case MultiImagesArticle:
-                RelativeLayout multiImagesArticleDigestView = (RelativeLayout)LayoutInflater.from(IDuApplication.Context).inflate(R.layout.view_multi_images_article_digest, null);
+                MultiImagesArticleDigestView multiImagesArticleDigestView = new MultiImagesArticleDigestView();
                 return new MultiImagesArticleDigestViewHolder(multiImagesArticleDigestView);
             case Images:
-                RelativeLayout imagesDigests = (RelativeLayout)LayoutInflater.from(IDuApplication.Context).inflate(R.layout.view_images_digest, null);
+                ImagesDigestView imagesDigests = new ImagesDigestView();
                 return new ImagesDigestViewHolder(imagesDigests);
         }
         return null;
@@ -70,14 +69,23 @@ public class NewsDigestsAdapter extends DigestsAdapter {
             case SingleImageArticle:
                 SingleImageArticleDigestViewHolder singleImageArticleDigestViewHolder = (SingleImageArticleDigestViewHolder)holder;
                 singleImageArticleDigestViewHolder.setDataBinding(newsDigestPresenter);
+                if(mIsFirstScreen) {
+                    singleImageArticleDigestViewHolder.loadImages();
+                }
                 break;
             case MultiImagesArticle:
                 MultiImagesArticleDigestViewHolder multiImagesArticleDigestViewHolder = (MultiImagesArticleDigestViewHolder)holder;
                 multiImagesArticleDigestViewHolder.setDataBinding(newsDigestPresenter);
+                if(mIsFirstScreen) {
+                    multiImagesArticleDigestViewHolder.loadImages();
+                }
                 break;
             case Images:
                 ImagesDigestViewHolder imagesDigestViewHolder = (ImagesDigestViewHolder)holder;
                 imagesDigestViewHolder.setDataBinding(newsDigestPresenter);
+                if (mIsFirstScreen) {
+                    imagesDigestViewHolder.loadImages();
+                }
         }
     }
 
@@ -90,20 +98,28 @@ public class NewsDigestsAdapter extends DigestsAdapter {
         return digest.getDigestType().ordinal();
     }
 
+    private boolean mIsFirstScreen = true;
+    @Override
+    public void setIsFirstScreen(boolean isFirstScreen) {
+        mIsFirstScreen = isFirstScreen;
+    }
+
     /**
      * Digest view holder.
      */
     static class SingleImageArticleDigestViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout digestView;
+        SingleImageArticleDigestView mSingleImageArticleDigestView;
         TextView mDigestTitle;
         TextView mDigestSource;
         TextView mDigestContent;
         /**
          * Construct a digest view holder.
-         * @param itemView The view to be hold.
+         * @param singleImageArticleDigestView The view to be hold.
          */
-        public SingleImageArticleDigestViewHolder(View itemView) {
-            super(itemView);
+        public SingleImageArticleDigestViewHolder(SingleImageArticleDigestView singleImageArticleDigestView) {
+            super(singleImageArticleDigestView.getView());
+            mSingleImageArticleDigestView = singleImageArticleDigestView;
             digestView = (RelativeLayout) itemView;
             mDigestTitle = (TextView)digestView.findViewById(R.id.single_image_digest_title);
             mDigestSource = (TextView)digestView.findViewById(R.id.single_image_digest_source);
@@ -111,9 +127,14 @@ public class NewsDigestsAdapter extends DigestsAdapter {
         }
 
         public void setDataBinding(NewsDigestPresenter digestPresenter) {
+            mSingleImageArticleDigestView.setPresenter(digestPresenter);
             mDigestTitle.setText(digestPresenter.getTitle());
             mDigestSource.setText(digestPresenter.getSource());
             mDigestContent.setText(digestPresenter.getDigest());
+        }
+
+        public void loadImages() {
+            mSingleImageArticleDigestView.loadDigestImages();
         }
     }
 
@@ -123,13 +144,15 @@ public class NewsDigestsAdapter extends DigestsAdapter {
     static class MultiImagesArticleDigestViewHolder extends RecyclerView.ViewHolder {
         TextView mDigestTitle;
         TextView mDigestSource;
+        MultiImagesArticleDigestView mMultiImagesArticleDigestView;
 
         /**
          * Construct a instance.
-         * @param itemView Inner view.
+         * @param multiImagesArticleDigestView Inner view.
          */
-        public MultiImagesArticleDigestViewHolder(View itemView) {
-            super(itemView);
+        public MultiImagesArticleDigestViewHolder(MultiImagesArticleDigestView multiImagesArticleDigestView) {
+            super(multiImagesArticleDigestView.getView());
+            mMultiImagesArticleDigestView = multiImagesArticleDigestView;
             mDigestTitle = (TextView)itemView.findViewById(R.id.multi_image_digest_title);
             mDigestSource = (TextView)itemView.findViewById(R.id.multi_image_digest_source);
         }
@@ -139,8 +162,13 @@ public class NewsDigestsAdapter extends DigestsAdapter {
          * @param newsDigestPresenter News digest presenter.
          */
         public void setDataBinding(NewsDigestPresenter newsDigestPresenter) {
+            mMultiImagesArticleDigestView.setPresenter(newsDigestPresenter);
             mDigestTitle.setText(newsDigestPresenter.getTitle());
             mDigestSource.setText(newsDigestPresenter.getSource());
+        }
+
+        public void loadImages() {
+            mMultiImagesArticleDigestView.loadDigestImages();
         }
     }
 
@@ -150,13 +178,15 @@ public class NewsDigestsAdapter extends DigestsAdapter {
     static class ImagesDigestViewHolder extends RecyclerView.ViewHolder {
         TextView mDigestTitle;
         TextView mDigestSource;
+        ImagesDigestView mImagesDigestView;
 
         /**
          * Construct a instance.
-         * @param itemView Inner view.
+         * @param imagesDigestView Inner view.
          */
-        public ImagesDigestViewHolder(View itemView) {
-            super(itemView);
+        public ImagesDigestViewHolder(ImagesDigestView imagesDigestView) {
+            super(imagesDigestView.getView());
+            mImagesDigestView = imagesDigestView;
             mDigestTitle = (TextView)itemView.findViewById(R.id.photo_set_digest_title);
             mDigestSource = (TextView)itemView.findViewById(R.id.photo_set_digest_source);
         }
@@ -168,6 +198,11 @@ public class NewsDigestsAdapter extends DigestsAdapter {
         public void setDataBinding(NewsDigestPresenter newsDigestPresenter) {
             mDigestTitle.setText(newsDigestPresenter.getTitle());
             mDigestSource.setText(newsDigestPresenter.getSource());
+            mImagesDigestView.setPresenter(newsDigestPresenter);
+        }
+
+        public void loadImages() {
+            mImagesDigestView.loadDigestImages();
         }
     }
 }

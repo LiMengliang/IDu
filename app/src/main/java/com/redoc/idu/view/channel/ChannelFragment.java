@@ -11,14 +11,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.redoc.idu.IDuApplication;
 import com.redoc.idu.R;
 import com.redoc.idu.contract.IChannel;
+import com.redoc.idu.contract.IDigest;
+import com.redoc.idu.view.widget.IDelayLoadImageView;
 import com.redoc.widget.PullToLoadMoreRecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_FLING;
+import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_IDLE;
+import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -153,6 +160,10 @@ public class ChannelFragment extends Fragment {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
+            mDigestsAdapter.setIsFirstScreen(false);
+            if(newState == SCROLL_STATE_IDLE) {
+                LoadVisibleImages((PullToLoadMoreRecyclerView) recyclerView);
+            }
         }
 
         /**
@@ -164,6 +175,19 @@ public class ChannelFragment extends Fragment {
             int lastVisiblePosition = mDigestsView.getLastVisiblePosition();
             if(lastVisiblePosition == mDigestsAdapter.getItemCount()) {
                 mChannelPresenter.getMoreDigests(++iteration * 20);
+            }
+        }
+    }
+
+    private void LoadVisibleImages(PullToLoadMoreRecyclerView recyclerView) {
+        int firstVisiblePosition = recyclerView.getFirstVisiblePosition();
+        int lastVisiblePosition = recyclerView.getLastVisiblePosition();
+        if(firstVisiblePosition >= 0 && lastVisiblePosition >= 0 && firstVisiblePosition <= lastVisiblePosition) {
+            for(int i = firstVisiblePosition; i <= lastVisiblePosition; i++) {
+                if(i < mChannelPresenter.allCachedDigests().size()) {
+                    IDigest.IDigestPresenter digestPresenter = mChannelPresenter.allCachedDigests().get(i);
+                    digestPresenter.loadImages();
+                }
             }
         }
     }
