@@ -1,5 +1,6 @@
 package com.redoc.idu.news.view;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Layout;
@@ -13,6 +14,7 @@ import com.redoc.idu.R;
 import com.redoc.idu.contract.IDigest;
 import com.redoc.idu.news.presenter.NewsDigestPresenter;
 import com.redoc.idu.utils.DrawableUtils;
+import com.redoc.idu.view.article.ArticleActivity;
 import com.redoc.idu.view.widget.IDelayLoadImageView;
 
 /**
@@ -32,6 +34,15 @@ public class MultiImagesArticleDigestView implements IDigest.IDigestView {
         mImageViewA = (ImageView)mRootView.findViewById(R.id.multi_image_digest_image_a);
         mImageViewB = (ImageView)mRootView.findViewById(R.id.multi_image_digest_image_b);
         mImageViewC = (ImageView)mRootView.findViewById(R.id.multi_image_digest_image_c);
+        mRootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(IDuApplication.Context, ArticleActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("Url", mNewsDigestPresenter.getArticleUrl());
+                IDuApplication.Context.startActivity(intent);
+            }
+        });
     }
     @Override
     public void setPresenter(IDigest.IDigestPresenter presenter) {

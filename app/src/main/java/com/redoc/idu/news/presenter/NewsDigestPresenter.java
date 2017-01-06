@@ -49,6 +49,11 @@ public class NewsDigestPresenter implements IDigest.IDigestPresenter {
     }
 
     @Override
+    public String getArticleUrl() {
+        return mDigestModel.getNewsUrl();
+    }
+
+    @Override
     public void loadImages() {
         mDigestView.loadDigestImages();
     }

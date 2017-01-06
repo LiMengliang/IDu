@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -139,13 +140,22 @@ public class ChannelFragment extends Fragment {
         mDigestsAdapter = channelPresenter.createDigestsAdapter();
     }
 
+    // TODO: Footer is not center in horizontal direction.
     private void initializeView() {
         mDigestsView.setLayoutManager(new LinearLayoutManager(IDuApplication.Context));
+        RelativeLayout relativeLayout = new RelativeLayout(IDuApplication.Context);
+        relativeLayout.setBackgroundColor(Color.BLACK);
         TextView footer = new TextView(IDuApplication.Context);
-        footer.setText("Get more");
+        footer.setText("正在获取更多...");
         footer.setTextSize(15);
-        footer.setTextColor(Color.BLACK);
-        mDigestsView.setFooterView(footer);
+        RelativeLayout.LayoutParams relativeLayoutParameter =
+                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        relativeLayoutParameter.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        footer.setLayoutParams(relativeLayoutParameter);
+        footer.setTextColor(Color.GRAY);
+        footer.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        relativeLayout.addView(footer);
+        mDigestsView.setFooterView(relativeLayout);
         mDigestsView.setInnerAdapter(mDigestsAdapter);
         mDigestsView.addOnScrollListener(new DigestViewScrollListener());
     }

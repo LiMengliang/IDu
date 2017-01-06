@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.redoc.idu.R;
 
@@ -53,6 +54,10 @@ public class HttpClient {
      */
     public void addJsonArrayRequest(String url, Response.Listener<JSONArray> listener, Response.ErrorListener errorListener) {
         mRequestQueue.add(new JsonArrayRequest(url, listener, errorListener));
+    }
+
+    public void addStringRequest(String url, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        mRequestQueue.add(new StringRequest(url, listener, errorListener));
     }
 
     public void displayImage(String url, ImageView imageView) {

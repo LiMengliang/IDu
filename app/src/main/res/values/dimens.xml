@@ -1,4 +1,5 @@
 <resources>
+    <dimen name="large_text_size">20sp</dimen>
     <dimen name="media_text_size">15sp</dimen>
     <dimen name="small_text_size">10sp</dimen>
 
@@ -15,4 +16,7 @@
     <dimen name="channel_item_height">32dp</dimen>
     <dimen name="channel_selector_bar_horizontal_padding">14dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <!--Detail view-->
+    <dimen name="detail_toolbar_height">64dp</dimen>
 </resources>

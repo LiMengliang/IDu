@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.redoc.idu.model.CategoryAndChannelManager;
+import com.redoc.idu.utils.html.JsoupParser;
 import com.redoc.idu.utils.network.HttpClient;
 
 /**
@@ -24,6 +25,7 @@ public class IDuApplication extends Application {
     public static CategoryAndChannelManager CategoryAndChannelManager;
 
     public static HttpClient HttpClient;
+    public static JsoupParser JsoupParser;
 
     /**
      * On create.

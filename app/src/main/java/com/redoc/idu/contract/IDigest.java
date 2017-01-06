@@ -37,6 +37,11 @@ public interface IDigest {
          */
         String getSource();
 
+        String getArticleUrl();
+
+        /**
+         * Load images.
+         */
         void loadImages();
     }
 }
