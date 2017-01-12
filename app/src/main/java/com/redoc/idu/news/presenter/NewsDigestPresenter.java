@@ -58,6 +58,10 @@ public class NewsDigestPresenter implements IDigest.IDigestPresenter {
         mDigestView.loadDigestImages();
     }
 
+    /**
+     * Get digest images' source.
+     * @return Source of images.
+     */
     public List<String> getDigestImageSources() {
         return mDigestModel.getDigestImages();
     }

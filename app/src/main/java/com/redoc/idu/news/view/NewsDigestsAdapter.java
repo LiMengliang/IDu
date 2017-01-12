@@ -99,6 +99,9 @@ public class NewsDigestsAdapter extends DigestsAdapter {
     }
 
     private boolean mIsFirstScreen = true;
+    /**
+     * {@inheritDoc /}
+     */
     @Override
     public void setIsFirstScreen(boolean isFirstScreen) {
         mIsFirstScreen = isFirstScreen;
@@ -201,6 +204,9 @@ public class NewsDigestsAdapter extends DigestsAdapter {
             mImagesDigestView.setPresenter(newsDigestPresenter);
         }
 
+        /**
+         * Load images.
+         */
         public void loadImages() {
             mImagesDigestView.loadDigestImages();
         }

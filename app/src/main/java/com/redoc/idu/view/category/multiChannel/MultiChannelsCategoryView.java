@@ -59,11 +59,17 @@ public class MultiChannelsCategoryView implements IMultiChannelsCategoryContract
         rootFragment.switchToChannel(index);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void showChannelsManager() {
         getOrCreateRootFragment().showChannelManager();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void hideChannelsManager() {
         getOrCreateRootFragment().hideChannelsManager(true);

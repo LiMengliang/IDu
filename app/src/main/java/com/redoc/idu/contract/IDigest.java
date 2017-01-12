@@ -37,6 +37,10 @@ public interface IDigest {
          */
         String getSource();
 
+        /**
+         * Get url of article.
+         * @return Url of article.
+         */
         String getArticleUrl();
 
         /**

@@ -1,5 +1,7 @@
 package com.redoc.idu.view.article;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,20 +10,28 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.redoc.idu.IDuApplication;
 import com.redoc.idu.R;
 import com.redoc.idu.contract.article.IArticleContract;
 import com.redoc.idu.presenter.article.TextArticlePresenter;
+import com.redoc.idu.view.video.VideoActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * Article activity.
+ */
 public class ArticleActivity extends AppCompatActivity implements IArticleContract.IArticleView {
 
     @BindView(R.id.web_view)
     WebView mWebView;
     private IArticleContract.IArticlePresenter mArticlePresenter;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +44,9 @@ public class ArticleActivity extends AppCompatActivity implements IArticleContra
         updateArticle(mArticlePresenter);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @OnClick(R.id.back_button)
     public void onClick()
     {
@@ -41,6 +54,9 @@ public class ArticleActivity extends AppCompatActivity implements IArticleContra
         mArticlePresenter.onDetached();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateArticle(IArticleContract.IArticlePresenter presenter) {
         this.mWebView.getSettings().setSupportZoom(false);
@@ -50,11 +66,26 @@ public class ArticleActivity extends AppCompatActivity implements IArticleContra
         mWebView.setWebViewClient(new WebViewClient(){
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error){
                 handler.proceed();
-        }});
-        // this.mWebView.  ("http://www.ele.me/");
+            }
+
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Intent intent = new Intent(IDuApplication.Context, VideoActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("VideoUrl", url);
+                IDuApplication.Context.startActivity(intent);
+                return true;
+            }
+        });
         mWebView.loadDataWithBaseURL("about:blank", (String)(presenter.getData()), "text/html", "utf-8", null);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setPresenter(IArticleContract.IArticlePresenter presenter) {
         mArticlePresenter = presenter;

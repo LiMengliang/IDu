@@ -14,11 +14,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:paddingTop="100dp"
+        android:paddingTop="150dp"
         android:keepScreenOn="true"
         android:text="@string/idu_title"
         android:textColor="@color/white"
-        android:textSize="50sp"/>
+        android:textSize="35sp"/>
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"

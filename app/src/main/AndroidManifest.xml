@@ -22,6 +22,7 @@
             android:theme="@style/AppTheme.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -32,6 +33,21 @@
         <activity
             android:name=".view.article.ArticleActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".view.photo.PhotoActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="my.com"
+                    android:scheme="m" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.video.VideoActivity"
+            android:theme="@style/AppTheme.Fullscreen"
+            android:screenOrientation="landscape" ></activity>
     </application>
 
 </manifest>

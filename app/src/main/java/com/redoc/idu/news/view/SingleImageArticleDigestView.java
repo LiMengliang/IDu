@@ -14,6 +14,7 @@ import com.redoc.idu.utils.DrawableUtils;
 import com.redoc.idu.view.article.ArticleActivity;
 
 /**
+ * Single images article digest view.
  * Created by meli on 2016/11/13.
  */
 
@@ -23,6 +24,9 @@ public class SingleImageArticleDigestView implements IDigest.IDigestView {
     private ImageView mImageView;
     private NewsDigestPresenter mNewsDigestPresenter;
 
+    /**
+     * Construct a SingleImageArticleDigestView.
+     */
     public SingleImageArticleDigestView() {
         mRelativeLayout = (RelativeLayout) LayoutInflater.from(IDuApplication.Context).inflate(R.layout.view_single_image_article_digest, null);
         mImageView = (ImageView)mRelativeLayout.findViewById(R.id.single_image_digest_image);
@@ -37,15 +41,25 @@ public class SingleImageArticleDigestView implements IDigest.IDigestView {
         });
     }
 
+    /**
+     * {@inheritDoc /}
+     */
     @Override
     public void loadDigestImages() {
         IDuApplication.HttpClient.displayImage(mNewsDigestPresenter.getDigestImageSources().get(0), mImageView);
     }
 
+    /**
+     * Get root view.
+     * @return
+     */
     public RelativeLayout getView() {
         return mRelativeLayout;
     }
 
+    /**
+     * {@inheritDoc /}
+     */
     @Override
     public void setPresenter(IDigest.IDigestPresenter presenter) {
         mNewsDigestPresenter = (NewsDigestPresenter)presenter;

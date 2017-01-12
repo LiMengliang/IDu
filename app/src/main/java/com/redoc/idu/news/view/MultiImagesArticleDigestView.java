@@ -18,6 +18,7 @@ import com.redoc.idu.view.article.ArticleActivity;
 import com.redoc.idu.view.widget.IDelayLoadImageView;
 
 /**
+ * Multi images article digest view.
  * Created by meli on 2016/11/14.
  */
 
@@ -29,6 +30,9 @@ public class MultiImagesArticleDigestView implements IDigest.IDigestView {
     private ImageView mImageViewC;
     private NewsDigestPresenter mNewsDigestPresenter;
 
+    /**
+     * Construct a multi images article digest view.
+     */
     public MultiImagesArticleDigestView() {
         mRootView = (RelativeLayout) LayoutInflater.from(IDuApplication.Context).inflate(R.layout.view_multi_images_article_digest, null);
         mImageViewA = (ImageView)mRootView.findViewById(R.id.multi_image_digest_image_a);
@@ -44,6 +48,10 @@ public class MultiImagesArticleDigestView implements IDigest.IDigestView {
             }
         });
     }
+
+    /**
+     * {@inheritDoc /}
+     */
     @Override
     public void setPresenter(IDigest.IDigestPresenter presenter) {
         mNewsDigestPresenter = (NewsDigestPresenter)presenter;
@@ -54,6 +62,9 @@ public class MultiImagesArticleDigestView implements IDigest.IDigestView {
         mImageViewC.setImageDrawable(DrawableUtils.colorIdToDrawable(R.color.light_gray));
     }
 
+    /**
+     * {@inheritDoc /}
+     */
     @Override
     public void loadDigestImages() {
         IDuApplication.HttpClient.displayImage(mNewsDigestPresenter.getDigestImageSources().get(0), mImageViewA);
@@ -61,6 +72,10 @@ public class MultiImagesArticleDigestView implements IDigest.IDigestView {
         IDuApplication.HttpClient.displayImage(mNewsDigestPresenter.getDigestImageSources().get(2), mImageViewC);
     }
 
+    /**
+     * Get root view.
+     * @return Root view.
+     */
     public RelativeLayout getView() {
         return mRootView;
     }

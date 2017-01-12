@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
  */
 
 public class JsoupParser {
+
     private final String ClassName = "class";
     private final String ContentName = "content";
     private final String AnchorName = "a";
@@ -38,6 +39,10 @@ public class JsoupParser {
 
     public void setElementAttribute(Element element, String attributeName, String attributeValue) {
         element.attr(attributeName, attributeValue);
+    }
+
+    public Elements getElementsByMatchingText(String text) {
+        return mDocument.getElementsMatchingText(text);
     }
 
     // public Elements getElementsByTagAndValue(Element element, String tag, String value) {
