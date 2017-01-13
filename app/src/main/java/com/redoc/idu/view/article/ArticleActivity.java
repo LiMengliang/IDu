@@ -90,4 +90,12 @@ public class ArticleActivity extends AppCompatActivity implements IArticleContra
     public void setPresenter(IArticleContract.IArticlePresenter presenter) {
         mArticlePresenter = presenter;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IArticleContract.IArticlePresenter getPresenter() {
+        return mArticlePresenter;
+    }
 }

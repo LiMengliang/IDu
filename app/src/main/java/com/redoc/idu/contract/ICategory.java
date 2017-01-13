@@ -1,9 +1,13 @@
 package com.redoc.idu.contract;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.redoc.idu.IPresenter;
 import com.redoc.idu.IView;
+import com.redoc.idu.view.widget.CategoryIconView;
 
 /**
  * Contract between {@link ICategoryView} and {@link ICategoryPresenter}
@@ -15,13 +19,21 @@ public interface ICategory {
     /**
      * Category view.
      */
-    interface ICategoryView {
+    interface ICategoryView<T extends ICategoryPresenter> extends IView<T> {
 
         /**
          * Get or create the view of the category.
          * @return
          */
         Fragment getOrCreateRootFragment();
+    }
+
+    interface ICategoryIconView extends IView<ICategoryPresenter> {
+        CategoryIconView getCategoryIconView();
+
+        void setLayoutParameter(ViewGroup.LayoutParams layoutParameter);
+
+        View getView();
     }
 
     /**
@@ -46,6 +58,8 @@ public interface ICategory {
          * @return Attached {@link ICategoryView} instance.
          */
         ICategoryView getAttachedCategoryView();
+
+        ICategoryIconView getCategoryIconView();
 
         /**
          * On a category is selected.

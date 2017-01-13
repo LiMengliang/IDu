@@ -1,6 +1,5 @@
 package com.redoc.idu.contract.multichannel;
 
-import com.redoc.idu.IView;
 import com.redoc.idu.contract.ICategory;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public interface IMultiChannelsCategoryContract {
     /**
      * Multi-channels category view.
      */
-    interface IMultiChannelsCategoryView extends ICategory.ICategoryView, IView<IMultiChannelsCategoryPresenter> {
+    interface IMultiChannelsCategoryView extends ICategory.ICategoryView<IMultiChannelsCategoryPresenter> {
 
         /**
          * Initialize a category view.

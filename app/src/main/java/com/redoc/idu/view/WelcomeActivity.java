@@ -1,14 +1,17 @@
 package com.redoc.idu.view;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.redoc.idu.IDuApplication;
 import com.redoc.idu.R;
 import com.redoc.idu.utils.BitmapUtils;
+import com.redoc.idu.utils.layout.LayoutUtils;
 
 import java.io.IOException;
 
@@ -31,6 +34,9 @@ public class WelcomeActivity extends AppCompatActivity /*implements View.OnClick
      */
     @BindView(R.id.enter_button)
     View mEnter;
+
+    @BindView(R.id.app_name)
+    TextView mAppName;
 
     /**
      * On create.
@@ -57,6 +63,10 @@ public class WelcomeActivity extends AppCompatActivity /*implements View.OnClick
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        int appNamePaddingToop = LayoutUtils.getNPercentOfScreenHeightInPixel(IDuApplication.Context, 0.15f);
+        mAppName.setPadding(mAppName.getPaddingLeft(), appNamePaddingToop,
+                mAppName.getPaddingRight(), mAppName.getPaddingBottom());
     }
 
     /**

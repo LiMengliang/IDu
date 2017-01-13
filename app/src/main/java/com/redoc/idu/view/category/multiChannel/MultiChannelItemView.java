@@ -71,6 +71,14 @@ public class MultiChannelItemView extends TextView implements IMultiChannelContr
      * {@inheritDoc}
      */
     @Override
+    public IMultiChannelContract.IMultiChannelPresenter getPresenter() {
+        return mChannelPresenter;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setChannelItemStyle(boolean followed) {
         if(followed) {
             setTextColor(Color.DKGRAY);

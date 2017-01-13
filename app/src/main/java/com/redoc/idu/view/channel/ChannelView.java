@@ -40,4 +40,12 @@ public class ChannelView implements IChannel.IChannelView {
         mChannelPresenter = presenter;
         ((ChannelFragment)getRootFragment()).setPresenter(presenter);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IChannel.IChannelPresenter getPresenter() {
+        return mChannelPresenter;
+    }
 }

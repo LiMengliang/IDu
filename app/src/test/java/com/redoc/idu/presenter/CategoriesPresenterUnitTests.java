@@ -38,7 +38,8 @@ public class CategoriesPresenterUnitTests {
      */
     @Test
     public void CategoriesPresenter_setPresenter_called() {
-        CategoriesPresenter categoriesPresenter = new CategoriesPresenter(categoriesView);
+        CategoriesPresenter categoriesPresenter = new CategoriesPresenter();
+        categoriesView.setPresenter(categoriesPresenter);
         Mockito.verify(categoriesView).setPresenter(categoriesPresenter);
     }
 
@@ -47,8 +48,9 @@ public class CategoriesPresenterUnitTests {
      */
     @Test
     public void CategoriesPresenter_onSelectACategory_switchToCategory_called() {
-        CategoriesPresenter categoriesPresenter = new CategoriesPresenter(categoriesView);
+        CategoriesPresenter categoriesPresenter = new CategoriesPresenter();
+        categoriesView.setPresenter(categoriesPresenter);
         categoriesPresenter.onSelectACategory(mCategoryPresenter);
-        Mockito.verify(categoriesView).switchToCategory(mCategoryPresenter);
+        Mockito.verify(categoriesView).switchToCategory(mCategoryPresenter.getAttachedCategoryView());
     }
 }

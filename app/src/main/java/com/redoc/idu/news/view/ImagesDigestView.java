@@ -47,6 +47,14 @@ public class ImagesDigestView implements IDigest.IDigestView {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IDigest.IDigestPresenter getPresenter() {
+        return mNewsDigestPresenter;
+    }
+
+    /**
      * {@inheritDoc /}
      */
     @Override

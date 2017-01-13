@@ -10,11 +10,10 @@
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
     <TextView
-        android:id="@+id/fullscreen_content"
+        android:id="@+id/app_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:paddingTop="150dp"
         android:keepScreenOn="true"
         android:text="@string/idu_title"
         android:textColor="@color/white"

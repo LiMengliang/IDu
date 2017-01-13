@@ -1,9 +1,6 @@
 package com.redoc.idu.news.view;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,7 +12,6 @@ import com.redoc.idu.contract.IDigest;
 import com.redoc.idu.news.presenter.NewsDigestPresenter;
 import com.redoc.idu.utils.DrawableUtils;
 import com.redoc.idu.view.article.ArticleActivity;
-import com.redoc.idu.view.widget.IDelayLoadImageView;
 
 /**
  * Multi images article digest view.
@@ -60,6 +56,14 @@ public class MultiImagesArticleDigestView implements IDigest.IDigestView {
         mImageViewA.setImageDrawable(DrawableUtils.colorIdToDrawable(R.color.light_gray));
         mImageViewB.setImageDrawable(DrawableUtils.colorIdToDrawable(R.color.light_gray));
         mImageViewC.setImageDrawable(DrawableUtils.colorIdToDrawable(R.color.light_gray));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IDigest.IDigestPresenter getPresenter() {
+        return mNewsDigestPresenter;
     }
 
     /**

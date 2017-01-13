@@ -4,13 +4,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.redoc.idu.R;
 import com.redoc.idu.contract.ICategories;
 import com.redoc.idu.contract.ICategory;
 import com.redoc.idu.presenter.CategoriesPresenter;
+import com.redoc.idu.utils.layout.LayoutUtils;
 import com.redoc.idu.view.widget.CategoryIconView;
 
 import java.util.ArrayList;
@@ -42,20 +45,12 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
     /**
      * A list of category icon view.
      */
-    private List<CategoryIconView> mCategoryIconViews;
+    private List<ICategory.ICategoryIconView> mCategoryIconViews;
 
     /**
      * Selected category.
      */
-    private ICategory.ICategoryPresenter mSelectedCategory;
-
-    /**
-     * Get presenter.
-     * @return Category presenter.
-     */
-    ICategories.ICategoriesPresenter getCategoriesPresenter() {
-        return mCategoriesPresenter;
-    }
+    private ICategory.ICategoryView mSelectedCategory;
 
     /**
      * On create
@@ -68,24 +63,27 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         ButterKnife.bind(this);
 
+        ViewGroup.LayoutParams layoutParams = mCategorySelectorBar.getLayoutParams();
+        layoutParams.height = LayoutUtils.getNPercentOfScreenHeightInPixel(this, 0.06f);
+        mCategorySelectorBar.setLayoutParams(layoutParams);
+
         mCategoryIconViews = new ArrayList<>();
-        mCategoriesPresenter = new CategoriesPresenter(this);
+        mCategoriesPresenter = new CategoriesPresenter();
+        setPresenter(mCategoriesPresenter);
     }
 
     /**
      * Switch to category.
-     * @param categoryPresenter Presenter of the category.
+     * @param selectedCategoryView Selected view of the category.
      */
     @Override
-    public void switchToCategory(ICategory.ICategoryPresenter categoryPresenter) {
-        categoryPresenter.onSelected();
-        if(mSelectedCategory != categoryPresenter) {
-            mSelectedCategory = categoryPresenter;
-            ICategory.ICategoryView categoryView = categoryPresenter.getAttachedCategoryView();
-            Fragment categoryFragment = categoryView.getOrCreateRootFragment();
+    public void switchToCategory(ICategory.ICategoryView selectedCategoryView) {
+        if(mSelectedCategory != selectedCategoryView) {
+            mSelectedCategory = selectedCategoryView;
+            Fragment categoryFragment = selectedCategoryView.getOrCreateRootFragment();
             if(mSelectedCategoryView == null) {
                 getSupportFragmentManager().beginTransaction().add(R.id.contentView, categoryFragment).commit();
-                mSelectedCategoryView = categoryView;
+                mSelectedCategoryView = selectedCategoryView;
             }
             else {
                 if(categoryFragment.isAdded()) {
@@ -99,14 +97,6 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
     }
 
     /**
-     * Add category.
-     */
-    @Override
-    public void addCategory() {
-
-    }
-
-    /**
      * Set categories.
      * @param categoryPresenters A list of category presenter.
      */
@@ -116,20 +106,18 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
         layoutParameters.weight = 1;
         int index = 0;
         for(final ICategory.ICategoryPresenter categoryPresenter : categoryPresenters) {
-            CategoryIconView categoryIconView = new CategoryIconView(this);
-            categoryIconView.setIconResourceId(categoryPresenter.getIconResourceId());
-            categoryIconView.setName(categoryPresenter.getCategoryName());
-            categoryIconView.setLayoutParams(layoutParameters);
-            mCategorySelectorBar.addView(categoryIconView, index++);
+            ICategory.ICategoryIconView categoryIconView = categoryPresenter.getCategoryIconView();
+            categoryIconView.setLayoutParameter(layoutParameters);
+            mCategorySelectorBar.addView(categoryIconView.getView(), index++);
             mCategoryIconViews.add(categoryIconView);
-            categoryIconView.setOnClickListener(new View.OnClickListener() {
+            categoryIconView.getView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mCategoriesPresenter.onSelectACategory(categoryPresenter);
                 }
             });
         }
-        switchToCategory(categoryPresenters.get(0));
+        switchToCategory(categoryPresenters.get(0).getAttachedCategoryView());
     }
 
     /**
@@ -140,5 +128,13 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
     public void setPresenter(ICategories.ICategoriesPresenter presenter) {
         presenter.onAttached(this);
         setCategories(presenter.getCategoryPresenters());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ICategories.ICategoriesPresenter getPresenter() {
+        return mCategoriesPresenter;
     }
 }

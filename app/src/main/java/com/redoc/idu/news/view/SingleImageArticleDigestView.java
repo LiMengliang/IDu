@@ -66,4 +66,12 @@ public class SingleImageArticleDigestView implements IDigest.IDigestView {
         mNewsDigestPresenter.onAttached(this);
         mImageView.setImageDrawable(DrawableUtils.colorIdToDrawable(R.color.light_gray));
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IDigest.IDigestPresenter getPresenter() {
+        return mNewsDigestPresenter;
+    }
 }

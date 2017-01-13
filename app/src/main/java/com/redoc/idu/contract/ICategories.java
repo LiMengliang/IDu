@@ -18,14 +18,9 @@ public interface ICategories {
 
         /**
          * Switch category.
-         * @param categoryPresenter Presenter of the category.
+         * @param categoryView View of the category.
          */
-        void switchToCategory(ICategory.ICategoryPresenter categoryPresenter);
-
-        /**
-         * Add category.
-         */
-        void addCategory();
+        void switchToCategory(ICategory.ICategoryView categoryView);
     }
 
     /**

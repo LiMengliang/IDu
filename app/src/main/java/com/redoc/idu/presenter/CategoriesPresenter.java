@@ -1,7 +1,5 @@
 package com.redoc.idu.presenter;
 
-import android.support.annotation.NonNull;
-
 import com.redoc.idu.IDuApplication;
 import com.redoc.idu.IView;
 import com.redoc.idu.radio.model.AudioCategory;
@@ -40,15 +38,16 @@ public class CategoriesPresenter implements ICategories.ICategoriesPresenter {
      */
     @Override
     public void onSelectACategory(ICategory.ICategoryPresenter categoryPresenter) {
+        ICategory.ICategoryView categoryView = categoryPresenter.getAttachedCategoryView();
         // TODO: modify model here.
-        mCategoriesView.switchToCategory(categoryPresenter);
+        categoryPresenter.onSelected();
+        mCategoriesView.switchToCategory(categoryView);
     }
 
     /**
      * Create a CategoriesPresenter instance.
-     * @param view Attached view.
      */
-    public CategoriesPresenter(@NonNull ICategories.ICategoriesView view) {
+    public CategoriesPresenter() {
         mCategoryPresenters = new ArrayList<>();
         // TODO: We need a extensible way to add categories.
         for(Category category :  IDuApplication.CategoryAndChannelManager.getCategories()) {
@@ -60,8 +59,6 @@ public class CategoriesPresenter implements ICategories.ICategoriesPresenter {
             }
         }
         mCategoryPresenters.add(new SettingsCategoryPresenter(new SettingsCategory()));
-        mCategoriesView = view;
-        mCategoriesView.setPresenter(this);
     }
 
     /**
@@ -70,6 +67,10 @@ public class CategoriesPresenter implements ICategories.ICategoriesPresenter {
      */
     @Override
     public void onAttached(IView view) {
+        if(view instanceof ICategories.ICategoriesView)
+        {
+            mCategoriesView = (ICategories.ICategoriesView)view;
+        }
     }
 
     /**

@@ -10,4 +10,10 @@ public interface IView<T extends IPresenter> {
      * @param presenter The presenter.
      */
     void setPresenter(T presenter);
+
+    /**
+     * Get presenter;
+     * @return The presenter.
+     */
+    T getPresenter();
 }

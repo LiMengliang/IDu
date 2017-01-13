@@ -1,7 +1,9 @@
 package com.redoc.idu.presenter;
 
+import com.redoc.idu.IDuApplication;
 import com.redoc.idu.IView;
 import com.redoc.idu.contract.ICategory;
+import com.redoc.idu.view.widget.CategoryIconView;
 
 /**
  * Single channel category presenter.
@@ -34,5 +36,16 @@ public abstract class SingleChannelCategoryPresenter implements ICategory.ICateg
     @Override
     public void onDetached() {
 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ICategory.ICategoryIconView getCategoryIconView() {
+        CategoryIconView categoryIconView = new CategoryIconView(IDuApplication.Context);
+        categoryIconView.setName(getCategoryName());
+        categoryIconView.setIconResourceId(getIconResourceId());
+        return categoryIconView;
     }
 }

@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.redoc.idu.R;
+import com.redoc.idu.contract.ICategory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,7 +20,7 @@ import butterknife.ButterKnife;
  * Category icon view.
  * Created by limen on 2016/8/19.
  */
-public class CategoryIconView extends LinearLayout {
+public class CategoryIconView extends LinearLayout implements ICategory.ICategoryIconView {
     /**
      * The icon image view.
      */
@@ -29,6 +32,8 @@ public class CategoryIconView extends LinearLayout {
      */
     @BindView(R.id.name)
     TextView mName;
+
+    private ICategory.ICategoryPresenter mCategoryPresenter;
 
     /**
      * Construct a CategoryIconView instance.
@@ -70,5 +75,30 @@ public class CategoryIconView extends LinearLayout {
      */
     public void setName(String name) {
         mName.setText(name);
+    }
+
+    @Override
+    public CategoryIconView getCategoryIconView() {
+        return null;
+    }
+
+    @Override
+    public void setLayoutParameter(ViewGroup.LayoutParams layoutParameter) {
+        setLayoutParams(layoutParameter);
+    }
+
+    @Override
+    public View getView() {
+        return this;
+    }
+
+    @Override
+    public void setPresenter(ICategory.ICategoryPresenter presenter) {
+        mCategoryPresenter = presenter;
+    }
+
+    @Override
+    public ICategory.ICategoryPresenter getPresenter() {
+        return mCategoryPresenter;
     }
 }

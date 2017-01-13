@@ -47,6 +47,14 @@ public class MultiChannelsCategoryView implements IMultiChannelsCategoryContract
      * {@inheritDoc}
      */
     @Override
+    public IMultiChannelsCategoryContract.IMultiChannelsCategoryPresenter getPresenter() {
+        return mMultiChannelsCategoryPresenter;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void initialize() {
     }
 

@@ -33,6 +33,11 @@ public class MultiChannelsManagerView extends LinearLayout implements IMultiChan
     private int mCollumn;
 
     /**
+     * Multi channel presenter.
+     */
+    private IMultiChannelManagerContract.IMultiChannelManagerPresenter mMultiChannelManagerPresenter;
+
+    /**
      * Construct a MultiChannelsManagerView instance.
      * @param context The context.
      */
@@ -85,6 +90,15 @@ public class MultiChannelsManagerView extends LinearLayout implements IMultiChan
      */
     @Override
     public void setPresenter(IMultiChannelManagerContract.IMultiChannelManagerPresenter presenter) {
+        mMultiChannelManagerPresenter = presenter;
         mChannelsGrid.setAdapter(new ChannelsGridAdapter(presenter.getAllChannels()));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IMultiChannelManagerContract.IMultiChannelManagerPresenter getPresenter() {
+        return mMultiChannelManagerPresenter;
     }
 }

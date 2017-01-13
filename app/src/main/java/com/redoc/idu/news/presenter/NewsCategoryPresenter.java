@@ -1,15 +1,20 @@
 package com.redoc.idu.news.presenter;
 
+import android.util.AttributeSet;
+
 import com.redoc.idu.IDuApplication;
 import com.redoc.idu.R;
+import com.redoc.idu.contract.ICategory;
 import com.redoc.idu.contract.multichannel.IMultiChannelContract;
 import com.redoc.idu.model.bean.Channel;
 import com.redoc.idu.model.MultiChannelsCategory;
 import com.redoc.idu.presenter.multichannel.MultiChannelPresenter;
 import com.redoc.idu.presenter.multichannel.MultiChannelsCategoryPresenter;
+import com.redoc.idu.view.widget.CategoryIconView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.Attributes;
 
 /**
  * News category presenter.

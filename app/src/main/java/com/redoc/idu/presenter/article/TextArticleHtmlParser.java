@@ -62,7 +62,7 @@ public class TextArticleHtmlParser {
             "\t\t<meta http-equiv=\"Cache-Control\" content=\"no-transform\"/>\n" +
             "\t</head>\n" +
             "\t<body>\n" +
-            "\t\t<table style=\"padding:10px 0px 0px 0px; border-color:#0066cc;border-left-style:solid;border-width:5px\"><tr><td valign=\"top\">" +
+            "\t\t<table style=\"padding:10px 0px 0px 0px; border-color:#CD6839;border-left-style:solid;border-width:5px\"><tr><td valign=\"top\">" +
             "\t\t\t<div class=\"title\"><!--TITLE--></div>" +
             "\t\t\t<div class=\"source\"><!--TIME_SOURCE--></div>\n" +
             "\t\t</td></tr>" +
