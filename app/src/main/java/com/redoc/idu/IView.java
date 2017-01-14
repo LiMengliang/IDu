@@ -1,5 +1,7 @@
 package com.redoc.idu;
 
+import android.view.View;
+
 /**
  * Created by limen on 2016/8/17.
  * Base view.

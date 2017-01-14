@@ -7,6 +7,8 @@ import com.redoc.idu.contract.article.IArticleContract;
 import com.redoc.idu.utils.html.JsoupParser;
 
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
+import org.jsoup.parser.Tag;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
@@ -28,10 +30,16 @@ public class TextArticleHtmlParser {
     private final String ImageSourceAttributeName = "src";
     private final String AnchorTagName = "a";
     private final String ParagraphTagName = "p";
+    private final String BrTagName = "br";
+    private final String PreTagName = "pre";
     private final String ImageAddressSource = "http://s.cimg.163.com/i/";
+    private final String StyleAttributeName = "style";
+    private final String MainColor = "#CD6839";
+
     private final List<String> ImageExtensions = new ArrayList<String>()
     {
         {
+            add(".gif.");
             add(".jpeg.");
             add(".jpg.");
             add(".png.");
@@ -49,25 +57,27 @@ public class TextArticleHtmlParser {
             "\t\t\timg{ max-width:100%; height:auto;}\n" +
             "\t\t\t.source {color:#999999; font-size:12px; text-align:left}\n" +
             "\t\t\t.title{ text-align:left; font-size:20px; font-weight:bold; padding:0px 3px 20px 0px; }\n" +
-            "\t\t\tp {line-height:150%; padding:20px 0px 0px 0px;}\n" +
-            "\t\t\t.content{color:#666666; font-size:15px; margin:3px; }\n" +
+            "\t\t\tp {line-height:170%; padding:20px 0px 0px 0px;}\n" +
+            "\t\t\tp.recommend {line-height:200%; font-size:20px; color:" + MainColor +"}\n" +
+            "\t\t\t.content{color:#666666; font-size:16px; margin:3px; }\n" +
             "\t\t\tdiv.wrapper{\n" +
             "\t\t\tfloat:left; /* important */\n" +
             "\t\t\tposition:relative; /* important(so we can absolutely position the description div */ \n" +
             "}\n" +
-            "\t\t\tdiv.description{position:absolute; bottom:0px; left:0px; width:100%; background-color:black; font-size:15px; opacity:0.6; filter:alpha(opacity=60);}\n" +
-            "p.description_content{text-align:right; color:white;}\n"+
+            "\t\t\tdiv.description{position:absolute; bottom:0px; left:0px; width:100%; font-size:15px; opacity:0.6; filter:alpha(opacity=60);}\n" +
+            "p.description_content{text-align:right; color:white; padding:0px 10px 0px 0px}\n"+
             "\t\t</style>\n" +
             "\t\t<meta http-equiv=\"Content-Type\" content=\"application/vnd.wap.xhtml+xml;charset=utf-8\"/>\n" +
             "\t\t<meta http-equiv=\"Cache-Control\" content=\"no-transform\"/>\n" +
             "\t</head>\n" +
             "\t<body>\n" +
-            "\t\t<table style=\"padding:10px 0px 0px 0px; border-color:#CD6839;border-left-style:solid;border-width:5px\"><tr><td valign=\"top\">" +
+            "\t\t<table style=\"padding:15px 0px 0px 0px; border-color:" + MainColor +";border-left-style:solid;border-width:5px;\"><tr><td valign=\"top\">" +
             "\t\t\t<div class=\"title\"><!--TITLE--></div>" +
             "\t\t\t<div class=\"source\"><!--TIME_SOURCE--></div>\n" +
             "\t\t</td></tr>" +
             "\t\t</table>\n" +
             "\t\t<!--CONTENT-->\n" +
+            "<p/><p/>" +
             "\t</body>\n" +
             "</html>";
 
@@ -77,8 +87,11 @@ public class TextArticleHtmlParser {
     private final String VideoImageNode =
             "<div class=\"wrapper\"><a href=\"<!--VIDEO_SOURCE-->\"><img src=\"<!--IMAGE_SOURCE-->\"/></a>" +
             "\t\t<div class='description'>\n" +
-            "\t\t\t<a href=\"<!--VIDEO_SOURCE-->\"><p class='description_content'>播放视频▶  </p></a>\n" +
+            "\t\t\t<a href=\"<!--VIDEO_SOURCE-->\"><p class='description_content'>播放视频▶</p></a>\n" +
             "\t\t</div>\n";
+
+    private final String RecommendReading = "<p class=\"recommend\">悦读推荐</p><hr style=\"dotted\" color=\"" + MainColor + "\"size=1/> \n" +
+            "<p><!--RecommendReading--></p>";
 
     private JsoupParser mJsoupParser;
     private IArticleContract.IArticlePresenter mArticlePresenter;
@@ -295,6 +308,9 @@ public class TextArticleHtmlParser {
                 // get large image src
                 dealWithImageTags(contentNode);
 
+                // deal with recomend reading
+                dealWithRecomendTag(contentNode);
+
                 Element about = mJsoupParser.getFirstElementByClass(AboutClassName);
                 String timeAndSource = about.text();
                 String htmlContent = ArticleTemplate.replace("<!--CONTENT-->", contentNode.toString());
@@ -351,6 +367,17 @@ public class TextArticleHtmlParser {
                     break;
                 }
             }
+        }
+
+        private void dealWithRecomendTag(Element contentNode) {
+            Element preElement = mJsoupParser.getElementByTag(PreTagName, contentNode);
+            preElement.attr(StyleAttributeName, "");
+            String content = "";
+            for (Node element: preElement.childNodes()) {
+                content += element.toString();
+            }
+            contentNode.append(RecommendReading.replace("<!--RecommendReading-->", content));
+            preElement.remove();
         }
     }
 }

@@ -48,11 +48,6 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
     private List<ICategory.ICategoryIconView> mCategoryIconViews;
 
     /**
-     * Selected category.
-     */
-    private ICategory.ICategoryView mSelectedCategory;
-
-    /**
      * On create
      * @param savedInstanceState The bundle instance.
      */
@@ -78,20 +73,18 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
      */
     @Override
     public void switchToCategory(ICategory.ICategoryView selectedCategoryView) {
-        if(mSelectedCategory != selectedCategoryView) {
-            mSelectedCategory = selectedCategoryView;
-            Fragment categoryFragment = selectedCategoryView.getOrCreateRootFragment();
-            if(mSelectedCategoryView == null) {
-                getSupportFragmentManager().beginTransaction().add(R.id.contentView, categoryFragment).commit();
-                mSelectedCategoryView = selectedCategoryView;
+        Fragment categoryFragment = selectedCategoryView.getOrCreateRootFragment();
+        // If first fragment, use add transaction, otherwise use hide and show.
+        if(mSelectedCategoryView == null) {
+            getSupportFragmentManager().beginTransaction().add(R.id.contentView, categoryFragment).commit();
+            mSelectedCategoryView = selectedCategoryView;
+        }
+        else {
+            if(categoryFragment.isAdded()) {
+                getSupportFragmentManager().beginTransaction().hide(mSelectedCategoryView.getOrCreateRootFragment()).show(categoryFragment).commit();
             }
             else {
-                if(categoryFragment.isAdded()) {
-                    getSupportFragmentManager().beginTransaction().hide(mSelectedCategoryView.getOrCreateRootFragment()).show(categoryFragment).commit();
-                }
-                else {
-                    getSupportFragmentManager().beginTransaction().hide(mSelectedCategoryView.getOrCreateRootFragment()).add(R.id.contentView, categoryFragment).commit();
-                }
+                getSupportFragmentManager().beginTransaction().hide(mSelectedCategoryView.getOrCreateRootFragment()).add(R.id.contentView, categoryFragment).commit();
             }
         }
     }

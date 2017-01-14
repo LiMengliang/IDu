@@ -78,16 +78,10 @@ public class CategoryIconView extends LinearLayout implements ICategory.ICategor
     }
 
     @Override
-    public CategoryIconView getCategoryIconView() {
-        return null;
-    }
-
-    @Override
     public void setLayoutParameter(ViewGroup.LayoutParams layoutParameter) {
         setLayoutParams(layoutParameter);
     }
 
-    @Override
     public View getView() {
         return this;
     }

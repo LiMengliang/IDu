@@ -30,6 +30,7 @@ public class CategoriesPresenter implements ICategories.ICategoriesPresenter {
     /**
      * The attached {@link ICategories.ICategoriesPresenter}
      */
+    // TODO: Think about if we can do anything to avoid ooo and memory leak
     private List<ICategory.ICategoryPresenter> mCategoryPresenters;
 
     /**

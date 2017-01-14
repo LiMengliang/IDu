@@ -29,10 +29,17 @@ public interface ICategory {
     }
 
     interface ICategoryIconView extends IView<ICategoryPresenter> {
-        CategoryIconView getCategoryIconView();
 
+        /**
+         * Set layout parameter.
+         * @param layoutParameter Layout parameters.
+         */
         void setLayoutParameter(ViewGroup.LayoutParams layoutParameter);
 
+        /**
+         * Get view.
+         * @return View of the category icon view.
+         */
         View getView();
     }
 

@@ -15,6 +15,9 @@ public class MultiChannelsCategoryView implements IMultiChannelsCategoryContract
      */
     private MultiChannelsCategoryFragment rootFragment;
 
+    /**
+     * Multi channels category presenter.
+     */
     private IMultiChannelsCategoryContract.IMultiChannelsCategoryPresenter mMultiChannelsCategoryPresenter;
 
 
@@ -23,6 +26,7 @@ public class MultiChannelsCategoryView implements IMultiChannelsCategoryContract
      *
      * @return Root fragment.
      */
+    // TODO: the rootFragment can be weak reference or soft reference
     @Override
     public MultiChannelsCategoryFragment getOrCreateRootFragment() {
         if(rootFragment == null) {

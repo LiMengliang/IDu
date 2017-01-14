@@ -95,20 +95,6 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
         return mFollowedChannels;
     }
 
-    /**
-     * Get selected channel.
-     *
-     * @return Presenter of selected channel.
-     */
-    @Override
-    public IMultiChannelContract.IMultiChannelPresenter getSelectedChannel() {
-        if(mSelectedChannel != null && mSelectedChannel.isFollowed()) {
-            return mSelectedChannel;
-        }
-        selectChannel(0);
-        return mSelectedChannel;
-    }
-
     @Override
     public IMultiChannelManagerContract.IMultiChannelManagerPresenter getMultiChannelManager() {
         return mMultiChannelsManagerPresenter;

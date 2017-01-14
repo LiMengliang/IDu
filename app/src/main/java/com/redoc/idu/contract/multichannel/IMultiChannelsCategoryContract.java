@@ -68,7 +68,7 @@ public interface IMultiChannelsCategoryContract {
          * Get selected channel.
          * @return Presenter of the selected channel.
          */
-        IMultiChannelContract.IMultiChannelPresenter getSelectedChannel();
+        // IMultiChannelContract.IMultiChannelPresenter getSelectedChannel();
 
         /**
          * Get multiple channel manager.
