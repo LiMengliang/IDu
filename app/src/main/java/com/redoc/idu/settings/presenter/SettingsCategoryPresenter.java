@@ -1,7 +1,7 @@
 package com.redoc.idu.settings.presenter;
 
 import com.redoc.idu.R;
-import com.redoc.idu.presenter.SingleChannelCategoryPresenter;
+import com.redoc.idu.framework.presenter.SingleChannelCategoryPresenter;
 import com.redoc.idu.settings.model.SettingsCategory;
 
 /**

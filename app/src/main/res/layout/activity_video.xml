@@ -4,7 +4,7 @@
     android:id="@+id/activity_video"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.redoc.idu.view.video.VideoActivity">
+    tools:context=".framework.view.video.VideoActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

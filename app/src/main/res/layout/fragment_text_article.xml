@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.redoc.idu.view.article.TextArticleFragment">
+    tools:context=".framework.view.article.TextArticleFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <WebView

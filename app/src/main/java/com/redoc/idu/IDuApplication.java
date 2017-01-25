@@ -3,7 +3,7 @@ package com.redoc.idu;
 import android.app.Application;
 import android.content.Context;
 
-import com.redoc.idu.model.CategoryAndChannelManager;
+import com.redoc.idu.framework.model.CategoryAndChannelManager;
 import com.redoc.idu.utils.html.JsoupParser;
 import com.redoc.idu.utils.network.HttpClient;
 

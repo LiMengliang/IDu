@@ -1,6 +1,6 @@
 package com.redoc.idu.settings.model;
 
-import com.redoc.idu.model.bean.Category;
+import com.redoc.idu.framework.model.bean.Category;
 
 /**
  * Settings category.

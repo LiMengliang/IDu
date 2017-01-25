@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
-            android:name=".view.WelcomeActivity"
+            android:name=".framework.view.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Fullscreen">
@@ -26,26 +26,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.MainActivity" />
+        <activity android:name=".framework.view.MainActivity" />
         <activity
-            android:name=".view.CategoriesActivity"
+            android:name=".framework.view.CategoriesActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.article.ArticleActivity"
+            android:name=".framework.view.article.ArticleActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.photo.PhotoActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="my.com"
-                    android:scheme="m" />
-            </intent-filter>
+        <activity
+            android:name=".framework.view.photo.PhotoActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-        <activity android:name=".view.video.VideoActivity"
+        <activity android:name=".framework.view.video.VideoActivity"
             android:theme="@style/AppTheme.Fullscreen"
             android:screenOrientation="landscape" ></activity>
     </application>

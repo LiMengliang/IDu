@@ -1,12 +1,12 @@
 package com.redoc.idu.news.presenter;
 
-import com.redoc.idu.contract.multichannel.IMultiChannelsCategoryContract;
-import com.redoc.idu.model.bean.Channel;
+import com.redoc.idu.framework.contract.multichannel.IMultiChannelsCategoryContract;
+import com.redoc.idu.framework.model.bean.Channel;
 import com.redoc.idu.news.model.NewsDigest;
 import com.redoc.idu.news.view.NewsDigestsAdapter;
-import com.redoc.idu.presenter.DigestsProvider;
-import com.redoc.idu.presenter.multichannel.MultiChannelPresenter;
-import com.redoc.idu.view.channel.DigestsAdapter;
+import com.redoc.idu.framework.presenter.DigestsProvider;
+import com.redoc.idu.framework.presenter.multichannel.MultiChannelPresenter;
+import com.redoc.idu.framework.view.channel.DigestsAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;

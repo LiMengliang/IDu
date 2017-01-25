@@ -1,8 +1,8 @@
 package com.redoc.idu.news.presenter;
 
-import com.android.volley.Response;
 import com.redoc.idu.IView;
-import com.redoc.idu.contract.IDigest;
+import com.redoc.idu.framework.contract.IDigest;
+import com.redoc.idu.framework.presenter.digest.DigestsWithImagePresenter;
 import com.redoc.idu.news.model.NewsDigest;
 import com.redoc.idu.news.model.NewsDigestType;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * News digest presenter.
  * Created by limen on 2016/11/5.
  */
-public class NewsDigestPresenter implements IDigest.IDigestPresenter {
+public class NewsDigestPresenter extends DigestsWithImagePresenter {
     private NewsDigest mDigestModel;
     private IDigest.IDigestView mDigestView;
 

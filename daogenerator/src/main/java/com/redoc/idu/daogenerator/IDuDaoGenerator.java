@@ -6,8 +6,8 @@ import de.greenrobot.daogenerator.DaoGenerator;
 
 public class IDuDaoGenerator {
     public static void main(String[] args)  throws Exception {
-        Schema schema = new Schema(1, "com.redoc.idu.model.bean");
-        schema.setDefaultJavaPackageDao("com.redoc.idu.model.dao");
+        Schema schema = new Schema(1, "com.redoc.idu.framework.model.bean");
+        schema.setDefaultJavaPackageDao("com.redoc.idu.framework.model.dao");
         addCategoryEntity(schema);
         addChannelEntity(schema);
         new DaoGenerator().generateAll(schema, "app\\src\\main\\java-gen");

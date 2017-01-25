@@ -1,7 +1,7 @@
 package com.redoc.idu.news.presenter;
 
-import com.redoc.idu.model.bean.Category;
-import com.redoc.idu.model.MultiChannelsCategory;
+import com.redoc.idu.framework.model.bean.Category;
+import com.redoc.idu.framework.model.MultiChannelsCategory;
 
 import org.junit.Test;
 

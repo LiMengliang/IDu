@@ -1,18 +1,18 @@
 package com.redoc.idu.news.view;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.redoc.idu.IDuApplication;
 import com.redoc.idu.R;
-import com.redoc.idu.contract.IChannel;
+import com.redoc.idu.framework.contract.IChannel;
+import com.redoc.idu.framework.view.digest.ImagesDigestView;
+import com.redoc.idu.framework.view.digest.MultiImagesArticleDigestView;
+import com.redoc.idu.framework.view.digest.SingleImageArticleDigestView;
 import com.redoc.idu.news.model.NewsDigestType;
 import com.redoc.idu.news.presenter.NewsDigestPresenter;
-import com.redoc.idu.view.channel.DigestsAdapter;
+import com.redoc.idu.framework.view.channel.DigestsAdapter;
 
 /**
  * Adapter for news digests.
@@ -69,6 +69,7 @@ public class NewsDigestsAdapter extends DigestsAdapter {
             case SingleImageArticle:
                 SingleImageArticleDigestViewHolder singleImageArticleDigestViewHolder = (SingleImageArticleDigestViewHolder)holder;
                 singleImageArticleDigestViewHolder.setDataBinding(newsDigestPresenter);
+                singleImageArticleDigestViewHolder.mSingleImageArticleDigestView.setClickListener(new TextArticleDigestClickListener(newsDigestPresenter));
                 if(mIsFirstScreen) {
                     singleImageArticleDigestViewHolder.loadImages();
                 }
@@ -76,6 +77,7 @@ public class NewsDigestsAdapter extends DigestsAdapter {
             case MultiImagesArticle:
                 MultiImagesArticleDigestViewHolder multiImagesArticleDigestViewHolder = (MultiImagesArticleDigestViewHolder)holder;
                 multiImagesArticleDigestViewHolder.setDataBinding(newsDigestPresenter);
+                multiImagesArticleDigestViewHolder.mMultiImagesArticleDigestView.setClickListener(new TextArticleDigestClickListener(newsDigestPresenter));
                 if(mIsFirstScreen) {
                     multiImagesArticleDigestViewHolder.loadImages();
                 }
@@ -83,6 +85,7 @@ public class NewsDigestsAdapter extends DigestsAdapter {
             case Images:
                 ImagesDigestViewHolder imagesDigestViewHolder = (ImagesDigestViewHolder)holder;
                 imagesDigestViewHolder.setDataBinding(newsDigestPresenter);
+                imagesDigestViewHolder.mImagesDigestView.setClickListener(new ImagesDigestClickListener(newsDigestPresenter));
                 if (mIsFirstScreen) {
                     imagesDigestViewHolder.loadImages();
                 }
