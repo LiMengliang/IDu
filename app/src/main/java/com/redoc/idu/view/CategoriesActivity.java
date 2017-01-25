@@ -111,6 +111,9 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
             });
         }
         switchToCategory(categoryPresenters.get(0).getAttachedCategoryView());
+        mCategoryIconViews.get(0).select(true);
+        mCategoryIconViews.get(1).select(false);
+        mCategoryIconViews.get(2).select(false);
     }
 
     /**

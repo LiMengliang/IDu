@@ -3,5 +3,6 @@
     <declare-styleable name="CategoryIconView">
         <attr name="category_icon" format="string"/>
         <attr name="name" format="string"/>
+        <attr name="selected" format="boolean"/>
     </declare-styleable>
 </resources>

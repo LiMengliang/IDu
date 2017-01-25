@@ -165,7 +165,7 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
     public ICategory.ICategoryIconView getCategoryIconView() {
         CategoryIconView categoryIconView = new CategoryIconView(IDuApplication.Context);
         categoryIconView.setName(getCategoryName());
-        categoryIconView.setIconResourceId(getIconResourceId());
+        categoryIconView.setIconResourceId(getSelectedIconResourceId(), getSelectedIconResourceId(), 0x595a5e, 0xCD6839);
         return categoryIconView;
     }
 

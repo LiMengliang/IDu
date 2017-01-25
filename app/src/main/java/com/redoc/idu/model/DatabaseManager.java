@@ -27,8 +27,8 @@ class DatabaseManager {
         mDaoSession = mDaoMaster.newSession();
         mCategoryDao = mDaoSession.getCategoryDao();
         mChannelDao = mDaoSession.getChannelDao();
-        // addCategories();
-        // addChannels();
+        //addCategories();
+        //addChannels();
     }
 
     /**

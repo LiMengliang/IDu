@@ -41,6 +41,8 @@ public interface ICategory {
          * @return View of the category icon view.
          */
         View getView();
+
+        void select(boolean selectOrNot);
     }
 
     /**
@@ -58,7 +60,9 @@ public interface ICategory {
          *
          * @return Id of icon.
          */
-        int getIconResourceId();
+        int getSelectedIconResourceId();
+
+        int getUnselectedIconResourceId();
 
         /**
          * Get attached {@link ICategoryView} instance.

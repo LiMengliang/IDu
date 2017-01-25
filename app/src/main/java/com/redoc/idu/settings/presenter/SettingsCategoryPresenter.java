@@ -38,8 +38,13 @@ public class SettingsCategoryPresenter extends SingleChannelCategoryPresenter {
      * @return Id of icon.
      */
     @Override
-    public int getIconResourceId() {
+    public int getSelectedIconResourceId() {
         return R.drawable.category_setting;
+    }
+
+    @Override
+    public int getUnselectedIconResourceId() {
+        return R.drawable.category_setting_unselected;
     }
 
     @Override

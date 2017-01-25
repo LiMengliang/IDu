@@ -22,6 +22,6 @@ public class AudioCategoryPresenterUnitTests {
     @Test
     public void AudioCategoryPresenter_getIconResourceId_meetExpected() {
         AudioCategoryPresenter audioCategoryPresenter = new AudioCategoryPresenter(new AudioCategory(new Category(2L, "电台")));
-        Assert.assertEquals(R.drawable.category_audio, audioCategoryPresenter.getIconResourceId());
+        Assert.assertEquals(R.drawable.category_audio, audioCategoryPresenter.getSelectedIconResourceId());
     }
 }

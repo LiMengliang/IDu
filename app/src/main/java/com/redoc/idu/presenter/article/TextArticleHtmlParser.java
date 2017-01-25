@@ -34,7 +34,7 @@ public class TextArticleHtmlParser {
     private final String PreTagName = "pre";
     private final String ImageAddressSource = "http://s.cimg.163.com/i/";
     private final String StyleAttributeName = "style";
-    private final String MainColor = "#CD6839";
+    private final String MainColor = "#8B5742";
 
     private final List<String> ImageExtensions = new ArrayList<String>()
     {
@@ -55,10 +55,10 @@ public class TextArticleHtmlParser {
             "\t<head>\n" +
             "\t\t<style>\n" +
             "\t\t\timg{ max-width:100%; height:auto;}\n" +
-            "\t\t\t.source {color:#999999; font-size:12px; text-align:left}\n" +
-            "\t\t\t.title{ text-align:left; font-size:20px; font-weight:bold; padding:0px 3px 20px 0px; }\n" +
+            "\t\t\t.source {color:#999999; font-size:12px; text-align:left; padding:0px 0px 0px 10px;}\n" +
+            "\t\t\t.title{ text-align:left; font-size:20px; font-weight:bold; padding:0px 3px 20px 10px; }\n" +
             "\t\t\tp {line-height:170%; padding:20px 0px 0px 0px;}\n" +
-            "\t\t\tp.recommend {line-height:200%; font-size:20px; color:" + MainColor +"}\n" +
+            "\t\t\tp.recommend {line-height:80%; font-size:18px; color:" + MainColor +"}\n" +
             "\t\t\t.content{color:#666666; font-size:16px; margin:3px; }\n" +
             "\t\t\tdiv.wrapper{\n" +
             "\t\t\tfloat:left; /* important */\n" +
@@ -77,7 +77,7 @@ public class TextArticleHtmlParser {
             "\t\t</td></tr>" +
             "\t\t</table>\n" +
             "\t\t<!--CONTENT-->\n" +
-            "<p/><p/>" +
+            "<br>" +
             "\t</body>\n" +
             "</html>";
 
@@ -308,8 +308,8 @@ public class TextArticleHtmlParser {
                 // get large image src
                 dealWithImageTags(contentNode);
 
-                // deal with recomend reading
-                dealWithRecomendTag(contentNode);
+                // deal with recommended reading
+                dealWithRecommendTag(contentNode);
 
                 Element about = mJsoupParser.getFirstElementByClass(AboutClassName);
                 String timeAndSource = about.text();
@@ -369,15 +369,27 @@ public class TextArticleHtmlParser {
             }
         }
 
-        private void dealWithRecomendTag(Element contentNode) {
-            Element preElement = mJsoupParser.getElementByTag(PreTagName, contentNode);
-            preElement.attr(StyleAttributeName, "");
-            String content = "";
-            for (Node element: preElement.childNodes()) {
-                content += element.toString();
+        private void dealWithRecommendTag(Element contentNode) {
+            Elements preElements = mJsoupParser.getElementsByTag(PreTagName, contentNode);
+            for(Element preElement : preElements) {
+                if(preElement != null) {
+                    preElement.attr(StyleAttributeName, "");
+                    String content = "";
+                    boolean ignoreBr = true;
+                    for (Node element: preElement.childNodes()) {
+                        String elementString = element.toString();
+                        if(!elementString.equals("<br>")) {
+                            ignoreBr = false;
+                            content += ("　　" + element.toString());
+                        }
+                        else if(!ignoreBr) {
+                            content += element.toString();
+                        }
+                    }
+                    contentNode.append(RecommendReading.replace("<!--RecommendReading-->", content));
+                    preElement.remove();
+                }
             }
-            contentNode.append(RecommendReading.replace("<!--RecommendReading-->", content));
-            preElement.remove();
         }
     }
 }

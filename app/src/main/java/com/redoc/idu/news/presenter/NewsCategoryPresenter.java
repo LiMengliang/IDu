@@ -52,8 +52,13 @@ public class NewsCategoryPresenter extends MultiChannelsCategoryPresenter {
      * @return Id of icon.
      */
     @Override
-    public int getIconResourceId() {
+    public int getSelectedIconResourceId() {
         return R.drawable.category_main;
+    }
+
+    @Override
+    public int getUnselectedIconResourceId() {
+        return R.drawable.category_setting_unselected;
     }
 
     /**

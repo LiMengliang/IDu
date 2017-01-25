@@ -48,7 +48,7 @@ public class MultiChannelsCategoryPresenterUnitTests {
          * @return Id of icon.
          */
         @Override
-        public int getIconResourceId() {
+        public int getSelectedIconResourceId() {
             return 0;
         }
 

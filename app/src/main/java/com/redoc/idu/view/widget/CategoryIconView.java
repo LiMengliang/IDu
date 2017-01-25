@@ -33,6 +33,11 @@ public class CategoryIconView extends LinearLayout implements ICategory.ICategor
     @BindView(R.id.name)
     TextView mName;
 
+    private int mSelectedIconResourceId;
+    private int mUnselectedIconResourceId;
+    private int mSelectedColor;
+    private int mUnselectedColor;
+
     private ICategory.ICategoryPresenter mCategoryPresenter;
 
     /**
@@ -55,7 +60,7 @@ public class CategoryIconView extends LinearLayout implements ICategory.ICategor
         ButterKnife.bind(this);
         if(attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CategoryIconView);
-            setIconResourceId(R.drawable.category_main);
+            // setIconResourceId(R.drawable.category_main);
             setName(typedArray.getString(R.styleable.CategoryIconView_name));
             typedArray.recycle();
         }
@@ -63,10 +68,13 @@ public class CategoryIconView extends LinearLayout implements ICategory.ICategor
 
     /**
      * Set icon resource.
-     * @param iconResourceId The resource id.
      */
-    public void setIconResourceId(int iconResourceId) {
-        mIcon.setImageResource(iconResourceId);
+    public void setIconResourceId(int selectedIconResourceId, int unselectedIconResourceId, int selectedColor,
+                                  int unselectedColor) {
+        mUnselectedIconResourceId = unselectedIconResourceId;
+        mSelectedIconResourceId = selectedIconResourceId;
+        mSelectedColor = selectedColor;
+        mUnselectedColor = unselectedColor;
     }
 
     /**
@@ -75,6 +83,17 @@ public class CategoryIconView extends LinearLayout implements ICategory.ICategor
      */
     public void setName(String name) {
         mName.setText(name);
+    }
+
+    public void select(boolean selectOrNot) {
+        if(selectOrNot) {
+            mIcon.setImageResource(mSelectedIconResourceId);
+            mName.setSelected(true);
+        }
+        else {
+            mIcon.setImageResource(mUnselectedIconResourceId);
+            mName.setSelected(false);
+        }
     }
 
     @Override

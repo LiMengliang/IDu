@@ -40,8 +40,13 @@ public class AudioCategoryPresenter extends SingleChannelCategoryPresenter {
      * @return Id of icon.
      */
     @Override
-    public int getIconResourceId() {
+    public int getSelectedIconResourceId() {
         return R.drawable.category_audio;
+    }
+
+    @Override
+    public int getUnselectedIconResourceId() {
+        return R.drawable.category_audio_unselected;
     }
 
     @Override
