@@ -1,9 +1,13 @@
 package com.redoc.idu.news.presenter.article;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.redoc.idu.IDuApplication;
 import com.redoc.idu.framework.contract.article.IArticleContract;
+import com.redoc.idu.framework.presenter.article.IArticleLoader;
 import com.redoc.idu.utils.html.JsoupParser;
 
 import org.jsoup.nodes.Element;
@@ -20,7 +24,7 @@ import java.util.regex.Pattern;
  * Created by Mengliang Li on 12/31/2016.
  */
 
-public class TextArticleHtmlParser {
+public class TextArticleHtmlParser implements IArticleLoader {
 
     private final String ContentName = "content";
     private final String TitleClassName = "atitle tCenter";
@@ -95,12 +99,19 @@ public class TextArticleHtmlParser {
     private JsoupParser mJsoupParser;
     private IArticleContract.IArticlePresenter mArticlePresenter;
 
+    public TextArticleHtmlParser(Parcel sourcce) {
+
+    }
+
     /**
      * Parse article html.
      * @param url The url of article.
      * @param articlePresenter Article presenter.
      */
     public void parse(String url, IArticleContract.IArticlePresenter articlePresenter) {
+        String[] splits = url.split(".html");
+        // _0 can get full article regardless whether the article is divided into multi-pages.
+        url = splits[0] + "_0.html";
         mArticlePresenter = articlePresenter;
         IDuApplication.HttpClient.addStringRequest(url, new RawUrlResponseListener(), new Response.ErrorListener() {
             @Override
@@ -109,6 +120,28 @@ public class TextArticleHtmlParser {
             }
         });
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+    }
+
+    public static final Creator<IArticleLoader> CREATOR = new Creator<IArticleLoader>() {
+        @Override
+        public IArticleLoader createFromParcel(Parcel source) {
+            return new TextArticleHtmlParser(source);
+        }
+
+        @Override
+        public IArticleLoader[] newArray(int size) {
+            return new TextArticleHtmlParser[0];
+        }
+    };
 
     /**
      * A response listener to raw html.

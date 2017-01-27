@@ -24,6 +24,7 @@ public class ImagesDigestClickListener implements View.OnClickListener {
     public void onClick(View view) {
         Intent intent = new Intent(IDuApplication.Context, PhotoActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("Url", mNewsDigestPresenter.getArticleUrl());
         IDuApplication.Context.startActivity(intent);
     }
 }

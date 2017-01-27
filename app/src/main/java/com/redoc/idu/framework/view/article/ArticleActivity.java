@@ -12,7 +12,8 @@ import android.webkit.WebViewClient;
 import com.redoc.idu.IDuApplication;
 import com.redoc.idu.R;
 import com.redoc.idu.framework.contract.article.IArticleContract;
-import com.redoc.idu.news.presenter.article.TextArticlePresenter;
+import com.redoc.idu.framework.presenter.article.IArticleLoader;
+import com.redoc.idu.framework.presenter.article.TextArticlePresenter;
 import com.redoc.idu.framework.view.video.VideoActivity;
 
 import butterknife.BindView;
@@ -39,7 +40,8 @@ public class ArticleActivity extends AppCompatActivity implements IArticleContra
         ButterKnife.bind(this);
         Bundle bundle = getIntent().getExtras();
         String url = bundle.getString("Url");
-        setPresenter(new TextArticlePresenter(url, this));
+        IArticleLoader articleLoader = bundle.getParcelable("ArticleLoader");
+        setPresenter(new TextArticlePresenter(url, this, articleLoader));
         updateArticle(mArticlePresenter);
     }
 
