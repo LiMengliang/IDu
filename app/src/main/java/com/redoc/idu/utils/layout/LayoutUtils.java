@@ -2,6 +2,8 @@ package com.redoc.idu.utils.layout;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
 
@@ -73,5 +75,16 @@ public class LayoutUtils {
     public static int dp2Px(Context context, float dp) {
         float m = context.getResources().getDisplayMetrics().density;
         return (int)(dp * m + 0.5f);
+    }
+
+    /**
+     * Inflate layout.
+     * @param context The context.
+     * @param resourceId Resource id.
+     * @param viewGroup View group.
+     * @param attachedToGroup If need to attach to view group.
+     */
+    public static void inflateLayout(Context context, int resourceId, ViewGroup viewGroup, boolean attachedToGroup) {
+        LayoutInflater.from(context).inflate(resourceId, viewGroup);
     }
 }

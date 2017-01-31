@@ -10,7 +10,7 @@ import com.redoc.idu.R;
 import com.redoc.idu.framework.contract.IDigest;
 import com.redoc.idu.framework.presenter.digest.DigestsWithImagePresenter;
 import com.redoc.idu.news.presenter.NewsDigestPresenter;
-import com.redoc.idu.utils.DrawableUtils;
+import com.redoc.idu.utils.image.DrawableUtils;
 
 /**
  * Single images article digest view.
@@ -29,15 +29,6 @@ public class SingleImageArticleDigestView implements IDigest.IDigestView {
     public SingleImageArticleDigestView() {
         mRelativeLayout = (RelativeLayout) LayoutInflater.from(IDuApplication.Context).inflate(R.layout.view_single_image_article_digest, null);
         mImageView = (ImageView)mRelativeLayout.findViewById(R.id.single_image_digest_image);
-        // mRelativeLayout.setOnClickListener(new View.OnClickListener() {
-        //     @Override
-        //     public void onClick(View view) {
-        //         Intent intent = new Intent(IDuApplication.Context, ArticleActivity.class);
-        //         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //         intent.putExtra("Url", mNewsDigestPresenter.getArticleUrl());
-        //         IDuApplication.Context.startActivity(intent);
-        //     }
-        // });
     }
 
     public void setClickListener(View.OnClickListener clickListener) {

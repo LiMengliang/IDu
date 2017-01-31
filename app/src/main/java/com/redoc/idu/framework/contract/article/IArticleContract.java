@@ -33,16 +33,9 @@ public interface IArticleContract {
         void loadArticle();
 
         /**
-         * On article is loaded.
-         * @param object The object to be loaded.
-         */
-        void onArticleLoaded(Object object);
-
-        /**
          * Get data of article to show.
          * @return Data of article.
          */
         Object getData();
     }
-
 }

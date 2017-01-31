@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.redoc.idu.IDuApplication;
 import com.redoc.idu.R;
-import com.redoc.idu.utils.BitmapUtils;
+import com.redoc.idu.utils.image.BitmapUtils;
 import com.redoc.idu.utils.layout.LayoutUtils;
 
 import java.io.IOException;

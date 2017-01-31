@@ -39,9 +39,8 @@ public class ArticleActivity extends AppCompatActivity implements IArticleContra
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         ButterKnife.bind(this);
         Bundle bundle = getIntent().getExtras();
-        String url = bundle.getString("Url");
         IArticleLoader articleLoader = bundle.getParcelable("ArticleLoader");
-        setPresenter(new TextArticlePresenter(url, this, articleLoader));
+        setPresenter(new TextArticlePresenter(this, articleLoader));
         updateArticle(mArticlePresenter);
     }
 

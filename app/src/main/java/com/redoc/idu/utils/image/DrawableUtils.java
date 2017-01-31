@@ -1,4 +1,4 @@
-package com.redoc.idu.utils;
+package com.redoc.idu.utils.image;
 
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;

@@ -1,7 +1,6 @@
 package com.redoc.idu.news.presenter.article;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -24,7 +23,7 @@ import java.util.regex.Pattern;
  * Created by Mengliang Li on 12/31/2016.
  */
 
-public class TextArticleHtmlParser implements IArticleLoader {
+public class TextArticleHtmlLoader implements IArticleLoader {
 
     private final String ContentName = "content";
     private final String TitleClassName = "atitle tCenter";
@@ -97,28 +96,33 @@ public class TextArticleHtmlParser implements IArticleLoader {
             "<p><!--RecommendReading--></p>";
 
     private JsoupParser mJsoupParser;
-    private IArticleContract.IArticlePresenter mArticlePresenter;
+    private IArticleLoadListener mArticleLoadListener;
+    private String mUrl;
 
-    public TextArticleHtmlParser(Parcel sourcce) {
+    public TextArticleHtmlLoader(Parcel source) {
+        mUrl = source.readString();
+    }
 
+    public TextArticleHtmlLoader(String url) {
+        mUrl = url;
     }
 
     /**
      * Parse article html.
-     * @param url The url of article.
-     * @param articlePresenter Article presenter.
      */
-    public void parse(String url, IArticleContract.IArticlePresenter articlePresenter) {
-        String[] splits = url.split(".html");
-        // _0 can get full article regardless whether the article is divided into multi-pages.
-        url = splits[0] + "_0.html";
-        mArticlePresenter = articlePresenter;
-        IDuApplication.HttpClient.addStringRequest(url, new RawUrlResponseListener(), new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
+    public void load(IArticleLoadListener loadListener) {
+        if(mUrl != null && !mUrl.equals("null") &&!mUrl.isEmpty()) {
+            mArticleLoadListener = loadListener;
+            String[] splits = mUrl.split(".html");
+            // _0 can get full article regardless whether the article is divided into multi-pages.
+            mUrl = splits[0] + "_0.html";
+            IDuApplication.HttpClient.addStringRequest(mUrl, new RawUrlResponseListener(), new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
 
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override
@@ -128,18 +132,18 @@ public class TextArticleHtmlParser implements IArticleLoader {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-
+        parcel.writeString(mUrl);
     }
 
     public static final Creator<IArticleLoader> CREATOR = new Creator<IArticleLoader>() {
         @Override
         public IArticleLoader createFromParcel(Parcel source) {
-            return new TextArticleHtmlParser(source);
+            return new TextArticleHtmlLoader(source);
         }
 
         @Override
         public IArticleLoader[] newArray(int size) {
-            return new TextArticleHtmlParser[0];
+            return new TextArticleHtmlLoader[0];
         }
     };
 
@@ -348,7 +352,7 @@ public class TextArticleHtmlParser implements IArticleLoader {
                 String htmlContent = ArticleTemplate.replace("<!--CONTENT-->", contentNode.toString());
                 htmlContent = htmlContent.replace("<!--TITLE-->", title.text());
                 htmlContent = htmlContent.replace("<!--TIME_SOURCE-->", timeAndSource.substring(0, timeAndSource.indexOf("网友评论")));
-                mArticlePresenter.onArticleLoaded(htmlContent);
+                mArticleLoadListener.onLoaded(htmlContent);
             }
         }
 

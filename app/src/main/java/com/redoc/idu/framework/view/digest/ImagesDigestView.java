@@ -9,8 +9,7 @@ import com.redoc.idu.IDuApplication;
 import com.redoc.idu.R;
 import com.redoc.idu.framework.contract.IDigest;
 import com.redoc.idu.framework.presenter.digest.DigestsWithImagePresenter;
-import com.redoc.idu.news.presenter.NewsDigestPresenter;
-import com.redoc.idu.utils.DrawableUtils;
+import com.redoc.idu.utils.image.DrawableUtils;
 
 /**
  * View of images digest.
@@ -33,16 +32,12 @@ public class ImagesDigestView implements IDigest.IDigestView {
         mImageViewA = (ImageView)mRootView.findViewById(R.id.photo_set_digest_main_image);
         mImageViewB = (ImageView)mRootView.findViewById(R.id.photo_set_digest_right_image_a);
         mImageViewC = (ImageView)mRootView.findViewById(R.id.photo_set_digest_right_image_b);
-        // mRootView.setOnClickListener(new View.OnClickListener() {
-        //     @Override
-        //     public void onClick(View view) {
-        //         Intent intent = new Intent(IDuApplication.Context, PhotoActivity.class);
-        //         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //         IDuApplication.Context.startActivity(intent);
-        //     }
-        // });
     }
 
+    /**
+     * Set click listener.
+     * @param clickListener Click listener.
+     */
     public void setClickListener(View.OnClickListener clickListener) {
         mRootView.setOnClickListener(clickListener);
     }

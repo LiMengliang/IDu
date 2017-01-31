@@ -9,6 +9,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -60,6 +61,26 @@ public class HttpClient {
         mRequestQueue.add(new StringRequest(url, listener, errorListener));
     }
 
+    /**
+     * Add a image request
+     * @param url Request url.
+     * @param listener Complete listener
+     * @param maxWidth Max width
+     * @param maxHeight Max height
+     * @param decodeConfig Decoding configuration
+     * @param errorListener Error listener.
+     */
+    public void addImageRequest(String url, Response.Listener<Bitmap> listener, int maxWidth,
+                                int maxHeight, Bitmap.Config decodeConfig,
+                                Response.ErrorListener errorListener) {
+        mRequestQueue.add(new ImageRequest(url, listener, maxWidth, maxHeight, decodeConfig, errorListener));
+    }
+
+    /**
+     * Display a image to image viewer
+     * @param url Image url.
+     * @param imageView The image view to display.
+     */
     public void displayImage(String url, ImageView imageView) {
         ImageLoader.ImageListener imageListener = mImageLoader.getImageListener(imageView, R.color.light_gray, R.color.light_gray);
         mImageLoader.get(url, imageListener);

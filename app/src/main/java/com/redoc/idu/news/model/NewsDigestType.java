@@ -19,5 +19,10 @@ public enum NewsDigestType {
     /**
      * Images.
      */
-    Images
+    Images,
+
+    /**
+     * Unspecified
+     */
+    Unspecified
 }

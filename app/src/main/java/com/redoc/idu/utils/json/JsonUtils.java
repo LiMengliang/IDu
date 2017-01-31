@@ -1,5 +1,6 @@
 package com.redoc.idu.utils.json;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,5 +46,16 @@ public class JsonUtils {
             res = jsonObject.getDouble(key);
         }
         return res;
+    }
+
+    /**
+     * Get json array.
+     * @param key json key.
+     * @param jsonObject The json object
+     * @return Json array.
+     * @throws JSONException
+     */
+    public static JSONArray getJsonArray(String key, JSONObject jsonObject) throws JSONException {
+        return jsonObject.getJSONArray(key);
     }
 }
