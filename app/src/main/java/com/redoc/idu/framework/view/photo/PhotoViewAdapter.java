@@ -12,6 +12,8 @@ import com.redoc.idu.framework.contract.article.IArticleContract;
 import com.redoc.idu.framework.presenter.article.PhotoArticlePresenter;
 import com.redoc.idu.framework.view.widget.PhotoView;
 
+import java.util.LinkedList;
+
 /**
  * Photo view adapter.
  * Created by Mengliang Li on 1/25/2017.
@@ -21,6 +23,7 @@ public class PhotoViewAdapter extends PagerAdapter {
 
     private IArticleContract.IArticlePresenter mPhotoArticlePresenter;
     private PhotoArticlePresenter.PhotosArticleInfo mPhotoInfos;
+    private LinkedList<View> recycledViews = new LinkedList<>();
 
     /**
      * Photo view adapter.
@@ -52,10 +55,18 @@ public class PhotoViewAdapter extends PagerAdapter {
      */
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        PhotoView photoView = new PhotoView(IDuApplication.Context);
+        PhotoView photoView = null;
+        if(recycledViews != null & recycledViews.size() > 0) {
+            photoView = (PhotoView)recycledViews.getFirst();
+            recycledViews.removeFirst();
+        }
+        else {
+            photoView = new PhotoView(IDuApplication.Context);
+        }
         String url = mPhotoInfos.getPhotoInfos().get(position).first;
         String note = mPhotoInfos.getPhotoInfos().get(position).second;
-        IDuApplication.HttpClient.addImageRequest(url, new BitmapResponseListener(photoView), 2000, 2000, Bitmap.Config.RGB_565, new Response.ErrorListener() {
+        IDuApplication.HttpClient.addImageRequest(url, new BitmapResponseListener(photoView), 2000,
+                2000, Bitmap.Config.RGB_565, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
@@ -72,6 +83,10 @@ public class PhotoViewAdapter extends PagerAdapter {
      */
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
+        container.removeView((View)object);
+        if(object != null) {
+            recycledViews.addLast((View)object);
+        }
     }
 
     /**
