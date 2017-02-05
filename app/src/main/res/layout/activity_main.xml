@@ -13,8 +13,8 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/splash"
-        idu:civ_border_color="@android:color/holo_green_light"
-        idu:civ_border_width="5dp"/>
+        idu:border_color="@android:color/holo_green_light"
+        idu:border_width="5dp"/>
     <com.redoc.widget.ZoomableImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

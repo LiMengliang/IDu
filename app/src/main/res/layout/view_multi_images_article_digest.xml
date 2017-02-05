@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/digest_view">
     <TextView
         android:id="@+id/multi_image_digest_title"
@@ -16,19 +17,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <ImageView
+        <com.redoc.widget.RoundImage
             android:id="@+id/multi_image_digest_image_a"
             style="@style/digest_image_style"/>
         <GridView
             android:layout_width="10dp"
             android:layout_height="match_parent"/>
-        <ImageView
+        <com.redoc.widget.RoundImage
             android:id="@+id/multi_image_digest_image_b"
             style="@style/digest_image_style"/>
         <GridView
             android:layout_width="10dp"
             android:layout_height="match_parent"/>
-        <ImageView
+        <com.redoc.widget.RoundImage
             android:id="@+id/multi_image_digest_image_c"
             style="@style/digest_image_style"/>
     </LinearLayout>

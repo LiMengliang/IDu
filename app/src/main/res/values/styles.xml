@@ -48,7 +48,8 @@
         <item name="android:layout_height">72dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:scaleType">centerCrop</item>
-        <item name="android:background">@color/light_gray</item>
+        <item name="shape">Rectangle</item>
+        <item name="rect_radius">3dp</item>
     </style>
 
     <!--photo set digest-->
@@ -57,12 +58,14 @@
         <item name="android:layout_height">154dp</item>
         <item name="android:scaleType">centerCrop</item>
         <item name="android:background">@color/light_gray</item>
+        <item name="shape">Rectangle</item>
+        <item name="rect_radius">3dp</item>
     </style>
 
     <!--Digest view style-->
     <style name="digest_view">
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">8dp</item>
     </style>

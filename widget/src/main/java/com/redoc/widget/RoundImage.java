@@ -32,6 +32,10 @@ public class RoundImage extends ImageView {
     private static final int DEFAULT_FILL_COLOR = Color.TRANSPARENT;
     private static final boolean DEFAULT_BORDER_OVERLAY = false;
 
+    private static final int UNSPECIFIEDSHAPE = 0;
+    private static final int RECTANGLE = 1;
+    private static final int CIRCLE = 2;
+
     private final RectF mDrawableRect = new RectF();
     private final RectF mBorderRect = new RectF();
 
@@ -43,6 +47,8 @@ public class RoundImage extends ImageView {
     private int mBorderColor = DEFAULT_BORDER_COLOR;
     private int mBorderWidth = DEFAULT_BORDER_WIDTH;
     private int mFillColor = DEFAULT_FILL_COLOR;
+    private int mShape = UNSPECIFIEDSHAPE;
+    private int mCornerRadius = 0;
 
     private Bitmap mBitmap;
     private BitmapShader mBitmapShader;
@@ -74,11 +80,12 @@ public class RoundImage extends ImageView {
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RoundImage, defStyle, 0);
 
-        mBorderWidth = a.getDimensionPixelSize(R.styleable.RoundImage_civ_border_width, DEFAULT_BORDER_WIDTH);
-        mBorderColor = a.getColor(R.styleable.RoundImage_civ_border_color, DEFAULT_BORDER_COLOR);
-        mBorderOverlay = a.getBoolean(R.styleable.RoundImage_civ_border_overlay, DEFAULT_BORDER_OVERLAY);
-        mFillColor = a.getColor(R.styleable.RoundImage_civ_fill_color, DEFAULT_FILL_COLOR);
-
+        mBorderWidth = a.getDimensionPixelSize(R.styleable.RoundImage_border_width, DEFAULT_BORDER_WIDTH);
+        mBorderColor = a.getColor(R.styleable.RoundImage_border_color, DEFAULT_BORDER_COLOR);
+        mBorderOverlay = a.getBoolean(R.styleable.RoundImage_border_overlay, DEFAULT_BORDER_OVERLAY);
+        mFillColor = a.getColor(R.styleable.RoundImage_fill_color, DEFAULT_FILL_COLOR);
+        mShape = a.getInt(R.styleable.RoundImage_shape, UNSPECIFIEDSHAPE);
+        mCornerRadius = a.getDimensionPixelSize(R.styleable.RoundImage_rect_radius, 0);
         a.recycle();
 
         init();
@@ -115,21 +122,33 @@ public class RoundImage extends ImageView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (mDisableCircularTransformation) {
+        if (mShape == UNSPECIFIEDSHAPE) {
             super.onDraw(canvas);
             return;
         }
+        else {
 
-        if (mBitmap == null) {
-            return;
-        }
-
-        if (mFillColor != Color.TRANSPARENT) {
-            canvas.drawCircle(mDrawableRect.centerX(), mDrawableRect.centerY(), mDrawableRadius, mFillPaint);
-        }
-        canvas.drawCircle(mDrawableRect.centerX(), mDrawableRect.centerY(), mDrawableRadius, mBitmapPaint);
-        if (mBorderWidth > 0) {
-            canvas.drawCircle(mBorderRect.centerX(), mBorderRect.centerY(), mBorderRadius, mBorderPaint);
+            if (mBitmap == null) {
+                return;
+            }
+            if (mShape == CIRCLE) {
+                if (mFillColor != Color.TRANSPARENT) {
+                    canvas.drawCircle(mDrawableRect.centerX(), mDrawableRect.centerY(), mDrawableRadius, mFillPaint);
+                }
+                canvas.drawCircle(mDrawableRect.centerX(), mDrawableRect.centerY(), mDrawableRadius, mBitmapPaint);
+                if (mBorderWidth > 0) {
+                    canvas.drawCircle(mBorderRect.centerX(), mBorderRect.centerY(), mBorderRadius, mBorderPaint);
+                }
+            }
+            else if (mShape == RECTANGLE) {
+                if (mFillColor != Color.TRANSPARENT) {
+                    canvas.drawRect(mDrawableRect, mFillPaint);
+                }
+                canvas.drawRoundRect(mDrawableRect, mCornerRadius, mCornerRadius, mBitmapPaint);
+                if(mBorderWidth > 0) {
+                    canvas.drawRoundRect(mDrawableRect, mCornerRadius, mCornerRadius,mBorderPaint);
+                }
+            }
         }
     }
 
@@ -260,7 +279,8 @@ public class RoundImage extends ImageView {
     @Override
     public void setImageBitmap(Bitmap bm) {
         super.setImageBitmap(bm);
-        initializeBitmap();
+        // initializeBitmap();
+        mBitmap = bm;
     }
 
     @Override
@@ -389,13 +409,13 @@ public class RoundImage extends ImageView {
     private RectF calculateBounds() {
         int availableWidth  = getWidth() - getPaddingLeft() - getPaddingRight();
         int availableHeight = getHeight() - getPaddingTop() - getPaddingBottom();
-
-        int sideLength = Math.min(availableWidth, availableHeight);
-
-        float left = getPaddingLeft() + (availableWidth - sideLength) / 2f;
-        float top = getPaddingTop() + (availableHeight - sideLength) / 2f;
-
-        return new RectF(left, top, left + sideLength, top + sideLength);
+        if(mShape == CIRCLE) {
+            int sideLength = Math.min(availableWidth, availableHeight);
+            float left = getPaddingLeft() + (availableWidth - sideLength) / 2f;
+            float top = getPaddingTop() + (availableHeight - sideLength) / 2f;
+            return new RectF(left, top, left + sideLength, top + sideLength);
+        }
+        return new RectF(0, 0, availableWidth, availableHeight);
     }
 
     private void updateShaderMatrix() {
