@@ -3,7 +3,9 @@ package com.redoc.idu.framework.view.widget;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.text.Layout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -50,13 +52,8 @@ public class PhotoView extends RelativeLayout {
         super(context);
         LayoutUtils.inflateLayout(IDuApplication.Context, R.layout.view_photo, this, true);
         ButterKnife.bind(this);
-        ViewGroup.LayoutParams photoLayoutParams = mPhotoContainer.getLayoutParams();
-        photoLayoutParams.height = LayoutUtils.getNPercentOfScreenHeightInPixel(IDuApplication.Context, 0.8f);
         ViewGroup.LayoutParams messageLayoutParams = mMessageView.getLayoutParams();
-        messageLayoutParams.height = LayoutUtils.getNPercentOfScreenHeightInPixel(IDuApplication.Context, 0.2f);
-        ViewGroup.LayoutParams photoViewLayoutParameter = mPhotoView.getLayoutParams();
-        photoViewLayoutParameter.height = LayoutUtils.getNPercentOfScreenHeightInPixel(IDuApplication.Context, 0.8f);
-        mPhotoView.setLayoutParams(photoViewLayoutParameter);
+        messageLayoutParams.height = LayoutUtils.getNPercentOfScreenHeightInPixel(IDuApplication.Context, 0.3f);
     }
 
     /**
@@ -64,15 +61,7 @@ public class PhotoView extends RelativeLayout {
      * @param bitmap The bitmap.
      */
     public void setPhoto(Bitmap bitmap) {
-        float imageViewHeight = mPhotoView.getLayoutParams().height;
-        float scale = imageViewHeight / bitmap.getHeight();
-        Matrix matrix = new Matrix();
-        matrix.postScale(scale, scale);
-        Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
-                bitmap.getHeight(), matrix, true);
-
-        mPhotoView.setImageBitmap(newBitmap);
-        this.setBackground(new BitmapDrawable(IDuApplication.Context.getResources(), BitmapUtils.getBlurBitmap(bitmap, IDuApplication.Context, 25.0f)));
+        mPhotoView.setImageBitmap(bitmap);
     }
 
     /**
@@ -90,5 +79,15 @@ public class PhotoView extends RelativeLayout {
      */
     public void setPageCount(int currentPage, int totalPage) {
         mPageCount.setText(String.format("%d/%d", currentPage, totalPage));
+    }
+
+    @OnClick(R.id.photo_view)
+    public void onPhotoViewClick() {
+        if(mMessageView.getVisibility() == VISIBLE) {
+            mMessageView.setVisibility(View.INVISIBLE);
+        }
+        else {
+            mMessageView.setVisibility(View.VISIBLE);
+        }
     }
 }

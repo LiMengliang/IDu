@@ -19,6 +19,7 @@ import java.io.InputStream;
 
 /**
  * Bitmap utilities.
+ * http://www.codeceo.com/article/android-bitmap-tips.html for more details
  *
  * Created by limen on 2016/7/17.
  */
@@ -50,18 +51,30 @@ public class BitmapUtils {
         return baos.toByteArray();
     }
 
+    public static Bitmap getSubBitmap(Bitmap bitmap, Rect rect) {
+        Bitmap clipBitmap = Bitmap.createBitmap(bitmap,
+                rect.left, rect.top,
+                rect.width(), rect.height());
+        return clipBitmap;
+    }
+
+
     /**
      * Resample bitmap.
+     * 这个方法有两个缺陷：
+     * 1、我们先要从磁盘上先将图片加载到内存，然后才能对图片进行缩放，在移动设备上对内存的要求比较高，这在一定程度上降级了性能。
+     * 2、我们使用Bitmap.createBitmap这个方法进行缩放，使用的是Java层面的方法来缩放，我们知道Java层面对图片，视频等进行处理是有性能损失的。
      * @param bitmap Bitmap.
-     * @param ratio Resample ratio.
+     * @param scale Resample ratio.
      * @return Get resampled bitmap.
      */
-    public static Bitmap resampleBitmap(Bitmap bitmap, float ratio) {
+    public static Bitmap scaleBitmap(Bitmap bitmap, float scale) {
         Matrix matrix = new Matrix();
-        matrix.postScale(ratio, ratio); //长和宽放大缩小的比例
+        matrix.postScale(scale, scale); //长和宽放大缩小的比例
         Bitmap resizeBmp = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
         return resizeBmp;
     }
+
 
     /**
      * blur a bitmap with gause algorithm.
@@ -72,7 +85,7 @@ public class BitmapUtils {
      */
     public static Bitmap getBlurBitmap(Bitmap bitmap, Context context, float blurDepth) {
 
-        Bitmap resampledBitmap = resampleBitmap(bitmap, 0.2f);
+        Bitmap resampledBitmap = bitmap;//resampleBitmap(bitmap, 0.1f);
         //Let's create an empty bitmap with the same size of the bitmap we want to blur
         Bitmap outBitmap = Bitmap.createBitmap(resampledBitmap.getWidth(), resampledBitmap.getHeight(), Bitmap.Config.ARGB_8888);
 
@@ -100,5 +113,38 @@ public class BitmapUtils {
         rs.destroy();
 
         return outBitmap;
+    }
+
+    public static Bitmap getThumbnail(String path, int maxWidth, int maxHeight) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        // 获取这个图片的宽和高信息到options中, 此时返回bm为空
+        Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+        options.inJustDecodeBounds = false;
+        // 计算缩放比
+        int sampleSize = sampleSize(options, maxWidth, maxHeight);
+        options.inSampleSize = sampleSize;
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        options.inPurgeable = true;
+        options.inInputShareable = true;
+        bitmap = BitmapFactory.decodeFile(path, options);
+        return bitmap;
+    }
+
+    public static int sampleSize(BitmapFactory.Options options, int maxWidth, int maxHeight) {
+        // raw height and width of image
+        int rawWidth = options.outWidth;
+        int rawHeight = options.outHeight;
+
+        // calculate best sample size
+        int inSampleSize = 0;
+        if (rawHeight > maxHeight || rawWidth > maxWidth) {
+            float ratioWidth = (float) rawWidth / maxWidth;
+            float ratioHeight = (float) rawHeight / maxHeight;
+            inSampleSize = (int) Math.min(ratioHeight, ratioWidth);
+        }
+        inSampleSize = Math.max(1, inSampleSize);
+
+        return inSampleSize;
     }
 }
