@@ -14,4 +14,7 @@
 
     <!--Multi Channels Manager-->
     <string name="all_channels">全部频道</string>
+
+    <!--Article & Photo Activity-->
+    <string name="is_loading">悦读正在加载</string>
 </resources>
