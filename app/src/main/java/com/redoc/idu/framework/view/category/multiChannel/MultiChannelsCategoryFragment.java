@@ -53,7 +53,7 @@ public class MultiChannelsCategoryFragment extends Fragment {
      * Display matrics.
      */
     private DisplayMetrics mDisplayMetrics;
-
+    
     /**
      * Construct a MultiChannelsCategoryFragment
      */

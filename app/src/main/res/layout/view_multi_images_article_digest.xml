@@ -17,19 +17,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <com.redoc.widget.RoundImage
+        <com.redoc.widget.ShapedImageView
             android:id="@+id/multi_image_digest_image_a"
             style="@style/digest_image_style"/>
         <GridView
             android:layout_width="10dp"
             android:layout_height="match_parent"/>
-        <com.redoc.widget.RoundImage
+        <com.redoc.widget.ShapedImageView
             android:id="@+id/multi_image_digest_image_b"
             style="@style/digest_image_style"/>
         <GridView
             android:layout_width="10dp"
             android:layout_height="match_parent"/>
-        <com.redoc.widget.RoundImage
+        <com.redoc.widget.ShapedImageView
             android:id="@+id/multi_image_digest_image_c"
             style="@style/digest_image_style"/>
     </LinearLayout>

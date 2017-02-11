@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/digest_view">
-    <com.redoc.widget.RoundImage
+    <com.redoc.widget.ShapedImageView
         android:id="@+id/single_image_digest_image"
         style="@style/digest_image_style"/>
     <RelativeLayout

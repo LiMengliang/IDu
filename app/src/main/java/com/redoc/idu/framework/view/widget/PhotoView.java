@@ -52,8 +52,6 @@ public class PhotoView extends RelativeLayout {
         super(context);
         LayoutUtils.inflateLayout(IDuApplication.Context, R.layout.view_photo, this, true);
         ButterKnife.bind(this);
-        ViewGroup.LayoutParams messageLayoutParams = mMessageView.getLayoutParams();
-        messageLayoutParams.height = LayoutUtils.getNPercentOfScreenHeightInPixel(IDuApplication.Context, 0.3f);
     }
 
     /**

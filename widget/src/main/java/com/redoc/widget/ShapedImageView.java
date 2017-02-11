@@ -20,7 +20,7 @@ import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-public class RoundImage extends ImageView {
+public class ShapedImageView extends ImageView {
 
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 
@@ -65,27 +65,27 @@ public class RoundImage extends ImageView {
     private boolean mBorderOverlay;
     private boolean mDisableCircularTransformation;
 
-    public RoundImage(Context context) {
+    public ShapedImageView(Context context) {
         super(context);
 
         init();
     }
 
-    public RoundImage(Context context, AttributeSet attrs) {
+    public ShapedImageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RoundImage(Context context, AttributeSet attrs, int defStyle) {
+    public ShapedImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RoundImage, defStyle, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ShapedImageView, defStyle, 0);
 
-        mBorderWidth = a.getDimensionPixelSize(R.styleable.RoundImage_border_width, DEFAULT_BORDER_WIDTH);
-        mBorderColor = a.getColor(R.styleable.RoundImage_border_color, DEFAULT_BORDER_COLOR);
-        mBorderOverlay = a.getBoolean(R.styleable.RoundImage_border_overlay, DEFAULT_BORDER_OVERLAY);
-        mFillColor = a.getColor(R.styleable.RoundImage_fill_color, DEFAULT_FILL_COLOR);
-        mShape = a.getInt(R.styleable.RoundImage_shape, UNSPECIFIEDSHAPE);
-        mCornerRadius = a.getDimensionPixelSize(R.styleable.RoundImage_rect_radius, 0);
+        mBorderWidth = a.getDimensionPixelSize(R.styleable.ShapedImageView_border_width, DEFAULT_BORDER_WIDTH);
+        mBorderColor = a.getColor(R.styleable.ShapedImageView_border_color, DEFAULT_BORDER_COLOR);
+        mBorderOverlay = a.getBoolean(R.styleable.ShapedImageView_border_overlay, DEFAULT_BORDER_OVERLAY);
+        mFillColor = a.getColor(R.styleable.ShapedImageView_fill_color, DEFAULT_FILL_COLOR);
+        mShape = a.getInt(R.styleable.ShapedImageView_shape, UNSPECIFIEDSHAPE);
+        mCornerRadius = a.getDimensionPixelSize(R.styleable.ShapedImageView_rect_radius, 0);
         a.recycle();
 
         init();
