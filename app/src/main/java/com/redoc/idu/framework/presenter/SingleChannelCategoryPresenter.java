@@ -3,7 +3,7 @@ package com.redoc.idu.framework.presenter;
 import com.redoc.idu.IDuApplication;
 import com.redoc.idu.IView;
 import com.redoc.idu.framework.contract.ICategory;
-import com.redoc.idu.framework.view.widget.CategoryIconView;
+import com.redoc.idu.framework.view.widget.LabeledIconView;
 
 /**
  * Single channel category presenter.
@@ -43,9 +43,9 @@ public abstract class SingleChannelCategoryPresenter implements ICategory.ICateg
      */
     @Override
     public ICategory.ICategoryIconView getCategoryIconView() {
-        CategoryIconView categoryIconView = new CategoryIconView(IDuApplication.Context);
+        LabeledIconView categoryIconView = new LabeledIconView(IDuApplication.Context);
         categoryIconView.setName(getCategoryName());
-        categoryIconView.setIconResourceId(getSelectedIconResourceId(), getUnselectedIconResourceId(), 0x595a5e, 0xCD6839);
+        categoryIconView.setIconResourceId(getSelectedIconResourceId(), getUnselectedIconResourceId());
         return categoryIconView;
     }
 }

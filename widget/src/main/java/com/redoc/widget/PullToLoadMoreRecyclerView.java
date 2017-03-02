@@ -38,7 +38,10 @@ public class PullToLoadMoreRecyclerView extends RecyclerView {
      */
     public PullToLoadMoreRecyclerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        addItemDecoration(new DefaultDivider(context));
+    }
+
+    public void setDivider(RecyclerView.ItemDecoration divider) {
+        addItemDecoration(divider);
     }
 
     /**
@@ -238,7 +241,7 @@ public class PullToLoadMoreRecyclerView extends RecyclerView {
     /**
      * Default devider of recycler view.
      */
-    static class DefaultDivider extends RecyclerView.ItemDecoration {
+    public static class DefaultDivider extends RecyclerView.ItemDecoration {
 
         Drawable mDivider;
         private static final int[] ATTRS = new int[]{ android.R.attr.listDivider };

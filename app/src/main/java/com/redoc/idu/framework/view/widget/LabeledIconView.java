@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  * Category icon view.
  * Created by limen on 2016/8/19.
  */
-public class CategoryIconView extends LinearLayout implements ICategory.ICategoryIconView {
+public class LabeledIconView extends LinearLayout implements ICategory.ICategoryIconView {
     /**
      * The icon image view.
      */
@@ -35,8 +35,6 @@ public class CategoryIconView extends LinearLayout implements ICategory.ICategor
 
     private int mSelectedIconResourceId;
     private int mUnselectedIconResourceId;
-    private int mSelectedColor;
-    private int mUnselectedColor;
 
     private ICategory.ICategoryPresenter mCategoryPresenter;
 
@@ -44,7 +42,7 @@ public class CategoryIconView extends LinearLayout implements ICategory.ICategor
      * Construct a CategoryIconView instance.
      * @param context The context.
      */
-    public CategoryIconView(Context context) {
+    public LabeledIconView(Context context) {
         this(context, null);
     }
 
@@ -53,15 +51,15 @@ public class CategoryIconView extends LinearLayout implements ICategory.ICategor
      * @param context The context.
      * @param attrs The attributes.
      */
-    public CategoryIconView(Context context, AttributeSet attrs) {
+    public LabeledIconView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         LayoutInflater.from(context).inflate(R.layout.view_category, this, true);
         ButterKnife.bind(this);
         if(attrs != null) {
-            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CategoryIconView);
+            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.LabeledIconView);
             // setIconResourceId(R.drawable.category_main);
-            setName(typedArray.getString(R.styleable.CategoryIconView_name));
+           // setName(typedArray.getString(R.styleable.LabeledIconView_name));
             typedArray.recycle();
         }
     }
@@ -69,12 +67,10 @@ public class CategoryIconView extends LinearLayout implements ICategory.ICategor
     /**
      * Set icon resource.
      */
-    public void setIconResourceId(int selectedIconResourceId, int unselectedIconResourceId, int selectedColor,
-                                  int unselectedColor) {
+    public void setIconResourceId(int selectedIconResourceId, int unselectedIconResourceId) {
         mUnselectedIconResourceId = unselectedIconResourceId;
         mSelectedIconResourceId = selectedIconResourceId;
-        mSelectedColor = selectedColor;
-        mUnselectedColor = unselectedColor;
+        select(false);
     }
 
     /**
@@ -85,6 +81,10 @@ public class CategoryIconView extends LinearLayout implements ICategory.ICategor
         mName.setText(name);
     }
 
+    /**
+     * Select or unselect a icon.
+     * @param selectOrNot Select or not.
+     */
     public void select(boolean selectOrNot) {
         if(selectOrNot) {
             mIcon.setImageResource(mSelectedIconResourceId);
@@ -96,20 +96,33 @@ public class CategoryIconView extends LinearLayout implements ICategory.ICategor
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setLayoutParameter(ViewGroup.LayoutParams layoutParameter) {
         setLayoutParams(layoutParameter);
     }
 
+    /**
+     * Get view.
+     * @return This.
+     */
     public View getView() {
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setPresenter(ICategory.ICategoryPresenter presenter) {
         mCategoryPresenter = presenter;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ICategory.ICategoryPresenter getPresenter() {
         return mCategoryPresenter;

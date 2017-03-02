@@ -57,7 +57,7 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
         ButterKnife.bind(this);
 
         ViewGroup.LayoutParams layoutParams = mCategorySelectorBar.getLayoutParams();
-        layoutParams.height = LayoutUtils.getNPercentOfScreenHeightInPixel(this, 0.06f);
+        layoutParams.height = LayoutUtils.getNPercentOfScreenHeightInPixel(this, 0.065f);
         mCategorySelectorBar.setLayoutParams(layoutParams);
 
         mCategoryIconViews = new ArrayList<>();
@@ -75,7 +75,6 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
         // If first fragment, use add transaction, otherwise use hide and show.
         if(mSelectedCategoryView == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.contentView, categoryFragment).commit();
-            mSelectedCategoryView = selectedCategoryView;
         }
         else {
             if(categoryFragment.isAdded()) {
@@ -85,6 +84,7 @@ public class CategoriesActivity extends AppCompatActivity implements ICategories
                 getSupportFragmentManager().beginTransaction().hide(mSelectedCategoryView.getOrCreateRootFragment()).add(R.id.contentView, categoryFragment).commit();
             }
         }
+        mSelectedCategoryView = selectedCategoryView;
     }
 
     /**

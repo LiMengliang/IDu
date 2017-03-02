@@ -6,6 +6,7 @@
     <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".IDuApplication"
@@ -35,11 +36,13 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".framework.view.photo.PhotoActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
-        <activity android:name=".framework.view.video.VideoActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".framework.view.video.VideoActivity"
             android:theme="@style/AppTheme.Fullscreen"
-            android:screenOrientation="landscape" ></activity>
+            android:screenOrientation="landscape"/>
+        <activity android:name=".settings.view.SelectImageActivity"
+            android:theme="@style/AppTheme.NoActionBar"  />
     </application>
 
 </manifest>

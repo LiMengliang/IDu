@@ -147,4 +147,48 @@ public class BitmapUtils {
 
         return inSampleSize;
     }
+
+    /**
+     * Decode thumb nail for a bitmap.
+     * @param path Path of the bitmap
+     * @param viewWidth Expected width
+     * @param viewHeight Expected height.
+     * @return
+     */
+    public static Bitmap decodeThumbBitmapForFile(String path, int viewWidth, int viewHeight){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        //设置为true,表示解析Bitmap对象，该对象不占内存
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, options);
+        //设置缩放比例
+        options.inSampleSize = computeScale(options, viewWidth, viewHeight);
+        //设置为false,解析Bitmap对象加入到内存中
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(path, options);
+    }
+
+    /**
+     * Compute scale.
+      * @param options The option of original image.
+     * @param viewWidth Expected view width.
+     * @param viewHeight Expected view height.
+     * @return Scale.
+     */
+    private static int computeScale(BitmapFactory.Options options, int viewWidth, int viewHeight){
+        int inSampleSize = 1;
+        if(viewWidth == 0 || viewWidth == 0){
+            return inSampleSize;
+        }
+        int bitmapWidth = options.outWidth;
+        int bitmapHeight = options.outHeight;
+
+        //假如Bitmap的宽度或高度大于我们设定图片的View的宽高，则计算缩放比例
+        if(bitmapWidth > viewWidth || bitmapHeight > viewHeight){
+            int widthScale = Math.round((float) bitmapWidth / (float) viewWidth);
+            int heightScale = Math.round((float) bitmapHeight / (float) viewWidth);
+            //为了保证图片不缩放变形，我们取宽高比例最小的那个
+            inSampleSize = widthScale < heightScale ? widthScale : heightScale;
+        }
+        return inSampleSize;
+    }
 }

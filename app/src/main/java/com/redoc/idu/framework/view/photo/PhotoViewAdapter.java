@@ -11,6 +11,7 @@ import com.redoc.idu.IDuApplication;
 import com.redoc.idu.framework.contract.article.IArticleContract;
 import com.redoc.idu.framework.presenter.article.PhotoArticlePresenter;
 import com.redoc.idu.framework.view.widget.PhotoView;
+import com.redoc.idu.utils.network.HttpClient;
 
 import java.util.LinkedList;
 
@@ -65,7 +66,7 @@ public class PhotoViewAdapter extends PagerAdapter {
         }
         String url = mPhotoInfos.getPhotoInfos().get(position).first;
         String note = mPhotoInfos.getPhotoInfos().get(position).second;
-        IDuApplication.HttpClient.addImageRequest(url, new BitmapResponseListener(photoView), 2000,
+        IDuApplication.HttpClient.addImageRequest(url, new HttpClient.BitmapResponseListener(photoView.getImageView()), 2000,
                 2000, Bitmap.Config.RGB_565, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
@@ -86,30 +87,6 @@ public class PhotoViewAdapter extends PagerAdapter {
         container.removeView((View)object);
         if(object != null) {
             recycledViews.addLast((View)object);
-        }
-    }
-
-    /**
-     * Bitmap response listener.
-     */
-    static class BitmapResponseListener implements Response.Listener<Bitmap> {
-
-        private PhotoView mPhotoView;
-
-        /**
-         * Construct a {@link BitmapResponseListener}
-         * @param photoView Photo view.
-         */
-        public BitmapResponseListener(PhotoView photoView) {
-            mPhotoView = photoView;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void onResponse(Bitmap bitmap) {
-            mPhotoView.setPhoto(bitmap);
         }
     }
 }

@@ -8,7 +8,7 @@ import com.redoc.idu.framework.contract.multichannel.IMultiChannelManagerContrac
 import com.redoc.idu.framework.contract.multichannel.IMultiChannelsCategoryContract;
 import com.redoc.idu.framework.model.MultiChannelsCategory;
 import com.redoc.idu.framework.view.category.multiChannel.MultiChannelsCategoryView;
-import com.redoc.idu.framework.view.widget.CategoryIconView;
+import com.redoc.idu.framework.view.widget.LabeledIconView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,9 +163,9 @@ public abstract class MultiChannelsCategoryPresenter implements IMultiChannelsCa
      */
     @Override
     public ICategory.ICategoryIconView getCategoryIconView() {
-        CategoryIconView categoryIconView = new CategoryIconView(IDuApplication.Context);
+        LabeledIconView categoryIconView = new LabeledIconView(IDuApplication.Context);
         categoryIconView.setName(getCategoryName());
-        categoryIconView.setIconResourceId(getSelectedIconResourceId(), getSelectedIconResourceId(), 0x595a5e, 0xCD6839);
+        categoryIconView.setIconResourceId(getSelectedIconResourceId(), getSelectedIconResourceId());
         return categoryIconView;
     }
 

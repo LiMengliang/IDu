@@ -36,7 +36,7 @@ public class TextArticleHtmlLoader implements IArticleLoader {
     private final String PreTagName = "pre";
     private final String ImageAddressSource = "http://s.cimg.163.com/i/";
     private final String StyleAttributeName = "style";
-    private final String MainColor = "#8B5742";
+    private final String MainColor = "#b72d2b";
 
     private final List<String> ImageExtensions = new ArrayList<String>()
     {

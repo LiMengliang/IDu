@@ -55,6 +55,14 @@ public class PhotoView extends RelativeLayout {
     }
 
     /**
+     * Get photo view.
+     * @return Photo view.
+     */
+    public ImageView getImageView() {
+        return mPhotoView;
+    }
+
+    /**
      * Set bitmap to viewer.
      * @param bitmap The bitmap.
      */

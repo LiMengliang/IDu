@@ -1,8 +1,10 @@
 package com.redoc.idu.settings.presenter;
 
 import com.redoc.idu.R;
+import com.redoc.idu.framework.contract.ICategory;
 import com.redoc.idu.framework.presenter.SingleChannelCategoryPresenter;
 import com.redoc.idu.settings.model.SettingsCategory;
+import com.redoc.idu.settings.view.SettingsCategoryView;
 
 /**
  * Settings category presenter.
@@ -20,6 +22,14 @@ public class SettingsCategoryPresenter extends SingleChannelCategoryPresenter {
      */
     public SettingsCategoryPresenter(SettingsCategory settingsCategory) {
         mSettingsCategory = settingsCategory;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ICategory.ICategoryView getAttachedCategoryView() {
+        return new SettingsCategoryView();
     }
 
     /**

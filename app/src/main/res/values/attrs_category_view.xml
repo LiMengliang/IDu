@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CategoryIconView">
+    <declare-styleable name="LabeledIconView">
         <attr name="category_icon" format="string"/>
         <attr name="name" format="string"/>
         <attr name="selected" format="boolean"/>

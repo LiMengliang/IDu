@@ -108,4 +108,28 @@ public class HttpClient {
             mCache.put(url, bitmap);
         }
     }
+
+    /**
+     * Bitmap response listener.
+     */
+    public static class BitmapResponseListener implements Response.Listener<Bitmap> {
+
+        private ImageView mImageView;
+
+        /**
+         * Construct a {@link BitmapResponseListener}
+         * @param imageView imageView.
+         */
+        public BitmapResponseListener(ImageView imageView) {
+            mImageView = imageView;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void onResponse(Bitmap bitmap) {
+            mImageView.setImageBitmap(bitmap);
+        }
+    }
 }

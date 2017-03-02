@@ -138,15 +138,19 @@ public class ChannelFragment extends Fragment {
 
     // TODO: Footer is not center in horizontal direction.
     private void initializeView() {
+        mDigestsView.setDivider(new PullToLoadMoreRecyclerView.DefaultDivider(IDuApplication.Context));
         mDigestsView.setLayoutManager(new LinearLayoutManager(IDuApplication.Context));
         RelativeLayout relativeLayout = new RelativeLayout(IDuApplication.Context);
-        relativeLayout.setBackgroundColor(Color.BLACK);
+        relativeLayout.setBackgroundColor(Color.TRANSPARENT);
+        relativeLayout.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
         TextView footer = new TextView(IDuApplication.Context);
         footer.setText("正在获取更多...");
         footer.setTextSize(15);
         RelativeLayout.LayoutParams relativeLayoutParameter =
                 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
         relativeLayoutParameter.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        relativeLayoutParameter.setMargins(0, 20, 0, 20);
         footer.setLayoutParams(relativeLayoutParameter);
         footer.setTextColor(Color.GRAY);
         footer.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);

@@ -17,4 +17,9 @@
 
     <!--Article & Photo Activity-->
     <string name="is_loading">悦读正在加载</string>
+
+    <!--Setting view-->
+    <string name="saved">收藏</string>
+    <string name='history'>历史</string>
+    <string name="night_mode">夜间</string>
 </resources>

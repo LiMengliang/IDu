@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_select_image_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.redoc.idu.settings.view.SelectImageActivity">
+    <LinearLayout
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/detail_toolbar_height"
+        android:background="@color/main_color"
+        android:orientation="horizontal"
+        android:layout_alignParentStart="true"
+        android:elevation="8dip">
+    </LinearLayout>
+    <com.redoc.widget.PullToLoadMoreRecyclerView
+        android:id="@+id/images_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tool_bar"
+        android:background="@color/white">
+
+    </com.redoc.widget.PullToLoadMoreRecyclerView>
+</RelativeLayout>
