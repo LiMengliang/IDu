@@ -2,22 +2,20 @@ package com.redoc.idu.framework.view.widget;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.redoc.idu.utils.image.BitmapUtils;
-import com.redoc.widget.PullToLoadMoreRecyclerView;
 
 import java.lang.ref.WeakReference;
 
 /**
- * Delay load image view.
+ * Async image view, this image view load data in background thread.
  * Created by meli on 2016/11/13.
  */
 
-public class DelayLoadImageView extends ImageView {
+public class AsyncImageView extends ImageView {
 
     /**
      * Delay image view listener.
@@ -29,17 +27,14 @@ public class DelayLoadImageView extends ImageView {
         void onLoaded();
     }
 
-    private int mResourceId = Integer.MIN_VALUE;
-    private String mUri;
     private IDelayLoadImageListener mDelayLoadImageListener;
-
     private AsyncTask mImageLoadingTask;
 
     /**
      * Constructor.
      * @param context Context.
      */
-    public DelayLoadImageView(Context context) {
+    public AsyncImageView(Context context) {
         super(context);
     }
 
@@ -48,7 +43,7 @@ public class DelayLoadImageView extends ImageView {
      * @param context Context.
      * @param attrs Attributes.
      */
-    public DelayLoadImageView(Context context, AttributeSet attrs) {
+    public AsyncImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -58,24 +53,8 @@ public class DelayLoadImageView extends ImageView {
      * @param attrs Attributes.
      * @param defStyleAttr Default style.
      */
-    public DelayLoadImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AsyncImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-
-    /**
-     * Set resource id.
-     * @param resourceId
-     */
-    public void setImageSource(int resourceId) {
-        mResourceId = resourceId;
-    }
-
-    /**
-     * Set image source url.
-     * @param uri
-     */
-    public void setImageSource(String uri) {
-        mUri = uri;
     }
 
     /**
@@ -95,18 +74,16 @@ public class DelayLoadImageView extends ImageView {
         if(mImageLoadingTask != null && mImageLoadingTask.getStatus() != AsyncTask.Status.FINISHED) {
             mImageLoadingTask.cancel(false);
         }
-            BitmapFactory.Options options = new BitmapFactory.Options();
-                    //设置为true,表示解析Bitmap对象，该对象不占内存
-                    //options.inJustDecodeBounds = false;
-            try{
-                ImageLoadTask imageLoadTask = new ImageLoadTask(this);
+        try{
+            ImageLoadTask imageLoadTask = new ImageLoadTask(this);
 
-                mImageLoadingTask = imageLoadTask;
-                imageLoadTask.execute(new ImageLoadInfo(url, getLayoutParams().width, getLayoutParams().height));
-            }
-            catch (Exception e)  {
-
-            }
+            mImageLoadingTask = imageLoadTask;
+            // Use following to load image one after one is finished
+            // imageLoadTask.execute(new ImageLoadInfo(url, getLayoutParams().width, getLayoutParams().height));
+            // Use following to load images at the same time, with multiple thread in thread pool
+            imageLoadTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new ImageLoadInfo(url, getLayoutParams().width, getLayoutParams().height));
+        }
+        catch (Exception e) {}
     }
 
     /**
@@ -115,7 +92,6 @@ public class DelayLoadImageView extends ImageView {
     public void onImageLoaded() {
         mDelayLoadImageListener.onLoaded();
     }
-
 
     /**
      * Image load information.
@@ -184,13 +160,13 @@ public class DelayLoadImageView extends ImageView {
       */
     class ImageLoadTask extends AsyncTask<ImageLoadInfo, Integer, ImageLoadInfo> {
 
-        private WeakReference<DelayLoadImageView> mImageView;
+        private WeakReference<AsyncImageView> mImageView;
 
         /**
          * Constructor.
          * @param imageView Delay load image view.
          */
-        public ImageLoadTask(DelayLoadImageView imageView) {
+        public ImageLoadTask(AsyncImageView imageView) {
             mImageView = new WeakReference<>(imageView);
         }
 

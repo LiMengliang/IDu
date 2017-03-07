@@ -41,5 +41,10 @@ public interface IAlbumImageContract {
          * Load image.
          */
         void loadImage();
+
+        /**
+         * Clear image.
+         */
+        void clearImage();
     }
 }

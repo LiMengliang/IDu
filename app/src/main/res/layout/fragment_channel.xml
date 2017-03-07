@@ -5,7 +5,7 @@
     tools:context=".framework.view.channel.ChannelFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <com.redoc.widget.PullToLoadMoreRecyclerView
+    <com.redoc.widget.TwoWayPullToLoadMoreRecycleView
         android:id="@+id/digests_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -115,39 +115,6 @@ public class BitmapUtils {
         return outBitmap;
     }
 
-    public static Bitmap getThumbnail(String path, int maxWidth, int maxHeight) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        // 获取这个图片的宽和高信息到options中, 此时返回bm为空
-        Bitmap bitmap = BitmapFactory.decodeFile(path, options);
-        options.inJustDecodeBounds = false;
-        // 计算缩放比
-        int sampleSize = sampleSize(options, maxWidth, maxHeight);
-        options.inSampleSize = sampleSize;
-        options.inPreferredConfig = Bitmap.Config.RGB_565;
-        options.inPurgeable = true;
-        options.inInputShareable = true;
-        bitmap = BitmapFactory.decodeFile(path, options);
-        return bitmap;
-    }
-
-    public static int sampleSize(BitmapFactory.Options options, int maxWidth, int maxHeight) {
-        // raw height and width of image
-        int rawWidth = options.outWidth;
-        int rawHeight = options.outHeight;
-
-        // calculate best sample size
-        int inSampleSize = 0;
-        if (rawHeight > maxHeight || rawWidth > maxWidth) {
-            float ratioWidth = (float) rawWidth / maxWidth;
-            float ratioHeight = (float) rawHeight / maxHeight;
-            inSampleSize = (int) Math.min(ratioHeight, ratioWidth);
-        }
-        inSampleSize = Math.max(1, inSampleSize);
-
-        return inSampleSize;
-    }
-
     /**
      * Decode thumb nail for a bitmap.
      * @param path Path of the bitmap

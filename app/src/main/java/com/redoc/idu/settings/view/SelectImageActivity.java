@@ -102,7 +102,7 @@ public class SelectImageActivity extends AppCompatActivity implements ISelectIma
             int lastVisiblePosition = recyclerView.getLastVisiblePosition();
             HashSet<Integer> visiblePositions = new HashSet<>();
             if(firstVisiblePosition >= 0 && lastVisiblePosition >= 0 && firstVisiblePosition <= lastVisiblePosition) {
-                for(int i = firstVisiblePosition; i < lastVisiblePosition; i++) {
+                for(int i = firstVisiblePosition; i <= lastVisiblePosition; i++) {
                     visiblePositions.add(i);
                     if(!mSelectImagePresenter.getLastVisiblePositions().contains(i)) {
                         IAlbumImageContract.IAlbumImagePresenter presenter = mSelectImagePresenter.getAlbumImagePresenter(i);

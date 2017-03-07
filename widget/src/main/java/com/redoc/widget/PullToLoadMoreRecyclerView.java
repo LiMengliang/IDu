@@ -86,6 +86,28 @@ public class PullToLoadMoreRecyclerView extends RecyclerView {
     }
 
     /**
+     * Check if the view reaches its top.
+     * @return True if reaches its top, otherwise hasn't.
+     */
+    public boolean isReachedHead() {
+        View firstView = getChildAt(0);
+        return firstView == null || (firstView.getY() == 0 && getFirstVisiblePosition() == 0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        // int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
+        int height = MeasureSpec.getSize(heightMeasureSpec);
+        // since recycle view inside this view is set to Match_parent, so the mode must be MeasureSpec.EXACTLY
+        int newSpec = MeasureSpec.makeMeasureSpec(height + 200, MeasureSpec.EXACTLY);
+        // mRecyclerView.setLayoutParams(recycleViewLayoutParameter);
+        setMeasuredDimension(widthMeasureSpec, newSpec);
+    }
+
+    /**
      * Get last visible item position.
      * @return Last visible item position.
      */

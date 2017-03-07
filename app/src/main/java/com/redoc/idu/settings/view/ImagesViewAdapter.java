@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.redoc.idu.IDuApplication;
-import com.redoc.idu.framework.view.widget.DelayLoadImageView;
+import com.redoc.idu.framework.view.widget.AsyncImageView;
 import com.redoc.idu.settings.contract.IAlbumImageContract;
 import com.redoc.idu.settings.contract.ISelectImageContract;
 import com.redoc.widget.PullToLoadMoreRecyclerView;
@@ -22,7 +22,7 @@ public class ImagesViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private PullToLoadMoreRecyclerView mRecyclerView;
     private ISelectImageContract.ISelectImagePresenter mSelectImagePresenter;
-    private HashSet<DelayLoadImageView> mDelayLoadImagesView = new HashSet<>();
+    private HashSet<AsyncImageView> mDelayLoadImagesView = new HashSet<>();
     private int mSize;
     private boolean mIsFirstScreen = true;
 
@@ -43,7 +43,7 @@ public class ImagesViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
      * @param isFirstScreen If firs screen.
      */
     public void setIsFirstScreen(boolean isFirstScreen) {
-        mIsFirstScreen = false;
+        mIsFirstScreen = isFirstScreen;
     }
 
     /**
@@ -52,7 +52,7 @@ public class ImagesViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final AlbumImageView imageView = new AlbumImageView(IDuApplication.Context);
-        imageView.setDelayLoadImageListener(new DelayLoadImageView.IDelayLoadImageListener() {
+        imageView.setDelayLoadImageListener(new AsyncImageView.IDelayLoadImageListener() {
             @Override
             public void onLoaded() {
                 mSelectImagePresenter.getLastVisiblePositions().add(imageView.getPositionInAlbum());
@@ -74,6 +74,7 @@ public class ImagesViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         imageView.setPositionInAlbum(position);
         IAlbumImageContract.IAlbumImagePresenter imagePresenter = mSelectImagePresenter.getAlbumImagePresenter(position);
         imagePresenter.setAlbumImageView((AlbumImageView)holder.itemView);
+        imagePresenter.clearImage();
         if(mIsFirstScreen) {
             imagePresenter.loadImage();
         }
@@ -95,9 +96,6 @@ public class ImagesViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public int getItemCount() {
         return mSelectImagePresenter.getImagesCount();
-    }
-
-    public void loadImages() {
     }
 
     /**

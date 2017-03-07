@@ -3,15 +3,17 @@ package com.redoc.idu.settings.view;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.redoc.idu.framework.view.widget.DelayLoadImageView;
+import com.redoc.idu.R;
+import com.redoc.idu.framework.view.widget.AsyncImageView;
 import com.redoc.idu.settings.contract.IAlbumImageContract;
+import com.redoc.idu.utils.image.DrawableUtils;
 
 /**
  * Album image view.
  * Created by Mengliang Li on 2/28/2017.
  */
 
-public class AlbumImageView extends DelayLoadImageView implements IAlbumImageContract.IAlbumImageView{
+public class AlbumImageView extends AsyncImageView implements IAlbumImageContract.IAlbumImageView{
 
     private IAlbumImageContract.IAlbumImagePresenter mAlbumImagePresenter;
     private int mPositionInAlbum;
@@ -56,7 +58,6 @@ public class AlbumImageView extends DelayLoadImageView implements IAlbumImageCon
      */
     @Override
     public void loadImage(String url) {
-        clearImage();
         loadImageAsync(url);
     }
 
@@ -65,7 +66,7 @@ public class AlbumImageView extends DelayLoadImageView implements IAlbumImageCon
      */
     @Override
     public void clearImage() {
-        setImageBitmap(null);
+        setImageDrawable(DrawableUtils.colorIdToDrawable(R.color.light_gray));
     }
 
     /**

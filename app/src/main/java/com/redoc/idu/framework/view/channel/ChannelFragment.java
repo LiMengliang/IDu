@@ -18,6 +18,7 @@ import com.redoc.idu.R;
 import com.redoc.idu.framework.contract.IChannel;
 import com.redoc.idu.framework.contract.IDigest;
 import com.redoc.widget.PullToLoadMoreRecyclerView;
+import com.redoc.widget.TwoWayPullToLoadMoreRecycleView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +36,7 @@ import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_IDLE;
 public class ChannelFragment extends Fragment {
 
     @BindView(R.id.digests_view)
-    PullToLoadMoreRecyclerView mDigestsView;
+    TwoWayPullToLoadMoreRecycleView mDigestsView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -140,6 +141,15 @@ public class ChannelFragment extends Fragment {
     private void initializeView() {
         mDigestsView.setDivider(new PullToLoadMoreRecyclerView.DefaultDivider(IDuApplication.Context));
         mDigestsView.setLayoutManager(new LinearLayoutManager(IDuApplication.Context));
+        View footer = createFooter();
+        View header = createHeader();
+        mDigestsView.setFooter(footer);
+        mDigestsView.setHeader(header);
+        mDigestsView.setInnerAdapter(mDigestsAdapter);
+        mDigestsView.setOnScrollListener(new DigestViewScrollListener());
+    }
+
+    private View createFooter() {
         RelativeLayout relativeLayout = new RelativeLayout(IDuApplication.Context);
         relativeLayout.setBackgroundColor(Color.TRANSPARENT);
         relativeLayout.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -155,9 +165,16 @@ public class ChannelFragment extends Fragment {
         footer.setTextColor(Color.GRAY);
         footer.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         relativeLayout.addView(footer);
-        mDigestsView.setFooterView(relativeLayout);
-        mDigestsView.setInnerAdapter(mDigestsAdapter);
-        mDigestsView.addOnScrollListener(new DigestViewScrollListener());
+        return relativeLayout;
+    }
+
+    private View createHeader() {
+        TextView header = new TextView(IDuApplication.Context);
+        header.setText("正在获取最新...");
+        header.setTextSize(15);
+        header.setTextColor(Color.GRAY);
+        header.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        return header;
     }
 
     /**

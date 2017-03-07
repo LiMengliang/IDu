@@ -46,6 +46,14 @@ public class AlbumImagePresenter implements IAlbumImageContract.IAlbumImagePrese
      * {@inheritDoc}
      */
     @Override
+    public void clearImage() {
+        mAlbumImageView.clearImage();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void onAttached(IView view) {
         mAlbumImageView = (IAlbumImageContract.IAlbumImageView)view;
         view.setPresenter(this);
