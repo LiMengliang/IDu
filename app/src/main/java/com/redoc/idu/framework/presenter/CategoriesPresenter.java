@@ -34,15 +34,28 @@ public class CategoriesPresenter implements ICategories.ICategoriesPresenter {
     private List<ICategory.ICategoryPresenter> mCategoryPresenters;
 
     /**
+     * Selected category.
+     */
+    private ICategory.ICategoryPresenter mSelectedCategory;
+
+    /**
      * On a category is selected.
      * @param categoryPresenter Presenter of selected category.
      */
     @Override
     public void onSelectACategory(ICategory.ICategoryPresenter categoryPresenter) {
-        ICategory.ICategoryView categoryView = categoryPresenter.getAttachedCategoryView();
-        // TODO: modify model here.
-        categoryPresenter.onSelected();
-        mCategoriesView.switchToCategory(categoryView);
+        if(mSelectedCategory == categoryPresenter) {
+            // get latest.
+            categoryPresenter.getSelectedChannel().getOrCreateChannelView().startGetLatest();
+            categoryPresenter.getSelectedChannel().getLatestDigests();
+        }
+        else {
+            ICategory.ICategoryView categoryView = categoryPresenter.getAttachedCategoryView();
+            // TODO: modify model here.
+            mSelectedCategory = categoryPresenter;
+            categoryPresenter.onSelected();
+            mCategoriesView.switchToCategory(categoryView);
+        }
     }
 
     /**

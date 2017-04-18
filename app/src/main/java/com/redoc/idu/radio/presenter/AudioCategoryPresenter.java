@@ -1,6 +1,7 @@
 package com.redoc.idu.radio.presenter;
 
 import com.redoc.idu.R;
+import com.redoc.idu.framework.contract.IChannel;
 import com.redoc.idu.radio.model.AudioCategory;
 import com.redoc.idu.framework.presenter.SingleChannelCategoryPresenter;
 
@@ -43,13 +44,27 @@ public class AudioCategoryPresenter extends SingleChannelCategoryPresenter {
         return R.drawable.category_audio;
     }
 
+    /**
+     * {@inheritdoc /}
+     */
     @Override
     public int getUnselectedIconResourceId() {
         return R.drawable.category_audio_unselected;
     }
 
+    /**
+     * {@inheritdoc /}
+     */
     @Override
     public void onSelected() {
 
+    }
+
+    /**
+     * {@inheritdoc /}
+     */
+    @Override
+    public IChannel.IChannelPresenter getSelectedChannel() {
+        return null;
     }
 }

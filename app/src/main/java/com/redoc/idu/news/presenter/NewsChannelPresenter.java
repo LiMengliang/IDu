@@ -1,5 +1,8 @@
 package com.redoc.idu.news.presenter;
 
+import android.widget.Toast;
+
+import com.redoc.idu.IDuApplication;
 import com.redoc.idu.framework.contract.multichannel.IMultiChannelsCategoryContract;
 import com.redoc.idu.framework.model.bean.Channel;
 import com.redoc.idu.news.model.NewsDigest;
@@ -68,7 +71,7 @@ public class NewsChannelPresenter extends MultiChannelPresenter {
             tempDigestsPresenter.add(new NewsDigestPresenter(digest));
         }
         addDigestsToCachedDigestsEnd(tempDigestsPresenter);
-        getOrCreateChannelView().updateDigests();
+        getOrCreateChannelView().updateDigests(true);
     }
 
     /**
@@ -77,11 +80,17 @@ public class NewsChannelPresenter extends MultiChannelPresenter {
     @Override
     public void onReceiveLatestDigests(JSONObject jsonObject) throws JSONException {
         List<NewsDigest> digests = NewsDigestsJsonParser.parseJsonToNewsDigest(jsonObject, getChannelId());
-        List<NewsDigestPresenter> tempDigestsPresenter = new ArrayList<>();
-        for(NewsDigest digest : digests) {
-            tempDigestsPresenter.add(new NewsDigestPresenter(digest));
+        if(allCachedDigests().size() == 0 || !(digests.get(0).getDigestTitle().equals(allCachedDigests().get(0).getTitle()))) {
+            List<NewsDigestPresenter> tempDigestsPresenter = new ArrayList<>();
+            for(NewsDigest digest : digests) {
+                tempDigestsPresenter.add(new NewsDigestPresenter(digest));
+            }
+            addDigestsToCachedDigestsHead(tempDigestsPresenter);
+            getOrCreateChannelView().updateDigests(true);
+            return;
         }
-        addDigestsToCachedDigestsHead(tempDigestsPresenter);
-        getOrCreateChannelView().updateDigests();
+        Toast toast = Toast.makeText(IDuApplication.Context, "已是最新", Toast.LENGTH_SHORT);
+        toast.show();
+        getOrCreateChannelView().updateDigests(false);
     }
 }

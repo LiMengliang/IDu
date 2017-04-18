@@ -2,6 +2,7 @@ package com.redoc.idu.settings.presenter;
 
 import com.redoc.idu.R;
 import com.redoc.idu.framework.contract.ICategory;
+import com.redoc.idu.framework.contract.IChannel;
 import com.redoc.idu.framework.presenter.SingleChannelCategoryPresenter;
 import com.redoc.idu.settings.model.SettingsCategory;
 import com.redoc.idu.settings.view.SettingsCategoryView;
@@ -57,8 +58,19 @@ public class SettingsCategoryPresenter extends SingleChannelCategoryPresenter {
         return R.drawable.category_setting_unselected;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     @Override
     public void onSelected() {
 
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    @Override
+    public IChannel.IChannelPresenter getSelectedChannel() {
+        return null;
     }
 }

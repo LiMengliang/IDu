@@ -28,8 +28,19 @@ public class ChannelView implements IChannel.IChannelView {
      * {@inheritDoc}
      */
     @Override
-    public void updateDigests() {
-        mFragment.updateDigests();
+    public void updateDigests(boolean needToUpdateContent) {
+        if(needToUpdateContent) {
+            mFragment.updateDigests();
+        }
+        mFragment.onUpdateLatest();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    @Override
+    public void startGetLatest() {
+        mFragment.startFetchLatest();
     }
 
     /**

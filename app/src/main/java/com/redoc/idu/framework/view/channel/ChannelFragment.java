@@ -46,6 +46,8 @@ public class ChannelFragment extends Fragment {
 
     private int iteration = 0;
 
+    private TwoWayPullToLoadMoreRecycleView.FetchLatestListener mFetchLatestListener;
+
     public ChannelFragment() {
         // Required empty public constructor
     }
@@ -105,6 +107,10 @@ public class ChannelFragment extends Fragment {
         mListener = null;
     }
 
+    public void onUpdateLatest() {
+        mDigestsView.fetchLatestFinished();
+    }
+
     /**
      * Update digests in the fragment.
      */
@@ -137,6 +143,15 @@ public class ChannelFragment extends Fragment {
         mDigestsAdapter = channelPresenter.createDigestsAdapter();
     }
 
+    /**
+     * Make digest view scroll by certain distance.
+     */
+    public void startFetchLatest() {
+        if(mDigestsView != null) {
+            mDigestsView.scrollBy(0, -200);
+        }
+    }
+
     // TODO: Footer is not center in horizontal direction.
     private void initializeView() {
         mDigestsView.setDivider(new PullToLoadMoreRecyclerView.DefaultDivider(IDuApplication.Context));
@@ -147,6 +162,15 @@ public class ChannelFragment extends Fragment {
         mDigestsView.setHeader(header);
         mDigestsView.setInnerAdapter(mDigestsAdapter);
         mDigestsView.setOnScrollListener(new DigestViewScrollListener());
+
+        mFetchLatestListener = new TwoWayPullToLoadMoreRecycleView.FetchLatestListener() {
+            @Override
+            public void fetchLatest() {
+                mChannelPresenter.getLatestDigests();
+                // mDigestsView.fetchLatestFinished();
+            }
+        };
+        mDigestsView.setFetchLatstListener(mFetchLatestListener);
     }
 
     private View createFooter() {

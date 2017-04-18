@@ -68,11 +68,21 @@ public interface ICategory {
          */
         ICategoryView getAttachedCategoryView();
 
+        /**
+         * Get category icon.
+         * @return Category icon view.
+         */
         ICategoryIconView getCategoryIconView();
 
         /**
          * On a category is selected.
          */
         void onSelected();
+
+        /**
+         * Get selected channel.
+         * @return
+         */
+        IChannel.IChannelPresenter getSelectedChannel();
     }
 }

@@ -16,6 +16,14 @@ import android.widget.RelativeLayout;
 
 public class TwoWayPullToLoadMoreRecycleView extends LinearLayout {
 
+    /**
+     * Moving direction.
+     */
+    enum MovingDirection {
+        Unknown,
+        Up,
+        Down
+    }
     private PullToLoadMoreRecyclerView mRecyclerView;
     private RelativeLayout mHeader;
     private Integer mStartY;
@@ -23,6 +31,8 @@ public class TwoWayPullToLoadMoreRecycleView extends LinearLayout {
     private static int HeaderHeight = 200;
     private boolean isInGetLatestMode = false;
     private boolean mightInGetLatestModel = false;
+    private FetchLatestListener mFetchLatestListener;
+    private MovingDirection mMovingDirection = MovingDirection.Unknown;
 
     /**
      * Construct a {@link TwoWayPullToLoadMoreRecycleView}
@@ -54,6 +64,10 @@ public class TwoWayPullToLoadMoreRecycleView extends LinearLayout {
         initializeView(context);
     }
 
+    public void setFetchLatstListener(FetchLatestListener fetchLatestListener) {
+        mFetchLatestListener = fetchLatestListener;
+    }
+
     /**
      * {@inheritDoc}
      * If user finger down when recycle view reaches its top, that means there is a potential that user wants to pull down to get latest.
@@ -64,10 +78,26 @@ public class TwoWayPullToLoadMoreRecycleView extends LinearLayout {
     public boolean onInterceptTouchEvent(MotionEvent event) {
         switch(event.getAction()) {
             case MotionEvent.ACTION_UP:
+                mMovingDirection = MovingDirection.Unknown;
                 break;
             case MotionEvent.ACTION_MOVE:
                 if(!isInGetLatestMode) {
-                    isInGetLatestMode = mightInGetLatestModel && mStartY < (int)event.getRawY();
+                    try {
+                        if(mMovingDirection == MovingDirection.Unknown && event != null) {
+                            if((int)event.getRawY() > mStartY) {
+                                mMovingDirection = MovingDirection.Down;
+                            }
+                            else if ((int)event.getRawY() < mStartY) {
+                                mMovingDirection = MovingDirection.Up;
+                            }
+                            else {
+                                mMovingDirection = MovingDirection.Unknown;
+                            }
+                        }
+                        isInGetLatestMode = mightInGetLatestModel && mMovingDirection == MovingDirection.Down;
+                    }
+                    catch(Exception e) {
+                    }
                 }
                 break;
             case MotionEvent.ACTION_DOWN:
@@ -90,9 +120,8 @@ public class TwoWayPullToLoadMoreRecycleView extends LinearLayout {
             case MotionEvent.ACTION_UP:
                 if(isInGetLatestMode) {
                     mightInGetLatestModel = false;
-                    isInGetLatestMode = false;
                     scrollBy(0, -mScrollDistance - 200);
-                    scrollBy(0, 200);
+                    mFetchLatestListener.fetchLatest();
                     mScrollDistance = 0;
                 }
                 mStartY = null;
@@ -130,6 +159,14 @@ public class TwoWayPullToLoadMoreRecycleView extends LinearLayout {
         RelativeLayout headerContainer = new RelativeLayout(context);
         headerContainer.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, HeaderHeight));
         return headerContainer;
+    }
+
+    public void fetchLatestFinished() {
+        if(this.getScrollY() != 200) {
+            scrollBy(0, 200);
+            isInGetLatestMode = false;
+        }
+        mMovingDirection = MovingDirection.Unknown;
     }
 
     /**
@@ -203,5 +240,9 @@ public class TwoWayPullToLoadMoreRecycleView extends LinearLayout {
      */
     public int getFirstVisiblePosition() {
         return getFirstVisiblePosition();
+    }
+
+    public interface FetchLatestListener {
+        void fetchLatest();
     }
 }

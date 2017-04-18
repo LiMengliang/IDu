@@ -30,8 +30,14 @@ public interface IChannel {
 
         /**
          * Update digests in this channel.
+         * @param needToUpdateContent If need to update content.
          */
-        void updateDigests();
+        void updateDigests(boolean needToUpdateContent);
+
+        /**
+         * Start get latest.
+         */
+        void startGetLatest();
     }
 
     /**
