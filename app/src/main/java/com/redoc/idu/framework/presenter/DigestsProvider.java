@@ -4,6 +4,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.redoc.idu.IDuApplication;
 import com.redoc.idu.framework.contract.IChannel;
+import com.redoc.idu.utils.network.NetworkConnectionManager;
+import com.redoc.idu.utils.notification.NotificationUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,8 +17,6 @@ import org.json.JSONObject;
 public class DigestsProvider {
 
     private IChannel.IChannelPresenter mChannelPresenter;
-    private ResponseListener mOnLatestResponseListener;
-    private ResponseListener mOnMoreResponseListener;
 
     /**
      * Construct a digests provider instance.
@@ -24,21 +24,32 @@ public class DigestsProvider {
      */
     public DigestsProvider(IChannel.IChannelPresenter channelPresenter) {
         mChannelPresenter = channelPresenter;
-        mOnLatestResponseListener = new ResponseListener(true);
-        mOnMoreResponseListener = new ResponseListener(false);
     }
 
     /**
      * Fetch latest.
      */
     public void fetchLatest() {
-        IDuApplication.HttpClient.addJsonObjectRequest(mChannelPresenter.getChannelDigestsLink(0), null, mOnLatestResponseListener,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        int a = 0;
-                    }
-                });
+
+        String url = mChannelPresenter.getChannelDigestsLink(0);
+        if(NetworkConnectionManager.isWifiAvailable(IDuApplication.Context)) {
+            IDuApplication.HttpClient.addJsonObjectRequest(url, null, new ResponseListener(true, url),
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            int a = 0;
+                        }
+                    });
+        }
+        else {
+            String digestsJsonString = IDuApplication.CacheManager.readString(url);
+            try {
+                mChannelPresenter.onReceiveLatestDigests(new JSONObject(digestsJsonString));
+                NotificationUtils.showToast("无网络连接，显示历史结果", false, IDuApplication.Context);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -46,12 +57,24 @@ public class DigestsProvider {
      * @param index Frame index.
      */
     public void fetchMore(int index) {
-        IDuApplication.HttpClient.addJsonObjectRequest(mChannelPresenter.getChannelDigestsLink(index), null, mOnMoreResponseListener,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                    }
-                });
+        String url = mChannelPresenter.getChannelDigestsLink(index);
+        if(NetworkConnectionManager.isWifiAvailable(IDuApplication.Context)) {
+            IDuApplication.HttpClient.addJsonObjectRequest(url, null, new ResponseListener(false, url),
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                        }
+                    });
+        }
+        else {
+            String digestsJsonString = IDuApplication.CacheManager.readString(url);
+            try {
+                JSONObject digestsJson = new JSONObject(digestsJsonString);
+                mChannelPresenter.onReceiveMoreDigests(digestsJson);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -59,13 +82,15 @@ public class DigestsProvider {
      */
     class ResponseListener implements Response.Listener<JSONObject> {
         private boolean mLatest;
+        private String mUrl;
 
         /**
          * Construct a response listener.
          * @param latest If to get latest digests.
          */
-        public ResponseListener(boolean latest) {
+        public ResponseListener(boolean latest, String url) {
             mLatest = latest;
+            mUrl = url;
         }
 
         /**
@@ -73,6 +98,7 @@ public class DigestsProvider {
          */
         @Override
         public void onResponse(JSONObject jsonObject) {
+            IDuApplication.CacheManager.writeString(mUrl, jsonObject.toString());
             try {
                 if(mLatest) {
                     mChannelPresenter.onReceiveLatestDigests(jsonObject);

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v7.app.NotificationCompat;
+import android.widget.Toast;
 
 import com.redoc.idu.IDuApplication;
 import com.redoc.idu.R;
@@ -218,5 +219,16 @@ public class NotificationUtils{
         Notification notification = builder.build();
         NotificationManager manager = (NotificationManager) IDuApplication.Context.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(TYPE_Media,notification);
+    }
+
+    /**
+     * Show toast.
+     * @param message Message of the toast.
+     * @param longDuration Duration.
+     * @param context Context.
+     */
+    public static void showToast(String message, boolean longDuration, Context context) {
+        Toast toast = Toast.makeText(context, message, longDuration?Toast.LENGTH_LONG:Toast.LENGTH_SHORT);
+        toast.show();
     }
 }

@@ -107,15 +107,22 @@ public class ChannelFragment extends Fragment {
         mListener = null;
     }
 
+    /**
+     * On update latest digests.
+     */
     public void onUpdateLatest() {
-        mDigestsView.fetchLatestFinished();
+        if(mDigestsView != null) {
+            mDigestsView.fetchLatestFinished();
+        }
     }
 
     /**
      * Update digests in the fragment.
      */
     public void updateDigests() {
-        mDigestsView.forceRefresh();
+        if(mDigestsView != null) {
+            mDigestsView.forceRefresh();
+        }
     }
 
     /**
@@ -167,10 +174,10 @@ public class ChannelFragment extends Fragment {
             @Override
             public void fetchLatest() {
                 mChannelPresenter.getLatestDigests();
-                // mDigestsView.fetchLatestFinished();
             }
         };
         mDigestsView.setFetchLatstListener(mFetchLatestListener);
+        mDigestsView.forceRefresh();
     }
 
     private View createFooter() {

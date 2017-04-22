@@ -2,10 +2,8 @@ package com.redoc.idu.utils.network;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v4.util.LruCache;
 import android.widget.ImageView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.ImageLoader;
@@ -15,6 +13,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.redoc.idu.R;
+import com.redoc.idu.utils.cache.CacheManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,9 +30,9 @@ public class HttpClient {
      * Construct a http client.
      * @param context Context.
      */
-    public HttpClient(Context context) {
+    public HttpClient(Context context, CacheManager cacheManager) {
         mRequestQueue = Volley.newRequestQueue(context);
-        mImageLoader = new ImageLoader(mRequestQueue, new HttpImageCache());
+        mImageLoader = new ImageLoader(mRequestQueue, new HttpImageCache(cacheManager));
     }
 
     /**
@@ -88,24 +87,25 @@ public class HttpClient {
 
     static class HttpImageCache implements ImageLoader.ImageCache {
 
-        private LruCache<String, Bitmap> mCache;
-        public HttpImageCache() {
-            int maxSize = 10 * 1024 * 1024;
-            mCache = new LruCache<String, Bitmap>(maxSize) {
-                @Override
-                protected int sizeOf(String key, Bitmap bitmap) {
-                    return bitmap.getRowBytes() * bitmap.getHeight();
-                }
-            };
-        }
-        @Override
-        public Bitmap getBitmap(String url) {
-            return mCache.get(url);
+        private CacheManager mCacheManager;
+        public HttpImageCache(CacheManager cacheManager) {
+            mCacheManager = cacheManager;
         }
 
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Bitmap getBitmap(String url) {
+            return mCacheManager.readBitmap(url);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void putBitmap(String url, Bitmap bitmap) {
-            mCache.put(url, bitmap);
+            mCacheManager.writeBitmap(url, bitmap);
         }
     }
 

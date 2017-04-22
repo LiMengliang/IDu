@@ -353,6 +353,7 @@ public class TextArticleHtmlLoader implements IArticleLoader {
                 htmlContent = htmlContent.replace("<!--TITLE-->", title.text());
                 htmlContent = htmlContent.replace("<!--TIME_SOURCE-->", timeAndSource.substring(0, timeAndSource.indexOf("网友评论")));
                 mArticleLoadListener.onLoaded(htmlContent);
+                IDuApplication.CacheManager.writeString(mUrl, htmlContent);
             }
         }
 
@@ -379,7 +380,7 @@ public class TextArticleHtmlLoader implements IArticleLoader {
 
         private void dealWithVideoTag(Element contentNode) {
             Elements paragraphs = mJsoupParser.getElementsByTag(ParagraphTagName, contentNode);
-            Pattern videoUrlPattern = Pattern.compile("https(.+)mp4,");
+            Pattern videoUrlPattern = Pattern.compile("http(.+)mp4,");
             Pattern imageSourcePattern = Pattern.compile("IMG(.+)ALT");
             for (Element paragraph: paragraphs) {
                 Pattern regstr = Pattern.compile("<!--@@VIDEO=(.+)-->");
